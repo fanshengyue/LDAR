@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">LDAR</string>
+    <string name="inputting">建档</string>
+    <string name="detection">检测</string>
+    <string name="review">维修复测</string>
+    <string name="me">我的</string>
+    <string name="password">密码</string>
+    <string name="login_password_digits">._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
+    <string name="login_list">用户列表</string>
+    <string name="usernameempty">用户名不能为空</string>
+    <string name="passwordempty">密码不能为空</string>
+    <string name="net_error">网络连接失败，请检查您的网络连接情况</string>
+</resources>
