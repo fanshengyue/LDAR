@@ -1,13 +1,15 @@
 
 package com.lm.ldar.util;
 
-
-
+import android.app.Activity;
 import com.lm.ldar.entity.Enterprise;
+import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.User;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class JsonPaser {
 	/**
@@ -37,7 +39,7 @@ public class JsonPaser {
 		return user;
 	}
 	/**
-	 * 解析User
+	 * 解析Enterprise
 	 * @param content
 	 * @return
 	 * @throws JSONException
@@ -58,6 +60,31 @@ public class JsonPaser {
 			enterprise.setEpid(jsonObject.optInt("epid"));
 		}
 		return enterprise;
+	}
+
+	/**
+	 * 解析Factory
+	 * @param content
+	 * @return
+	 * @throws JSONException
+	 */
+	public static List<Factory> parseFactory(Activity activity, String content) throws JSONException{
+		List<Factory> factories = new ArrayList<>();
+		if(!IsNullOrEmpty.isEmpty(content)){
+			JSONObject jsonObject = new JSONObject(content);
+			Iterator iterator = jsonObject.keys();
+			while(iterator.hasNext()){
+				Factory factory = new Factory();
+				factory.setId(jsonObject.optLong("id"));
+				factory.setNumber(jsonObject.optString("number"));
+				factory.setName(jsonObject.optString("name"));
+				factory.setCreate_time(jsonObject.optString("createtime"));
+				factory.setValid(jsonObject.getInt("valid"));
+				factory.setEid(jsonObject.getInt("eid"));
+				factories.add(factory);
+			}
+		}
+		return factories;
 	}
 
 }
