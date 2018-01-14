@@ -17,10 +17,13 @@ import com.lm.ldar.R;
 import com.lm.ldar.SharePreferenceKey;
 import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.EnterpriseDao;
+import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.entity.Enterprise;
+import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.entity.User;
+import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
 import com.lm.ldar.util.JsonPaser;
 import com.lm.ldar.util.NetUtil;
@@ -30,6 +33,7 @@ import org.json.JSONException;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by fanshengyue on 2018/1/12.
@@ -93,40 +97,37 @@ public class WelcomeActivity extends BaseActivity {
                 if(NetUtil.DealCode(WelcomeActivity.this,str)){
                     String data=NetUtil.JsonInner(WelcomeActivity.this,str);
                     if(!IsNullOrEmpty.isEmpty(data)){
-                        DaoSession daoSession = ((LMApplication)getApplication()).getDaoSession();
                         try {
                             org.json.JSONObject jsonObject=new org.json.JSONObject(data);
+                            //用户
                             String str_user=jsonObject.optString("user");
                             if(!IsNullOrEmpty.isEmpty(str_user)){
-                                //用户
-                                UserDao userDao=daoSession.getUserDao();
                                 User user= JsonPaser.parseUser(str_user);
                                 if(user!=null){
                                     //登录用户信息更新shareprefrence
                                     userUtil.updateShareUser(user.getId(),user.getUsername(),user.getPassword());
-                                    User userQueryEntity=userDao.queryBuilder().where(UserDao.Properties.Id.eq(user.getId())).unique();
-                                    if(userQueryEntity!=null){
-                                        userDao.update(user);
-                                    }else {
-                                        userDao.insert(user);
-                                    }
+                                    DaoUtil.UpdateUser(userDao,user);
                                 }
-                                //企业
-                                EnterpriseDao enterpriseDao=daoSession.getEnterpriseDao();
-                                String str_enterprise=jsonObject.optString("enterprise");
-                                if(!IsNullOrEmpty.isEmpty(str_enterprise)){
-                                    Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
-                                    if(enterprise!=null){
-                                        Enterprise ep_queryEntity=enterpriseDao.queryBuilder().where(EnterpriseDao.Properties.Id.eq(enterprise.getId())).unique();
-                                        if(ep_queryEntity!=null){
-                                            enterpriseDao.update(enterprise);
-                                        }else{
-                                            enterpriseDao.insert(enterprise);
-                                        }
-                                    }
-                                }
-
                             }
+                            //企业
+                            String str_enterprise=jsonObject.optString("enterprise");
+                            if(!IsNullOrEmpty.isEmpty(str_enterprise)){
+                                Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
+                                if(enterprise!=null){
+                                    DaoUtil.UpdateEnterprise(enterpriseDao,enterprise);
+                                }
+                            }
+                            //厂区
+                            String str_fac=jsonObject.optString("factoryList");
+                            if(!IsNullOrEmpty.isEmpty(str_fac)){
+                                List<Factory> factories=JsonPaser.parseFactory(str_fac);
+                                if(factories!=null&&factories.size()>0){
+                                    for(Factory factory:factories){
+                                        DaoUtil.UpdateFactory(factoryDao,factory);
+                                    }
+                                }
+                            }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

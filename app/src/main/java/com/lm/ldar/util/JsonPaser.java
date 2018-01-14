@@ -68,7 +68,7 @@ public class JsonPaser {
 	 * @return
 	 * @throws JSONException
 	 */
-	public static List<Factory> parseFactory(Activity activity, String content) throws JSONException{
+	public static List<Factory> parseFactory(String content) throws JSONException{
 		List<Factory> factories = new ArrayList<>();
 		if(!IsNullOrEmpty.isEmpty(content)){
 			JSONObject jsonObject = new JSONObject(content);
@@ -78,7 +78,7 @@ public class JsonPaser {
 				factory.setId(jsonObject.optLong("id"));
 				factory.setNumber(jsonObject.optString("number"));
 				factory.setName(jsonObject.optString("name"));
-				factory.setCreate_time(jsonObject.optString("createtime"));
+				factory.setCreatetime(jsonObject.optString("createtime"));
 				factory.setValid(jsonObject.getInt("valid"));
 				factory.setEid(jsonObject.getInt("eid"));
 				factories.add(factory);

@@ -11,18 +11,18 @@ public class Factory implements Serializable {
     private Long id;
     private String number;//厂区编号
     private String name;//厂区名称
-    private String create_time;//创建时间
+    private String createtime;//创建时间
     private int valid;//状态
     private int eid;//企业ID
 
     public Factory() {
     }
 
-    public Factory(Long id, String number, String name, String create_time, int valid, int eid) {
+    public Factory(Long id, String number, String name, String createtime, int valid, int eid) {
         this.id = id;
         this.number = number;
         this.name = name;
-        this.create_time = create_time;
+        this.createtime = createtime;
         this.valid = valid;
         this.eid = eid;
     }
@@ -51,12 +51,12 @@ public class Factory implements Serializable {
         this.name = name;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 
     public int getValid() {

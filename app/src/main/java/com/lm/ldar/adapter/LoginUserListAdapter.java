@@ -14,10 +14,13 @@ import android.widget.Toast;
 import com.lm.ldar.R;
 import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.EnterpriseDao;
+import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.entity.Enterprise;
+import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.entity.User;
+import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.LoginUserUtil;
 import com.lm.ldar.util.NetUtil;
 import com.lm.ldar.view.MyAlertDialog;
@@ -77,18 +80,7 @@ public class LoginUserListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //删除数据库
-                        UserDao userDao=daoSession.getUserDao();
-                        User queryUser=userDao.queryBuilder().where(UserDao.Properties.Id.eq(data.get(position).getId())).unique();
-                        if(queryUser!=null){
-                            //删除用户
-                            userDao.delete(queryUser);
-                            //删除企业信息
-                            EnterpriseDao enterpriseDao=daoSession.getEnterpriseDao();
-                            Enterprise ep_queryEntity=enterpriseDao.queryBuilder().where(EnterpriseDao.Properties.Id.eq(queryUser.getEid())).unique();
-                            if(ep_queryEntity!=null){
-                                enterpriseDao.delete(ep_queryEntity);
-                            }
-                        }
+                        DaoUtil.DeleteByUserId(activity,data.get(position).getId());
                         data.remove(position);
                         notifyDataSetChanged();
                         dialog.dismiss();

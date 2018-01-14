@@ -59,7 +59,8 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_start_inputting:
-                takePhoto();
+//                takePhoto();
+                startActivity(new Intent(InputtingActivity.this,DrawPointActivity.class));
                 break;
             default:
                 break;

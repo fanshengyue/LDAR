@@ -29,10 +29,13 @@ import com.lm.ldar.SharePreferenceKey;
 import com.lm.ldar.adapter.LoginUserListAdapter;
 import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.EnterpriseDao;
+import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.entity.Enterprise;
+import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.entity.User;
+import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.FAST;
 import com.lm.ldar.util.JsonPaser;
 import com.lm.ldar.util.NetUtil;
@@ -66,16 +69,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     Button loginBtnCommit;
     @BindView(R.id.tv_login_list)
     TextView tvLoginList;
-    private UserDao userDao;
-    private EnterpriseDao enterpriseDao;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initListener();
-        userDao=daoSession.getUserDao();
-        enterpriseDao=daoSession.getEnterpriseDao();
+
     }
 
     /**
@@ -134,12 +134,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 if(user!=null){
                                     //登录用户信息更新shareprefrence
                                     userUtil.updateShareUser(user.getId(),user.getUsername(),user.getPassword());
-                                    User userQueryEntity=userDao.queryBuilder().where(UserDao.Properties.Id.eq(user.getId())).unique();
-                                    if(userQueryEntity!=null){
-                                        userDao.update(user);
-                                    }else {
-                                        userDao.insert(user);
-                                    }
+                                    DaoUtil.UpdateUser(userDao,user);
                                 }
                             }
                             //企业
@@ -147,14 +142,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                             if(!IsNullOrEmpty.isEmpty(str_enterprise)){
                                 Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
                                 if(enterprise!=null){
-                                    Enterprise ep_queryEntity=enterpriseDao.queryBuilder().where(EnterpriseDao.Properties.Id.eq(enterprise.getId())).unique();
-                                    if(ep_queryEntity!=null){
-                                        enterpriseDao.update(enterprise);
-                                    }else{
-                                        enterpriseDao.insert(enterprise);
+                                    DaoUtil.UpdateEnterprise(enterpriseDao,enterprise);
+                                }
+                            }
+                            //厂区
+                            String str_fac=jsonObject.optString("factoryList");
+                            if(!IsNullOrEmpty.isEmpty(str_fac)){
+                                List<Factory> factories=JsonPaser.parseFactory(str_fac);
+                                if(factories!=null&&factories.size()>0){
+                                    for(Factory factory:factories){
+                                        DaoUtil.UpdateFactory(factoryDao,factory);
                                     }
                                 }
                             }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

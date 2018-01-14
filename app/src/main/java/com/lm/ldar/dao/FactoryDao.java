@@ -17,6 +17,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
  */
 
 public class FactoryDao extends AbstractDao<Factory, Long> {
+    public static final String TABLENAME = "FACTORY";
 
     /**
      * Properties of entity VideoPlayEntity.<br/>
@@ -26,9 +27,9 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Number = new Property(1, String.class, "number", false, "NUMBER");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
-        public final static Property Create_time = new Property(5, String.class, "create_time", false, "CREATE_TIME");
-        public final static Property Valid = new Property(6, int.class, "valid", false, "VALID");
-        public final static Property Eid = new Property(9, int.class, "eid", false, "EID");
+        public final static Property Create_time = new Property(3, String.class, "createtime", false, "CREATE_TIME");
+        public final static Property Valid = new Property(4, int.class, "valid", false, "VALID");
+        public final static Property Eid = new Property(5, int.class, "eid", false, "EID");
     };
 
     public FactoryDao(DaoConfig config) {
@@ -42,7 +43,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
-        db.execSQL("CREATE TABLE " + constraint + "\"factory\" (" + //
+        db.execSQL("CREATE TABLE " + constraint + "\"FACTORY\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"NUMBER\" TEXT NOT NULL," + // 1: number
                 "\"NAME\" TEXT NOT NULL," + // 2: name
@@ -53,7 +54,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
 
     /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"factory\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"FACTORY\"";
         db.execSQL(sql);
     }
 
@@ -80,7 +81,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setNumber(cursor.getString(offset + 1));
         entity.setName(cursor.getString(offset + 2));
-        entity.setCreate_time(cursor.getString(offset + 3));
+        entity.setCreatetime(cursor.getString(offset + 3));
         entity.setValid(cursor.getInt(offset + 4));
         entity.setEid(cursor.getInt(offset + 5));
     }
@@ -95,7 +96,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
         }
         stmt.bindString(2, entity.getNumber());
         stmt.bindString(3, entity.getName());
-        stmt.bindString(4, entity.getCreate_time());
+        stmt.bindString(4, entity.getCreatetime());
         stmt.bindLong(5, entity.getValid());
         stmt.bindLong(6,entity.getEid());
     }
@@ -110,7 +111,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
         }
         stmt.bindString(2, entity.getNumber());
         stmt.bindString(3, entity.getName());
-        stmt.bindString(4, entity.getCreate_time());
+        stmt.bindString(4, entity.getCreatetime());
         stmt.bindLong(5, entity.getValid());
         stmt.bindLong(6,entity.getEid());
     }

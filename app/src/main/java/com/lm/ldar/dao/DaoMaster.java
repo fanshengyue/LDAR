@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
+import com.lm.ldar.entity.Factory;
+
 import org.greenrobot.greendao.AbstractDaoMaster;
 import org.greenrobot.greendao.database.StandardDatabase;
 import org.greenrobot.greendao.database.Database;
@@ -23,12 +25,14 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(Database db, boolean ifNotExists) {
         UserDao.createTable(db, ifNotExists);
         EnterpriseDao.createTable(db, ifNotExists);
+        FactoryDao.createTable(db,ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         UserDao.dropTable(db, ifExists);
         EnterpriseDao.dropTable(db, ifExists);
+        FactoryDao.createTable(db,ifExists);
     }
 
     /**
@@ -49,6 +53,7 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, SCHEMA_VERSION);
         registerDaoClass(UserDao.class);
         registerDaoClass(EnterpriseDao.class);
+        registerDaoClass(FactoryDao.class);
     }
 
     public DaoSession newSession() {
