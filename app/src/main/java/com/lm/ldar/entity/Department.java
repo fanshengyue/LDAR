@@ -3,29 +3,28 @@ package com.lm.ldar.entity;
 import java.io.Serializable;
 
 /**
- * 子区域表
+ * 部门表
  * Created by xieweikun on 2018/1/14.
  */
 
-public class Area implements Serializable{
-
-    private Long id;//id
-    private String number;//区域编号
-    private String name;//区域名称
+public class Department implements Serializable {
+    private Long id;//部门ID
+    private String number;//部门编号
+    private String name;//部门名称
     private String createtime;//创建时间
-    private int did;//装置ID
+    private int fid;//厂区ID
     private int eid;//企业ID
     private int valid;//状态
 
-    public Area() {
+    public Department() {
     }
 
-    public Area(Long id, String number, String name, String createtime, int did, int eid, int valid) {
+    public Department(Long id, String number, String name, String createtime, int fid, int eid, int valid) {
         this.id = id;
         this.number = number;
         this.name = name;
         this.createtime = createtime;
-        this.did = did;
+        this.fid = fid;
         this.eid = eid;
         this.valid = valid;
     }
@@ -62,12 +61,12 @@ public class Area implements Serializable{
         this.createtime = createtime;
     }
 
-    public int getDid() {
-        return did;
+    public int getFid() {
+        return fid;
     }
 
-    public void setDid(int did) {
-        this.did = did;
+    public void setFid(int fid) {
+        this.fid = fid;
     }
 
     public int getEid() {
