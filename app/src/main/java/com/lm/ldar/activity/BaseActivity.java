@@ -19,5 +19,6 @@ public class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         dialog=new LoadingDialog(BaseActivity.this);
         urlManager=new UrlManager(BaseActivity.this);
+        
     }
 }
