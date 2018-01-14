@@ -567,7 +567,7 @@ public class OkhttpFactory extends NetworkFactory {
 				newUrl=url + "?" + p;
 			}
 			builder.url(newUrl);
-      Log.v("url----->",newUrl);
+      Log.i("url----->",newUrl);
 		}else if(method==METHOD_POST){
 			for (String key : params.keySet()) {
 				if(params.get(key).equals(null)||params.get(key).equals("null")){
@@ -582,7 +582,7 @@ public class OkhttpFactory extends NetworkFactory {
 			}else{
 				newUrl=url + "?" + p;
 			}
-			Log.v("url----->", newUrl);
+			Log.i("url----->", newUrl);
 		}
 
 		Call call=client.newCall(builder.build());
