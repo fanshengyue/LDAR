@@ -21,7 +21,7 @@ public class LMApplication extends Application {
         super.onCreate();
         applicationContext=this;
         instance=this;
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this,"ladr.db",null);
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this,"ldar.db",null);
         Database db = devOpenHelper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
     }

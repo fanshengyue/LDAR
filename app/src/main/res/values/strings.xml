@@ -10,4 +10,9 @@
     <string name="usernameempty">用户名不能为空</string>
     <string name="passwordempty">密码不能为空</string>
     <string name="net_error">网络连接失败，请检查您的网络连接情况</string>
+    <string name="start_inputting">开始建档</string>
+    <string name="nosdcard">内存卡不存在!</string>
+    <string name="save">保存</string>
+    <string name="clear_tag">清除标点</string>
+    <string name="logout">退出登录</string>
 </resources>

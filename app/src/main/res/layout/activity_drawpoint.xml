@@ -5,17 +5,20 @@
     android:orientation="vertical"
     >
     <Button
-        android:id="@+id/bt_start_inputting"
+        android:id="@+id/bt_clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_inputting"/>
-    <TextView
-        android:id="@+id/tv_image_path"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:text="@string/clear_tag"/>
 
+    <Button
+        android:id="@+id/bt_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"/>
+    <com.lm.ldar.view.PictureTagLayout
+        android:id="@+id/tagview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dimen_dp_10">
+    </com.lm.ldar.view.PictureTagLayout>
 </LinearLayout>

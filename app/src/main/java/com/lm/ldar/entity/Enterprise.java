@@ -8,25 +8,26 @@ import java.io.Serializable;
 
 public class Enterprise implements Serializable {
     /** Not-null value. */
-    private Long id;
+    private Long id;//企业Id
     private String ecode;//组织机构代码
     private String ename;//企业名称
-    private String legal_persion;//企业法人
+    private String legalperson;//企业法人
     private String industry;//行业
-    private String create_time;
+    private String createtime;
     private int valid;//用户状态 0--禁用，1--启用
     private int nid;//命名规则id
     private int ppid;//图像参数设置ID
     private int epid;//标点信息参数ID
 
-    public Enterprise(Long id,String ecode,String ename,String legal_persion,String industry,String create_time,
+    public Enterprise(){}
+    public Enterprise(Long id,String ecode,String ename,String legalperson,String industry,String createtime,
                       int valid,int nid,int ppid,int epid){
         this.id=id;
         this.ecode=ecode;
         this.ename=ename;
-        this.legal_persion=legal_persion;
+        this.legalperson=legalperson;
         this.industry=industry;
-        this.create_time=create_time;
+        this.createtime=createtime;
         this.valid=valid;
         this.nid=nid;
         this.ppid=ppid;
@@ -57,12 +58,12 @@ public class Enterprise implements Serializable {
         this.ename = ename;
     }
 
-    public String getLegal_persion() {
-        return legal_persion;
+    public String getLegalperson() {
+        return legalperson;
     }
 
-    public void setLegal_persion(String legal_persion) {
-        this.legal_persion = legal_persion;
+    public void setLegalperson(String legalperson) {
+        this.legalperson = legalperson;
     }
 
     public String getIndustry() {
@@ -73,12 +74,12 @@ public class Enterprise implements Serializable {
         this.industry = industry;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 
     public int getValid() {

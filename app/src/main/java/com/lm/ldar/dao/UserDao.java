@@ -32,7 +32,7 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Last_login_ip = new Property(5, String.class, "lastloginip", false, "LAST_LOGIN_IP");
         public final static Property Valid = new Property(6, int.class, "valid", false, "VALID");
         public final static Property Create_time = new Property(7, String.class, "createtime", false, "CREATE_TIME");
-        public final static Property Eid = new Property(8, String.class, "eid", false, "EID");
+        public final static Property Eid = new Property(8, Long.class, "eid", false, "EID");
         public final static Property Login_times = new Property(9, int.class, "logintimes", false, "LOGIN_TIMES");
         public final static Property Phone = new Property(10, String.class, "phone", false, "PHONE");
         public final static Property Email = new Property(11, String.class, "email", false, "EMAIL");
@@ -59,7 +59,7 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"LAST_LOGIN_IP\" TEXT," + // 5: last_login_ip
                 "\"VALID\" INTEGER," + //6.valid
                 "\"CREATE_TIME\" TEXT," + //7.create_time
-                "\"EID\" TEXT," + //8.eid
+                "\"EID\" INTEGER," + //8.eid
                 "\"LOGIN_TIMES\" INTEGER," + //9.login_times
                 "\"PHONE\" TEXT," + //10.phone
                 "\"EMAIL\" TEXT," + //11.email
@@ -84,7 +84,7 @@ public class UserDao extends AbstractDao<User, Long> {
                 cursor.getString(offset + 5), // lastloginip
                 cursor.getInt(offset + 6),// valid
                 cursor.getString(offset + 7),// createtime
-                cursor.getString(offset + 8),// eid
+                cursor.getLong(offset + 8),// eid
                 cursor.getInt(offset + 9),// login_times
                 cursor.getString(offset + 10),// phone
                 cursor.getString(offset + 11),// email
@@ -109,7 +109,7 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setLastloginip(cursor.getString(offset + 5));
         entity.setValid(cursor.getInt(offset + 6));
         entity.setCreatetime(cursor.getString(offset + 7));
-        entity.setEid(cursor.getString(offset + 8));
+        entity.setEid(cursor.getLong(offset + 8));
         entity.setLogintimes(cursor.getInt(offset + 9));
         entity.setPhone(cursor.getString(offset + 10));
         entity.setEmail(cursor.getString(offset + 11));
@@ -131,7 +131,7 @@ public class UserDao extends AbstractDao<User, Long> {
         stmt.bindString(6, entity.getLastloginip());
         stmt.bindLong(7, entity.getValid());
         stmt.bindString(8, entity.getCreatetime());
-        stmt.bindString(9, entity.getEid());
+        stmt.bindLong(9, entity.getEid());
         stmt.bindLong(10, entity.getLogintimes());
         stmt.bindString(11, entity.getPhone());
         stmt.bindString(12, entity.getEmail());
@@ -153,7 +153,7 @@ public class UserDao extends AbstractDao<User, Long> {
         stmt.bindString(6, entity.getLastloginip());
         stmt.bindLong(7, entity.getValid());
         stmt.bindString(8, entity.getCreatetime());
-        stmt.bindString(9, entity.getEid());
+        stmt.bindLong(9, entity.getEid());
         stmt.bindLong(10, entity.getLogintimes());
         stmt.bindString(11, entity.getPhone());
         stmt.bindString(12, entity.getEmail());

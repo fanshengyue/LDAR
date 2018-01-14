@@ -3,12 +3,14 @@ package com.lm.ldar.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,20 +25,28 @@ import com.example.network.framework.SuccessfulCallback;
 import com.example.network.workUtils.OkhttpFactory;
 import com.lm.ldar.LMApplication;
 import com.lm.ldar.R;
+import com.lm.ldar.SharePreferenceKey;
+import com.lm.ldar.adapter.LoginUserListAdapter;
 import com.lm.ldar.dao.DaoSession;
+import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.UserDao;
+import com.lm.ldar.entity.Enterprise;
+import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.entity.User;
 import com.lm.ldar.util.FAST;
 import com.lm.ldar.util.JsonPaser;
 import com.lm.ldar.util.NetUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
+import com.lm.ldar.util.Util;
 import com.lm.ldar.view.MyAlertDialog;
 import com.lm.ldar.view.NoScrollListView;
 
 import org.json.JSONException;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,17 +66,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     Button loginBtnCommit;
     @BindView(R.id.tv_login_list)
     TextView tvLoginList;
-
-    private String mUsername;
-    private String mPassword;
-
+    private UserDao userDao;
+    private EnterpriseDao enterpriseDao;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initListener();
+        userDao=daoSession.getUserDao();
+        enterpriseDao=daoSession.getEnterpriseDao();
+    }
 
+    /**
+     * 初始化两个输入框，若曾经登陆过，则显示最近一次登录的用户名，密码
+     */
+    private void initExitText(){
+        LoginUserEntity entity=userUtil.getLoginUserInfo();
+        if(entity!=null&&!IsNullOrEmpty.isEmpty(entity.getUsername())&&!IsNullOrEmpty.isEmpty(entity.getPassword())){
+            etUsername.setText(entity.getUsername());
+        }
     }
 
     private void initListener(){
@@ -75,14 +94,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void Login(){
-        mUsername=etUsername.getText().toString();
-        mPassword=etPassword.getText().toString();
-        mUsername= "lg";
-        mPassword="12345678";
+        String mUsername=etUsername.getText().toString();
+        String mPassword=etPassword.getText().toString();
         if(!IsNullOrEmpty.isEmpty(mUsername)){
             if(!IsNullOrEmpty.isEmpty(mPassword)){
                 //登录逻辑
-                startLogin(mUsername,mPassword);
+                startLogin(mUsername,Util.MD5(mPassword));
             }else{
                 Toast.makeText(LoginActivity.this,getString(R.string.passwordempty),Toast.LENGTH_SHORT).show();
             }
@@ -91,7 +108,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private void startLogin(String username,String password){
+    /**
+     * 登录,password是MD5加密后的数据
+     * @param username
+     * @param password
+     */
+    private void startLogin(final String username, final String password){
         NetworkFactory factory= OkhttpFactory.getInstance();
         SuccessfulCallback successfulCallback=new SuccessfulCallback() {
             @Override
@@ -103,16 +125,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 if(NetUtil.DealCode(LoginActivity.this,str)){
                     String data=NetUtil.JsonInner(LoginActivity.this,str);
                     if(!IsNullOrEmpty.isEmpty(data)){
-                        DaoSession daoSession = ((LMApplication)getApplication()).getDaoSession();
                         try {
                             org.json.JSONObject jsonObject=new org.json.JSONObject(data);
+                            //用户
                             String str_user=jsonObject.optString("user");
                             if(!IsNullOrEmpty.isEmpty(str_user)){
-                                UserDao userDao=daoSession.getUserDao();
-//                                User user= FAST.parseObject(str_user,User.class);
-//                                User user=JSON.parseObject(str_user, User.class);
-                                User user= JsonPaser.parseUser(LoginActivity.this,str_user);
+                                User user= JsonPaser.parseUser(str_user);
                                 if(user!=null){
+                                    //登录用户信息更新shareprefrence
+                                    userUtil.updateShareUser(user.getId(),user.getUsername(),user.getPassword());
                                     User userQueryEntity=userDao.queryBuilder().where(UserDao.Properties.Id.eq(user.getId())).unique();
                                     if(userQueryEntity!=null){
                                         userDao.update(user);
@@ -120,7 +141,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                         userDao.insert(user);
                                     }
                                 }
-
+                            }
+                            //企业
+                            String str_enterprise=jsonObject.optString("enterprise");
+                            if(!IsNullOrEmpty.isEmpty(str_enterprise)){
+                                Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
+                                if(enterprise!=null){
+                                    Enterprise ep_queryEntity=enterpriseDao.queryBuilder().where(EnterpriseDao.Properties.Id.eq(enterprise.getId())).unique();
+                                    if(ep_queryEntity!=null){
+                                        enterpriseDao.update(enterprise);
+                                    }else{
+                                        enterpriseDao.insert(enterprise);
+                                    }
+                                }
                             }
 
                         } catch (JSONException e) {
@@ -148,13 +181,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         };
         HashMap<String,String> params=new HashMap<>();
         params.put("username",username);
-        params.put("password",password);
+        params.put("password", password);
         dialog.show();
         factory.start(NetworkFactory.METHOD_POST,urlManager.getAppLogin() , params, successfulCallback, failCallback);
     }
 
     public  void UserList(Activity activity){
-        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+        final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
         if(alertDialog.isShowing()){
             alertDialog.dismiss();
         }
@@ -171,8 +204,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         p.height= WindowManager.LayoutParams.WRAP_CONTENT;//高度自适应
         window.setAttributes(p);
         NoScrollListView listView=window.findViewById(R.id.lv_login);
-
-
+        List<User> users=userDao.queryBuilder().build().list();
+        final List<LoginUserEntity>data=new ArrayList<>();
+        if(users!=null&&users.size()>0){
+            for(User user:users){
+                LoginUserEntity entity=new LoginUserEntity();
+                entity.setId(user.getId());
+                entity.setUsername(user.getUsername());
+                entity.setPassword(user.getPassword());
+                data.add(entity);
+            }
+        }
+        if(data!=null){
+            LoginUserListAdapter adapter=new LoginUserListAdapter(LoginActivity.this,data,daoSession);
+            listView.setAdapter(adapter);
+        }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startLogin(data.get(position).getUsername(),data.get(position).getPassword());
+                alertDialog.dismiss();
+            }
+        });
 
     }
 
@@ -189,5 +242,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initExitText();
     }
 }

@@ -15,7 +15,7 @@ public class User implements Serializable {
     private String lastloginip;
     private int valid;//用户状态 0--禁用，1--启用
     private String createtime;
-    private String eid;//企业id
+    private Long eid;//企业id
     private int logintimes;//登录次数
     private String phone;
     private String email;
@@ -23,7 +23,7 @@ public class User implements Serializable {
 
     public User(){}
     public User(Long id,String username,String password,String truename,String lastlogintime,String lastloginip,int valid,
-                String createtime,String eid,int logintimes,String phone,String email,String usergroups){
+                String createtime,Long eid,int logintimes,String phone,String email,String usergroups){
         this.id=id;
         this.username=username;
         this.password=password;
@@ -103,11 +103,11 @@ public class User implements Serializable {
         this.createtime = createtime;
     }
 
-    public String getEid() {
+    public Long getEid() {
         return eid;
     }
 
-    public void setEid(String eid) {
+    public void setEid(Long eid) {
         this.eid = eid;
     }
 

@@ -5,13 +5,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lm.ldar.LMApplication;
 import com.lm.ldar.R;
+import com.lm.ldar.api.UrlManager;
 import com.lm.ldar.util.DisplayUtil;
 
 
@@ -64,6 +68,11 @@ public class LoadingDialog extends AlertDialog {
         rootLayout.addView(t);
         rootLayout.setPadding(25,20,25,20);
         setContentView(rootLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        android.view.WindowManager.LayoutParams p = getWindow().getAttributes();
+        p.width = DisplayUtil.dip2px(context,UrlManager.getScreenWidth(context))/2;
+        getWindow().setAttributes(p);
+
     }
 
     @Override
