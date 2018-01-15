@@ -8,22 +8,22 @@ import java.io.Serializable;
  */
 
 public class Ctype implements Serializable {
-    private Long id;//组件一级分类ID
+    private String id;//组件一级分类ID
     private String description;//描述
 
     public Ctype() {
     }
 
-    public Ctype(Long id, String description) {
+    public Ctype(String id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
