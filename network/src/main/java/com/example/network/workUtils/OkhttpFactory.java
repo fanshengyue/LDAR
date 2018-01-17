@@ -68,12 +68,14 @@ public class OkhttpFactory extends NetworkFactory {
 	}
 	
     private OkhttpFactory() {
-    	
+
 		if(client==null){
 			client=new OkHttpClient();
 			OkHttpClient.Builder mBuilder = new OkHttpClient.Builder();
 			mBuilder.sslSocketFactory(createSSLSocketFactory());
 			mBuilder.hostnameVerifier(new TrustAllHostnameVerifier());
+			mBuilder.connectTimeout(30, TimeUnit.SECONDS);//连接超时时间 connect timeout
+			mBuilder.readTimeout(30,TimeUnit.SECONDS);// socket timeout
 			client=mBuilder.build();
 			handler=new Handler(Looper.getMainLooper());
 		}
@@ -244,7 +246,7 @@ public class OkhttpFactory extends NetworkFactory {
 			public boolean verify(String hostname, SSLSession session) {
 				return true;//强制返回true，屏蔽掉https证书检查
 			}
-		}).readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+		}).readTimeout(30000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, final IOException e) {
 				if (failCallback != null) {
@@ -314,7 +316,7 @@ public class OkhttpFactory extends NetworkFactory {
 			public boolean verify(String hostname, SSLSession session) {
 				return true;//强制返回true，屏蔽掉https证书检查
 			}
-		}).readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+		}).readTimeout(30000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call,final IOException e) {
 				if(failCallback!=null){

@@ -31,6 +31,17 @@ public class LoginUserUtil {
         edit.putString(SharePreferenceKey.UserName,username);
         edit.putString(SharePreferenceKey.UserPass,password);
         edit.commit();
+
+    }
+
+    /**
+     * 更新当前企业信息
+     */
+    public void updateEnterPrise(Long id){
+        SharedPreferences sp_ep = mContext.getSharedPreferences(SharePreferenceKey.EnterPriseInfo, 0);
+        SharedPreferences.Editor edit_ep = sp_ep.edit();
+        edit_ep.putLong(SharePreferenceKey.EnterPriseId,id);
+        edit_ep.commit();
     }
 
     /**
@@ -43,6 +54,11 @@ public class LoginUserUtil {
         edit.putString(SharePreferenceKey.UserName,"");
         edit.putString(SharePreferenceKey.UserPass,"");
         edit.commit();
+
+        SharedPreferences sp_ep = mContext.getSharedPreferences(SharePreferenceKey.EnterPriseInfo, 0);
+        SharedPreferences.Editor edit_ep = sp_ep.edit();
+        edit_ep.putLong(SharePreferenceKey.EnterPriseId,0);
+        edit_ep.commit();
     }
 
     public LoginUserEntity getLoginUserInfo(){
@@ -57,6 +73,12 @@ public class LoginUserUtil {
         userEntity.setPassword(password);
         return userEntity;
 
+    }
+
+    public Long getEnterPriseId(){
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SharePreferenceKey.EnterPriseInfo,
+                Activity.MODE_PRIVATE);
+        return sharedPreferences.getLong(SharePreferenceKey.EnterPriseId,0);
     }
 
 }

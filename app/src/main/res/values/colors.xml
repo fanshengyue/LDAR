@@ -78,7 +78,7 @@
     <!--线颜色-->
     <color name="lineColor">#c6c6c6</color>
     <!--主色调-->
-    <color name="main_color">#1E90FF</color>
+    <color name="main_color">#7594F8</color>
     <!--辅色调-->
     <color name="second_color">#2d7fcc</color>
     <!--标识/功能颜色-->
@@ -87,5 +87,7 @@
     <color name="findcommentbg">#f0f0f0</color>
     <!--透明色-->
     <color name="no_color">#00000000</color>
+
+    <color name="bg_button">#00b2ff</color>
 
 </resources>

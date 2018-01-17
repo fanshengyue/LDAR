@@ -30,6 +30,9 @@ public class PictureTagView extends RelativeLayout implements OnEditorActionList
     private static final int ViewWidth = 80;
     private static final int ViewHeight = 50;
 
+    public static String TAG_LEFT="F";
+    public static int TAG_RIGHT=1;
+
     public PictureTagView(Context context, Direction direction) {
         super(context);
         this.context = context;
@@ -39,26 +42,41 @@ public class PictureTagView extends RelativeLayout implements OnEditorActionList
         initEvents();
     }
 
+    private void setTag(){
+        String tagname="";
+        if(TAG_RIGHT<10){
+            tagname=TAG_LEFT+"0"+TAG_RIGHT;
+        }else{
+            tagname=TAG_LEFT+TAG_RIGHT;
+        }
+        etPictureTagLabel.setText(tagname);
+        tvPictureTagLabel.setText(tagname);
+    }
+
     /** 初始化视图 **/
     protected void initViews(){
         LayoutInflater.from(context).inflate(R.layout.picturetagview, this,true);
         tvPictureTagLabel = findViewById(R.id.tvPictureTagLabel);
         etPictureTagLabel = findViewById(R.id.etPictureTagLabel);
+        setTag();
         loTag = findViewById(R.id.loTag);
     }
     /** 初始化 **/
     protected void init(){
+        setTag();
         imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         directionChange();
     }
 
     /** 初始化事件 **/
     protected void initEvents(){
+        setTag();
         etPictureTagLabel.setOnEditorActionListener(this);
     }
 
     public void setStatus(Status status){
         switch(status){
+
             case Normal:
                 tvPictureTagLabel.setVisibility(View.VISIBLE);
                 etPictureTagLabel.clearFocus();

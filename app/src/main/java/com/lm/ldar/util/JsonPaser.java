@@ -5,6 +5,8 @@ import android.app.Activity;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.User;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -71,17 +73,19 @@ public class JsonPaser {
 	public static List<Factory> parseFactory(String content) throws JSONException{
 		List<Factory> factories = new ArrayList<>();
 		if(!IsNullOrEmpty.isEmpty(content)){
-			JSONObject jsonObject = new JSONObject(content);
-			Iterator iterator = jsonObject.keys();
-			while(iterator.hasNext()){
-				Factory factory = new Factory();
-				factory.setId(jsonObject.optLong("id"));
-				factory.setNumber(jsonObject.optString("number"));
-				factory.setName(jsonObject.optString("name"));
-				factory.setCreatetime(jsonObject.optString("createtime"));
-				factory.setValid(jsonObject.getInt("valid"));
-				factory.setEid(jsonObject.getInt("eid"));
-				factories.add(factory);
+			JSONArray jsonArray=new JSONArray(content);
+			if(jsonArray!=null && jsonArray.length()>0){
+				for(int i=0;i<jsonArray.length();i++){
+					JSONObject jsonObject=jsonArray.optJSONObject(i);
+					Factory factory = new Factory();
+					factory.setId(jsonObject.optLong("id"));
+					factory.setNumber(jsonObject.optString("number"));
+					factory.setName(jsonObject.optString("name"));
+					factory.setCreatetime(jsonObject.optString("createtime"));
+					factory.setValid(jsonObject.getInt("valid"));
+					factory.setEid(jsonObject.getInt("eid"));
+					factories.add(factory);
+				}
 			}
 		}
 		return factories;

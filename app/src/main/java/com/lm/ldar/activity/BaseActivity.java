@@ -4,13 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lm.ldar.LMApplication;
+import com.lm.ldar.R;
 import com.lm.ldar.api.UrlManager;
 import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.UserDao;
+import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.util.LoginUserUtil;
 import com.lm.ldar.view.LoadingDialog;
 
@@ -26,15 +32,29 @@ public class BaseActivity extends Activity {
     public UserDao userDao;
     public EnterpriseDao enterpriseDao;
     public FactoryDao factoryDao;
+    public Long userId;//用户id
+    public Long epId;//企业id
 
+    private TextView tv_title, tv_right;
+    private ImageView ivRight;
+    private LinearLayout ll_back;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+        initDao();
+
+    }
+
+    private void init(){
         dialog=new LoadingDialog(BaseActivity.this);
         urlManager=new UrlManager(BaseActivity.this);
         userUtil=new LoginUserUtil(BaseActivity.this);
-        initDao();
-
+        epId=userUtil.getEnterPriseId();
+        LoginUserEntity entity=userUtil.getLoginUserInfo();
+        if(entity!=null){
+            userId=entity.getId();
+        }
     }
 
     private void initDao(){
@@ -42,6 +62,23 @@ public class BaseActivity extends Activity {
         userDao=daoSession.getUserDao();
         enterpriseDao=daoSession.getEnterpriseDao();
         factoryDao=daoSession.getFactoryDao();
+    }
+
+    public void initTitleBar(String title) {
+        ll_back = findViewById(R.id.ll_back);
+        tv_title = findViewById(R.id.tv_title);
+        tv_right = findViewById(R.id.tv_right);
+        ivRight = findViewById(R.id.iv_right);
+        tv_right.setVisibility(View.GONE);
+        ivRight.setVisibility(View.GONE);
+        tv_title.setText(title);
+        ll_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
 

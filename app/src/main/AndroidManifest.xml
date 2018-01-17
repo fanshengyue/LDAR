@@ -26,13 +26,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.DetectionActivity" />
-        <activity android:name=".activity.InputtingActivity" />
-        <activity android:name=".activity.MeActivity" />
-        <activity android:name=".activity.ReviewActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.DrawPointActivity"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.DetectionActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.InputtingActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.MeActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.ReviewActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.ImageInfoActivity"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.DrawPointActivity"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

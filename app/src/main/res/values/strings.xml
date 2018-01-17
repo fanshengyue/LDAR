@@ -13,6 +13,35 @@
     <string name="start_inputting">开始建档</string>
     <string name="nosdcard">内存卡不存在!</string>
     <string name="save">保存</string>
+    <string name="save_success">保存成功</string>
     <string name="clear_tag">清除标点</string>
     <string name="logout">退出登录</string>
+    <string name="not_find_image">找不到图片</string>
+
+    <string name="location_info">位置信息</string>
+    <string name="image_info">图片信息</string>
+    <string name="please_select">请选择</string>
+    <string name="cancel">取消</string>
+    <string name="last_step">上一步</string>
+    <string name="next_step">下一步</string>
+    <string name="see">查看</string>
+    <string name="upload">上传</string>
+
+    <!--direction-->
+    <string name="N">N</string>
+    <string name="S">S</string>
+    <string name="W">W</string>
+    <string name="E">E</string>
+    <string name="NNE">NNE</string>
+    <string name="NE">NE</string>
+    <string name="ENE">ENE</string>
+    <string name="ESE">ESE</string>
+    <string name="SE">SE</string>
+    <string name="SSE">SSE</string>
+    <string name="SSW">SSW</string>
+    <string name="SW">SW</string>
+    <string name="WSW">WSW</string>
+    <string name="WNW">WNW</string>
+    <string name="NW">NW</string>
+    <string name="NNW">NNW</string>
 </resources>

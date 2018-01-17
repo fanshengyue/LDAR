@@ -52,15 +52,18 @@ public class WelcomeActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        LoginUserEntity entity=userUtil.getLoginUserInfo();
-                        if(entity!=null&&!IsNullOrEmpty.isEmpty(entity.getUsername())&&!IsNullOrEmpty.isEmpty(entity.getPassword())){
-                            //自动登录
-                            startLogin(entity.getUsername(),entity.getPassword());
-                        }else{
-                            Intent intent=new Intent(WelcomeActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            WelcomeActivity.this.finish();
-                        }
+                        Intent intent=new Intent(WelcomeActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        WelcomeActivity.this.finish();
+//                        LoginUserEntity entity=userUtil.getLoginUserInfo();
+//                        if(entity!=null&&!IsNullOrEmpty.isEmpty(entity.getUsername())&&!IsNullOrEmpty.isEmpty(entity.getPassword())){
+//                            //自动登录
+//                            startLogin(entity.getUsername(),entity.getPassword());
+//                        }else{
+//                            Intent intent=new Intent(WelcomeActivity.this, LoginActivity.class);
+//                            startActivity(intent);
+//                            WelcomeActivity.this.finish();
+//                        }
 
                         break;
                     default:
@@ -114,6 +117,8 @@ public class WelcomeActivity extends BaseActivity {
                             if(!IsNullOrEmpty.isEmpty(str_enterprise)){
                                 Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
                                 if(enterprise!=null){
+                                    //企业id更新shareprefrence
+                                    userUtil.updateEnterPrise(enterprise.getId());
                                     DaoUtil.UpdateEnterprise(enterpriseDao,enterprise);
                                 }
                             }

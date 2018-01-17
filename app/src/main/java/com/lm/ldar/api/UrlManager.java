@@ -13,7 +13,7 @@ import com.lm.ldar.util.NetWorkUtil;
 
 
 /**
- * Created by Wen Yun on 2016/5/19.
+ * Created by fanshengyue on 2018/1/13.
  */
 public class UrlManager {
     private String mVersion;
@@ -64,6 +64,6 @@ public class UrlManager {
      * @throws
      */
     public String getBaseUrl(){
-        return "http://192.168.1.14:8080/LDAR2.0";
+        return "http://123.57.10.249:8080/LDAR2.0";
     }
 }

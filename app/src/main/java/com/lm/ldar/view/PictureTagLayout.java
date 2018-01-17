@@ -87,6 +87,17 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
         }
         return true;
     }
+
+    public void ChangeTag(String TAG){
+        PictureTagView.TAG_LEFT=TAG;
+    }
+
+
+    public void initTag(){
+        PictureTagView.TAG_LEFT="F";
+        PictureTagView.TAG_RIGHT=1;
+    }
+
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage("确定要删除这个标签吗？");
@@ -124,6 +135,7 @@ public class PictureTagLayout extends RelativeLayout implements View.OnTouchList
         if(params.topMargin<0)params.topMargin =0;
         else if((params.topMargin+PictureTagView.getViewHeight())>getHeight())params.topMargin = getHeight() - PictureTagView.getViewHeight();
         this.addView(view, params);
+        PictureTagView.TAG_RIGHT++;
     }
     private void moveView(int x,int y){
         if(touchView == null) return;

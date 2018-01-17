@@ -40,6 +40,11 @@ public class DaoUtil {
                 //删除厂区信息
                 FactoryDao factoryDao=daoSession.getFactoryDao();
                 List<Factory> factories=factoryDao.queryBuilder().where(FactoryDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
+                if(factories!=null&&factories.size()>0){
+                    for(Factory factory:factories){
+                        factoryDao.delete(factory);
+                    }
+                }
             }
 
         }
@@ -87,5 +92,7 @@ public class DaoUtil {
             }
         }
     }
+
+
 
 }

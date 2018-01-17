@@ -142,6 +142,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                             if(!IsNullOrEmpty.isEmpty(str_enterprise)){
                                 Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
                                 if(enterprise!=null){
+                                    //企业id更新shareprefrence
+                                    userUtil.updateEnterPrise(enterprise.getId());
                                     DaoUtil.UpdateEnterprise(enterpriseDao,enterprise);
                                 }
                             }

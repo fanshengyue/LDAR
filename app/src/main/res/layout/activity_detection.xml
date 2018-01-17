@@ -3,10 +3,198 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/detection"
-        android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_dp_50"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/dimen_dp_18"
+                android:textColor="@color/font_text"
+                android:layout_marginLeft="@dimen/dimen_dp_100"
+                android:layout_marginRight="@dimen/dimen_dp_100"
+                android:text="@string/detection"
+                />
 
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lineColor"
+            />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/dimen_dp_10">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="版        本 :"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <Button
+                        android:id="@+id/bt_version"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/please_select"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:textColor="@color/font_text2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="厂        区 :"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <Button
+                        android:id="@+id/bt_factory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/please_select"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:textColor="@color/font_text2"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="部        门 :"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <Button
+                        android:id="@+id/bt_department"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/please_select"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:textColor="@color/font_text2"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="装        置 :"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <Button
+                        android:id="@+id/bt_device"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/please_select"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:textColor="@color/font_text2"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="子  区  域 :"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <Button
+                        android:id="@+id/bt_child_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/please_select"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:textColor="@color/font_text2"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/bt_download"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:text="下    载"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dimen_dp_20"
+                    android:layout_marginLeft="@dimen/dimen_dp_60"
+                    android:layout_marginRight="@dimen/dimen_dp_60"
+                    android:background="@drawable/bg_border_button"/>
+                <Button
+                    android:id="@+id/bt_see"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:text="查    看"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dimen_dp_20"
+                    android:layout_marginLeft="@dimen/dimen_dp_60"
+                    android:layout_marginRight="@dimen/dimen_dp_60"
+                    android:background="@drawable/bg_border_button"/>
+
+            </LinearLayout>
+        </ScrollView>
 </LinearLayout>
+
