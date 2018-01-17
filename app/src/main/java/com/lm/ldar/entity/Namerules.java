@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 
 public class Namerules implements Serializable {
-    private Long id;
-    private int eid;
+    private Long id;//序号
+    private int eid;//企业ID
     private String name;//命名规则名称
     private String famen;//阀门
     private String beng;//泵
