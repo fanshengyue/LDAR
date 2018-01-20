@@ -64,6 +64,6 @@ public class UrlManager {
      * @throws
      */
     public String getBaseUrl(){
-        return "http://123.57.10.249:8080/LDAR2.0";
+        return "http://123.57.10.249/LDAR2.0";
     }
 }

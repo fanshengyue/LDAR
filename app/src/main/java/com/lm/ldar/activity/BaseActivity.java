@@ -12,10 +12,18 @@ import android.widget.TextView;
 import com.lm.ldar.LMApplication;
 import com.lm.ldar.R;
 import com.lm.ldar.api.UrlManager;
+import com.lm.ldar.dao.AreaDao;
+import com.lm.ldar.dao.CtypeDao;
 import com.lm.ldar.dao.DaoSession;
+import com.lm.ldar.dao.DepartmentDao;
+import com.lm.ldar.dao.DeviceDao;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
+import com.lm.ldar.dao.NamerulesDao;
+import com.lm.ldar.dao.PictureversionDao;
 import com.lm.ldar.dao.UserDao;
+import com.lm.ldar.dao.WorkplanDao;
+import com.lm.ldar.entity.Ctype;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.util.LoginUserUtil;
 import com.lm.ldar.view.LoadingDialog;
@@ -32,36 +40,51 @@ public class BaseActivity extends Activity {
     public UserDao userDao;
     public EnterpriseDao enterpriseDao;
     public FactoryDao factoryDao;
+    public AreaDao areaDao;
+    public PictureversionDao pictureversionDao;
+    public DeviceDao deviceDao;
+    public NamerulesDao namerulesDao;
+    public CtypeDao ctypeDao;
+    public WorkplanDao workplanDao;
+    public DepartmentDao departmentDao;
+
     public Long userId;//用户id
     public Long epId;//企业id
 
     private TextView tv_title, tv_right;
     private ImageView ivRight;
     private LinearLayout ll_back;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
         initDao();
-
     }
 
-    private void init(){
-        dialog=new LoadingDialog(BaseActivity.this);
-        urlManager=new UrlManager(BaseActivity.this);
-        userUtil=new LoginUserUtil(BaseActivity.this);
-        epId=userUtil.getEnterPriseId();
-        LoginUserEntity entity=userUtil.getLoginUserInfo();
-        if(entity!=null){
-            userId=entity.getId();
+    private void init() {
+        dialog = new LoadingDialog(BaseActivity.this);
+        urlManager = new UrlManager(BaseActivity.this);
+        userUtil = new LoginUserUtil(BaseActivity.this);
+        epId = userUtil.getEnterPriseId();
+        LoginUserEntity entity = userUtil.getLoginUserInfo();
+        if (entity != null) {
+            userId = entity.getId();
         }
     }
 
-    private void initDao(){
-        daoSession = ((LMApplication)getApplication()).getDaoSession();
-        userDao=daoSession.getUserDao();
-        enterpriseDao=daoSession.getEnterpriseDao();
-        factoryDao=daoSession.getFactoryDao();
+    private void initDao() {
+        daoSession = ((LMApplication) getApplication()).getDaoSession();
+        userDao = daoSession.getUserDao();
+        enterpriseDao = daoSession.getEnterpriseDao();
+        factoryDao = daoSession.getFactoryDao();
+        areaDao = daoSession.getAreaDao();
+        pictureversionDao = daoSession.getPictureversionDao();
+        deviceDao = daoSession.getDeviceDao();
+        namerulesDao = daoSession.getNamerulesDao();
+        ctypeDao = daoSession.getCtypeDao();
+        workplanDao = daoSession.getWorkplanDao();
+        departmentDao = daoSession.getDepartmentDao();
     }
 
     public void initTitleBar(String title) {
