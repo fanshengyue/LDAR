@@ -1,6 +1,11 @@
 package com.lm.ldar.util;
 
+import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,5 +41,49 @@ public class Util {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * EditText输入数字小数点监听
+     */
+    public static void EditDigitalListener(final EditText editText){
+        //数字键盘
+        editText.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        editText.addTextChangedListener(new TextWatcher() {
+            String tmp = "";
+            String digits = ".0123456789";
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                tmp=s.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text=editText.getText().toString();
+                if(text.contains(".")||text.length()==0){
+                    //已经有了小数点或第一位不能是小数点
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                }else{
+                    editText.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+                    String str = s.toString();
+                    if(str.equals(tmp)){
+                        return;
+                    }
+                    StringBuffer sb = new StringBuffer();
+                    for(int i = 0; i < str.length(); i++){
+                        if(digits.indexOf(str.charAt(i)) >= 0){
+                            sb.append(str.charAt(i));
+                        }
+                    }
+                    tmp = sb.toString();
+                    editText.setText(tmp);
+                    editText.setSelection(editText.getText().length());
+                }
+            }
+        });
     }
 }

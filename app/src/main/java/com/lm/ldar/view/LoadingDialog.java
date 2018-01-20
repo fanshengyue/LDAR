@@ -61,7 +61,7 @@ public class LoadingDialog extends AlertDialog {
         TextView t=new TextView(context);
         t.setGravity(Gravity.CENTER);
         t.setTextColor(Color.WHITE);
-        t.setText("加载中...");
+        t.setText("请等待...");
         t.setTextSize(12);
         t.setPadding(0, 0, 0, DisplayUtil.dip2px(context, 15));
         t.setLayoutParams(params);

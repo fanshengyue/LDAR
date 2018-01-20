@@ -15,8 +15,8 @@ import butterknife.ButterKnife;
  */
 
 public class ReviewActivity extends BaseActivity implements View.OnClickListener{
-    @BindView(R.id.bt_version)
-    Button btVersion;
+    @BindView(R.id.bt_plan)
+    Button btPlan;
     @BindView(R.id.bt_factory)
     Button btFactory;
     @BindView(R.id.bt_department)
@@ -39,7 +39,7 @@ public class ReviewActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initListener(){
-        btVersion.setOnClickListener(this);
+        btPlan.setOnClickListener(this);
         btChildArea.setOnClickListener(this);
         btDepartment.setOnClickListener(this);
         btDevice.setOnClickListener(this);
@@ -52,8 +52,8 @@ public class ReviewActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bt_version:
-                //版本
+            case R.id.bt_plan:
+                //检测计划
                 break;
             case R.id.bt_factory:
                 //厂区

@@ -36,7 +36,9 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="12dp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:editable="false"
+            android:focusable="false"/>
     </RelativeLayout>
 
 </LinearLayout>

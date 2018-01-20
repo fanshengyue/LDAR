@@ -47,6 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/tv_floor"
                         android:gravity="center"
+                        android:digits="0123456789."
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -82,6 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/tv_distance"
                         android:gravity="center"
+                        android:digits="0123456789."
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -107,23 +109,29 @@
                     <LinearLayout
                         android:id="@+id/ll_loc_button"
                         android:layout_width="@dimen/dimen_dp_100"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
                         android:orientation="horizontal"
                         android:layout_alignParentRight="true">
                         <Button
                             android:id="@+id/bt_loc_A"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:text="A"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:textColor="@color/font_text"
+                            android:background="@drawable/bg_button_nomal"
+                            android:layout_marginRight="@dimen/dimen_dp_5"/>
                         <Button
                             android:id="@+id/bt_loc_B"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="B"
+                            android:gravity="center"
                             android:layout_weight="1"
-                            android:gravity="center"/>
+                            android:textColor="@color/font_text"
+                            android:background="@drawable/bg_button_nomal"
+                            android:layout_marginLeft="@dimen/dimen_dp_5"/>
                     </LinearLayout>
 
                     <EditText
@@ -156,11 +164,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
                     <Button
                         android:id="@+id/bt_direction"
                         android:layout_width="@dimen/dimen_dp_80"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:textColor="@color/font_text"
+                        android:background="@drawable/bg_button_nomal"
                         android:text="@string/please_select"/>
                 </LinearLayout>
             </LinearLayout>
@@ -194,24 +205,38 @@
                         <Button
                             android:id="@+id/bt_height_zero"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/dimen_dp_40"
                             android:layout_weight="1"
                             android:text="0"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:textColor="@color/font_text"
+                            android:background="@drawable/bg_button_nomal"/>
+                        <View
+                            android:layout_width="@dimen/dimen_dp_10"
+                            android:layout_height="match_parent">
+                        </View>
                         <Button
                             android:id="@+id/bt_height_one"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/dimen_dp_40"
                             android:text="1"
                             android:layout_weight="1"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:textColor="@color/font_text"
+                            android:background="@drawable/bg_button_nomal"/>
+                        <View
+                            android:layout_width="@dimen/dimen_dp_10"
+                            android:layout_height="match_parent">
+                        </View>
                         <Button
                             android:id="@+id/bt_height_two"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="@dimen/dimen_dp_40"
                             android:text="2"
                             android:layout_weight="1"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:textColor="@color/font_text"
+                            android:background="@drawable/bg_button_nomal"/>
                     </LinearLayout>
                     <TextView
                         android:id="@+id/tv_height_h"
@@ -226,76 +251,77 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/tv_height_h"
                         android:gravity="center"
+                        android:digits="0123456789."
                         />
                 </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_50"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="@dimen/dimen_dp_10"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
                     android:gravity="center"
                     android:text="*"
                     android:textColor="@color/font_text3"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
                     android:text="设备信息:"
                     android:gravity="center"
                     android:layout_weight="4"/>
                 <EditText
                     android:id="@+id/et_equip"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_50"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="@dimen/dimen_dp_10"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
                     android:gravity="center"
                     android:text="*"
                     android:textColor="@color/font_text3"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
                     android:text="物质信息:"
                     android:gravity="center"
                     android:layout_weight="4"/>
                 <EditText
                     android:id="@+id/et_material"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_50"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="@dimen/dimen_dp_10"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
                     android:gravity="center"
                     android:text="*"
                     android:textColor="@color/font_text3"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
                     android:text="PID 图 号:"
                     android:gravity="center"
                     android:layout_weight="4"/>
                 <EditText
                     android:id="@+id/et_pid"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
 

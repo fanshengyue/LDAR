@@ -14,8 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lm.ldar.R;
+import com.lm.ldar.entity.ImageInfoEntity;
+import com.lm.ldar.util.IsNullOrEmpty;
+import com.lm.ldar.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,7 +87,19 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
     Button btNextStep;
     private String image_name;
     private String image_path;
-    private String direction;
+
+    /**
+     * 本页面信息
+     * @param savedInstanceState
+     */
+    private String location;//位置
+    private String direction;//方向
+    private String equip;//设备信息
+    private String material;//物质信息
+    private String pid;//PID图号
+    private String distance;//距离
+    private String floor;//楼层
+    private String height;//高度
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,6 +125,10 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
         btHeightTwo.setOnClickListener(this);
         btLocA.setOnClickListener(this);
         btLocB.setOnClickListener(this);
+
+        Util.EditDigitalListener(etFloor);
+        Util.EditDigitalListener(etHeight);
+        Util.EditDigitalListener(etDistance);
     }
 
 
@@ -116,10 +136,41 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_next_step:
-                Intent intent = new Intent(ImageInfoActivity.this, DrawPointActivity.class);
-                intent.putExtra("image_name", image_name);
-                intent.putExtra("image_path", image_path);
-                startActivity(intent);
+                floor=etFloor.getText().toString();
+                distance=etDistance.getText().toString();
+                location=etLocation.getText().toString();
+                direction=etDistance.getText().toString();
+                height=etHeight.getText().toString();
+                equip=etEquip.getText().toString();
+                material=etMaterial.getText().toString();
+                pid=etPid.getText().toString();
+
+                if(isNotNull(floor,"楼层")){
+                    if(isNotNull(direction,"方向")){
+                        if(isNotNull(height,"高度")){
+                            if(isNotNull(equip,"设备信息")){
+                                if(isNotNull(material,"物质信息")){
+                                    if(isNotNull(pid,"PID图号")){
+                                        ImageInfoEntity entity=new ImageInfoEntity();
+                                        entity.setFloor(floor);
+                                        entity.setDistance(distance);
+                                        entity.setLocation(location);
+                                        entity.setDirection(direction);
+                                        entity.setHeight(height);
+                                        entity.setEquip(equip);
+                                        entity.setMaterial(material);
+                                        entity.setPid(pid);
+                                        Intent intent = new Intent(ImageInfoActivity.this, DrawPointActivity.class);
+                                        intent.putExtra("image_name", image_name);
+                                        intent.putExtra("image_path", image_path);
+                                        intent.putExtra("image_info",entity);
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 break;
             case R.id.bt_last_step:
                 finish();
@@ -129,22 +180,42 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.bt_height_zero:
                 etHeight.setText("0");
+                height="0";
                 break;
             case R.id.bt_height_one:
                 etHeight.setText("1");
+                height="1";
                 break;
             case R.id.bt_height_two:
                 etHeight.setText("2");
+                height="2";
                 break;
             case R.id.bt_loc_A:
                 etLocation.setText("A");
+                location="A";
                 break;
             case R.id.bt_loc_B:
                 etLocation.setText("B");
+                location="B";
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 不能为空
+     * @param name
+     * @param str
+     * @return
+     */
+    private boolean isNotNull(String name,String str){
+        boolean isNull=true;
+        if(IsNullOrEmpty.isEmpty(name)){
+            isNull=false;
+            Toast.makeText(ImageInfoActivity.this,str+"不能为空",Toast.LENGTH_SHORT).show();
+        }
+        return isNull;
     }
 
     /**

@@ -53,12 +53,14 @@
                     <Button
                         android:id="@+id/bt_version"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
                         android:layout_weight="1"
                         android:text="@string/please_select"
                         android:gravity="center"
                         android:drawableRight="@drawable/arrow_down"
-                        android:textColor="@color/font_text2"
+                        android:textColor="@color/font_text"
+                        android:background="@drawable/bg_button_nomal"
+                        android:paddingRight="@dimen/dimen_dp_10"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -82,12 +84,14 @@
                     <Button
                         android:id="@+id/bt_factory"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
                         android:layout_weight="1"
                         android:text="@string/please_select"
                         android:gravity="center"
                         android:drawableRight="@drawable/arrow_down"
-                        android:textColor="@color/font_text2"/>
+                        android:textColor="@color/font_text"
+                        android:paddingRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_button_nomal"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -110,12 +114,14 @@
                     <Button
                         android:id="@+id/bt_department"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
                         android:layout_weight="1"
                         android:text="@string/please_select"
                         android:gravity="center"
                         android:drawableRight="@drawable/arrow_down"
-                        android:textColor="@color/font_text2"/>
+                        android:textColor="@color/font_text"
+                        android:background="@drawable/bg_button_nomal"
+                        android:paddingRight="@dimen/dimen_dp_10"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,12 +144,15 @@
                     <Button
                         android:id="@+id/bt_device"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
                         android:layout_weight="1"
                         android:text="@string/please_select"
                         android:gravity="center"
                         android:drawableRight="@drawable/arrow_down"
-                        android:textColor="@color/font_text2"/>
+                        android:textColor="@color/font_text"
+                        android:background="@drawable/bg_button_nomal"
+                        android:paddingRight="@dimen/dimen_dp_10"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,12 +175,14 @@
                     <Button
                         android:id="@+id/bt_child_area"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
                         android:layout_weight="1"
                         android:text="@string/please_select"
                         android:gravity="center"
                         android:drawableRight="@drawable/arrow_down"
-                        android:textColor="@color/font_text2"/>
+                        android:textColor="@color/font_text"
+                        android:paddingRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_button_nomal"/>
                 </LinearLayout>
                 <Button
                     android:id="@+id/bt_download"

@@ -77,21 +77,21 @@ public class PictureTagView extends RelativeLayout implements OnEditorActionList
     public void setStatus(Status status){
         switch(status){
 
-            case Normal:
-                tvPictureTagLabel.setVisibility(View.VISIBLE);
-                etPictureTagLabel.clearFocus();
-                tvPictureTagLabel.setText(etPictureTagLabel.getText());
-                etPictureTagLabel.setVisibility(View.GONE);
-                //隐藏键盘
-                imm.hideSoftInputFromWindow(etPictureTagLabel.getWindowToken() , 0);
-                break;
-            case Edit:
-                tvPictureTagLabel.setVisibility(View.GONE);
-                etPictureTagLabel.setVisibility(View.VISIBLE);
-                etPictureTagLabel.requestFocus();
-                //弹出键盘
-                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-                break;
+//            case Normal:
+//                tvPictureTagLabel.setVisibility(View.VISIBLE);
+//                etPictureTagLabel.clearFocus();
+//                tvPictureTagLabel.setText(etPictureTagLabel.getText());
+//                etPictureTagLabel.setVisibility(View.GONE);
+//                //隐藏键盘
+//                imm.hideSoftInputFromWindow(etPictureTagLabel.getWindowToken() , 0);
+//                break;
+//            case Edit:
+//                tvPictureTagLabel.setVisibility(View.GONE);
+//                etPictureTagLabel.setVisibility(View.VISIBLE);
+//                etPictureTagLabel.requestFocus();
+//                //弹出键盘
+//                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+//                break;
             case LongClick:
                 //长按删除(隐藏)
                 loTag.setVisibility(GONE);

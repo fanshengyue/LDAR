@@ -83,8 +83,8 @@
     <color name="second_color">#2d7fcc</color>
     <!--标识/功能颜色-->
     <color name="tag">#ff7570</color>
-    <!--发现评论背景色-->
-    <color name="findcommentbg">#f0f0f0</color>
+    <!--按钮背景色-->
+    <color name="bg_normal_button">#f0f0f0</color>
     <!--透明色-->
     <color name="no_color">#00000000</color>
 
