@@ -27,7 +27,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Number = new Property(1, String.class, "number", false, "NUMBER");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
-        public final static Property Create_time = new Property(3, String.class, "createtime", false, "CREATE_TIME");
+        public final static Property Createtime = new Property(3, String.class, "createtime", false, "CREATETIME");
         public final static Property Valid = new Property(4, int.class, "valid", false, "VALID");
         public final static Property Eid = new Property(5, int.class, "eid", false, "EID");
     };
@@ -47,7 +47,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"NUMBER\" TEXT NOT NULL," + // 1: number
                 "\"NAME\" TEXT NOT NULL," + // 2: name
-                "\"CREATE_TIME\" TEXT," + //3.create_time
+                "\"CREATETIME\" TEXT," + //3.createtime
                 "\"VALID\" INTEGER," + //4.valid
                 "\"EID\" INTEGER);");//5.eid
     }
@@ -64,7 +64,7 @@ public class FactoryDao extends AbstractDao<Factory, Long> {
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
                 cursor.getString(offset + 1), // number
                 cursor.getString(offset + 2), // name
-                cursor.getString(offset + 3), // create_time
+                cursor.getString(offset + 3), // createtime
                 cursor.getInt(offset + 4),// valid
                 cursor.getInt(offset + 5)// eid
         );

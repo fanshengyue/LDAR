@@ -39,7 +39,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig workplanDaoConfig;
     private final DaoConfig departmentDaoConfig;
     private final DaoConfig pictureversionDaoConfig;
-    private final DaoConfig pictureDaoConfig;
+    //private final DaoConfig pictureDaoConfig;
 
     private final UserDao userDao;
     private final EnterpriseDao enterpriseDao;
@@ -51,7 +51,7 @@ public class DaoSession extends AbstractDaoSession {
     private final WorkplanDao workplanDao;
     private final DepartmentDao departmentDao;
     private final PictureversionDao pictureversionDao;
-    private final PictureDao pictureDao;
+    //private final PictureDao pictureDao;
 
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -87,8 +87,8 @@ public class DaoSession extends AbstractDaoSession {
         pictureversionDaoConfig = daoConfigMap.get(PictureversionDao.class).clone();
         pictureversionDaoConfig.initIdentityScope(type);
         // 图片
-        pictureDaoConfig = daoConfigMap.get(PictureDao.class).clone();
-        pictureDaoConfig.initIdentityScope(type);
+//        pictureDaoConfig = daoConfigMap.get(PictureDao.class).clone();
+//        pictureDaoConfig.initIdentityScope(type);
 
         userDao = new UserDao(userDaoConfig, this);
         enterpriseDao = new EnterpriseDao(enterpriseDaoConfig, this);
@@ -100,7 +100,7 @@ public class DaoSession extends AbstractDaoSession {
         workplanDao = new WorkplanDao(workplanDaoConfig, this);
         departmentDao = new DepartmentDao(departmentDaoConfig, this);
         pictureversionDao = new PictureversionDao(pictureversionDaoConfig,this);
-        pictureDao = new PictureDao(pictureDaoConfig,this);
+//        pictureDao = new PictureDao(pictureDaoConfig,this);
 
         registerDao(User.class, userDao);
         registerDao(Enterprise.class, enterpriseDao);
@@ -112,7 +112,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(Workplan.class, workplanDao);
         registerDao(Department.class, departmentDao);
         registerDao(Pictureversion.class,pictureversionDao);
-        registerDao(Picture.class,pictureDao);
+//        registerDao(Picture.class,pictureDao);
     }
 
     public void clear() {
@@ -126,7 +126,7 @@ public class DaoSession extends AbstractDaoSession {
         workplanDaoConfig.clearIdentityScope();
         departmentDaoConfig.clearIdentityScope();
         pictureversionDaoConfig.clearIdentityScope();
-        pictureDaoConfig.clearIdentityScope();
+//        pictureDaoConfig.clearIdentityScope();
     }
 
     public UserDao getUserDao() {
@@ -169,7 +169,7 @@ public class DaoSession extends AbstractDaoSession {
         return pictureversionDao;
     }
 
-    public PictureDao getPictureDao() {
-        return pictureDao;
-    }
+//    public PictureDao getPictureDao() {
+//        return pictureDao;
+//    }
 }
