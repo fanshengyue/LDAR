@@ -48,6 +48,7 @@ public class BaseActivity extends Activity {
     public WorkplanDao workplanDao;
     public DepartmentDao departmentDao;
 
+
     public Long userId;//用户id
     public Long epId;//企业id
 
