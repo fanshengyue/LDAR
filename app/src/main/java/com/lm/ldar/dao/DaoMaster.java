@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
+import com.lm.ldar.entity.Device;
 import com.lm.ldar.entity.Factory;
 
 import org.greenrobot.greendao.AbstractDaoMaster;
@@ -26,6 +27,14 @@ public class DaoMaster extends AbstractDaoMaster {
         UserDao.createTable(db, ifNotExists);
         EnterpriseDao.createTable(db, ifNotExists);
         FactoryDao.createTable(db,ifNotExists);
+        AreaDao.createTable(db,ifNotExists);
+        DeviceDao.createTable(db,ifNotExists);
+        NamerulesDao.createTable(db,ifNotExists);
+        CtypeDao.createTable(db,ifNotExists);
+        WorkplanDao.createTable(db,ifNotExists);
+        DepartmentDao.createTable(db,ifNotExists);
+        PictureversionDao.createTable(db,ifNotExists);
+        PictureDao.createTable(db,ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -33,6 +42,14 @@ public class DaoMaster extends AbstractDaoMaster {
         UserDao.dropTable(db, ifExists);
         EnterpriseDao.dropTable(db, ifExists);
         FactoryDao.createTable(db,ifExists);
+        AreaDao.createTable(db,ifExists);
+        DeviceDao.createTable(db,ifExists);
+        NamerulesDao.createTable(db,ifExists);
+        CtypeDao.createTable(db,ifExists);
+        WorkplanDao.createTable(db,ifExists);
+        DepartmentDao.createTable(db,ifExists);
+        PictureversionDao.createTable(db,ifExists);
+        PictureDao.createTable(db,ifExists);
     }
 
     /**
@@ -54,6 +71,14 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(UserDao.class);
         registerDaoClass(EnterpriseDao.class);
         registerDaoClass(FactoryDao.class);
+        registerDaoClass(AreaDao.class);
+        registerDaoClass(DeviceDao.class);
+        registerDaoClass(NamerulesDao.class);
+        registerDaoClass(CtypeDao.class);
+        registerDaoClass(WorkplanDao.class);
+        registerDaoClass(DepartmentDao.class);
+        registerDaoClass(PictureversionDao.class);
+        registerDaoClass(PictureDao.class);
     }
 
     public DaoSession newSession() {

@@ -17,8 +17,11 @@ import android.widget.Toast;
 
 import com.lm.ldar.R;
 import com.lm.ldar.entity.ImageInfoEntity;
+import com.lm.ldar.entity.Picture;
+import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.ImageUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
+import com.lm.ldar.util.Util;
 import com.lm.ldar.view.PictureTagLayout;
 
 import butterknife.BindView;
@@ -157,12 +160,57 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
      * @param name
      */
     public void saveView(View view, String name) {
-        dialog.show();
         Bitmap bitmap = ImageUtil.convertViewToBitmap(view);
         if (bitmap != null) {
             ImageUtil.saveBitmap(DrawPointActivity.this, bitmap, image_path, name);
         }
+        if(entity!=null){
+            Picture picture=new Picture();
+            picture.setNumber("");
+            picture.setStatus("");
+            picture.setElementname("");
+            picture.setName(image_path + image_name + ".jpg");
+            picture.setCreatetime(Util.getCurrentTime());
+            picture.setDeviceinfo(entity.getEquip());
+            picture.setMaterial(entity.getMaterial());
+            picture.setPosition(getPosition(entity));
+            picture.setDid(7);
+            picture.setAid(13);
+            picture.setEid(5);
+            picture.setPidnumber(entity.getPid());
+            picture.setPvid(2);
+            picture.setSketch(image_path+"c_"+image_name+".jpg");
+            DaoUtil.addPicture(pictureDao,picture);
+        }
+        ImageInfoActivity.isFinish=true;
+        InputtingActivity.isCamera=true;
         dialog.dismiss();
+        finish();
+    }
+
+    /**
+     * 拼接Position
+     * @param imageInfoEntity
+     * @return
+     */
+    private String getPosition(ImageInfoEntity imageInfoEntity){
+        String position="";
+        if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getFloor())){
+            position=position+imageInfoEntity.getFloor();
+        }
+        if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getDistance())){
+            position=position+imageInfoEntity.getDistance();
+        }
+        if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getLocation())){
+            position=position+imageInfoEntity.getLocation();
+        }
+        if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getDirection())){
+            position=position+imageInfoEntity.getDirection();
+        }
+        if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getHeight())){
+            position=position+imageInfoEntity.getHeight();
+        }
+        return position;
     }
 
     @Override
@@ -173,9 +221,11 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
                 tagview.removeAllViews();
                 break;
             case R.id.bt_save:
+                dialog.show();
                 saveView(tagview, "c_" + image_name + ".jpg");
                 break;
             case R.id.bt_last_step:
+                ImageInfoActivity.isFinish=false;
                 finish();
                 break;
             case R.id.ll_more:

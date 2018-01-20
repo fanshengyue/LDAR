@@ -19,14 +19,18 @@ import com.lm.ldar.R;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Global;
+import com.lm.ldar.entity.Picture;
+import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
 import com.lm.ldar.view.MyAlertDialog;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -45,8 +49,6 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
     public final static int STAKE_PHOTO_RESULT_CODE = 200;
     @BindView(R.id.bt_inputting)
     Button btInputting;
-    @BindView(R.id.bt_test)
-    Button btTest;
     @BindView(R.id.bt_version)
     Button btVersion;
     @BindView(R.id.bt_factory)
@@ -65,6 +67,8 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
     private String image_name;//图片名字
     private String image_path;//文件夹路径
 
+    public static boolean isCamera=false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +78,6 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initListener() {
-        btTest.setOnClickListener(this);
         btInputting.setOnClickListener(this);
         btVersion.setOnClickListener(this);
         btChildArea.setOnClickListener(this);
@@ -112,13 +115,26 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.bt_upload:
                 //上传
-                break;
-            case R.id.bt_test:
-                HashMap<String, Object> params = new HashMap<>();
-                params.put("name", "123456");
-                File file = new File(Global.IMAGE_PATH_TEST);
-                if (file != null) {
-                    uploadFile("http://192.168.1.14:8080/LDAR2.0/app-insertpicture.action", params, file);
+                List<Picture>pictureList=DaoUtil.getPictureList(pictureDao,epId);
+                if(pictureList!=null&&pictureList.size()>0){
+                    for(Picture picture:pictureList){
+                        File[] files=new File[2];
+                        files[0]=new File(picture.getName());
+                        files[1]=new File(picture.getSketch());
+                        HashMap<String,String> parmas=new HashMap<>();
+                        parmas.put("name",picture.getName());
+                        parmas.put("createtime",picture.getCreatetime());
+                        parmas.put("deviceinfo",picture.getDeviceinfo());
+                        parmas.put("material",picture.getMaterial());
+                        parmas.put("position",picture.getPosition());
+                        parmas.put("did",picture.getDid()+"");
+                        parmas.put("aid",picture.getAid()+"");
+                        parmas.put("eid",picture.getEid()+"");
+                        parmas.put("pidnumber",picture.getPidnumber());
+                        parmas.put("pvid",picture.getPidnumber());
+                        parmas.put("sketch",picture.getSketch());
+                        uploadFiles(urlManager.uploadUrl(),parmas,files);
+                    }
                 }
                 break;
             default:
@@ -126,9 +142,17 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void uploadFile(String url, Map<String, Object> map, File file) {
+
+    /**
+     * 上传一组图片
+     * @param url
+     * @param map
+     * @param files
+     */
+
+    private void uploadFiles(String url, Map<String, String> map, File[] files) {
         dialog.show();
-        OkhttpFactory.getInstance().post_file(InputtingActivity.this, url, map, file, new SuccessfulCallback() {
+        OkhttpFactory.getInstance().post_files(InputtingActivity.this, url, map, files, new SuccessfulCallback() {
             @Override
             public void success(String str) {
                 dialog.dismiss();
@@ -153,7 +177,7 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
                 Log.i("上传失败：", str);
                 MyAlertDialog.showDialog(InputtingActivity.this, str);
             }
-        }, "image_file");
+        }, "image_fileList");
     }
 
     /**
@@ -165,20 +189,24 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
         if (SDState.equals(Environment.MEDIA_MOUNTED)) {
 
             String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + Global.IMAGE_DIR_NAME + "/";
-            File f = new File(imageFilePath);
-            if (!f.exists()) {
-                f.mkdirs();
-            }
+
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
             //根据当前时间生成图片的名称
             String timestamp = formatter.format(new Date()) + ".jpg";
-            File imageFile = new File(imageFilePath + timestamp);// 通过路径创建保存文件
+
             Enterprise epEntity = enterpriseDao.queryBuilder().where(EnterpriseDao.Properties.Id.eq(epId)).unique();
             if (epEntity != null) {
                 image_path = imageFilePath + epEntity.getEcode() + "/";
             } else {
                 image_path = imageFilePath;
             }
+            File f = new File(image_path);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+
+            File imageFile = new File(image_path + timestamp);// 通过路径创建保存文件
+
             image_name = formatter.format(new Date());
             Uri imageFileUri = Uri.fromFile(imageFile);// 获取文件的Uri
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -189,6 +217,14 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isCamera){
+            takePhoto();
+            isCamera=false;
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

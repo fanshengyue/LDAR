@@ -11,7 +11,7 @@ public class Picture implements Serializable {
 
     private Long id;//序号
     private String number;//图片编号
-    private String name;//图片名称
+    private String name;//图片名称(拍照完以后原始图片路径)
     private String status;//状态 0 未编辑 1 已编辑
     private String createtime;//创建时间
     private String deviceinfo;//装置信息
@@ -23,7 +23,7 @@ public class Picture implements Serializable {
     private String elementname;//图片重命名
     private String pidnumber;//PID图号
     private int pvid;//图像版本号
-    private String sketch;//草图地址
+    private String sketch;//草图地址(标点之后存储图片路径)
 
     public Picture() {
     }

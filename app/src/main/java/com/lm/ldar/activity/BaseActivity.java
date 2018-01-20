@@ -15,6 +15,7 @@ import com.lm.ldar.api.UrlManager;
 import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
+import com.lm.ldar.dao.PictureDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.util.LoginUserUtil;
@@ -32,6 +33,7 @@ public class BaseActivity extends Activity {
     public UserDao userDao;
     public EnterpriseDao enterpriseDao;
     public FactoryDao factoryDao;
+    public PictureDao pictureDao;
     public Long userId;//用户id
     public Long epId;//企业id
 
@@ -62,6 +64,7 @@ public class BaseActivity extends Activity {
         userDao=daoSession.getUserDao();
         enterpriseDao=daoSession.getEnterpriseDao();
         factoryDao=daoSession.getFactoryDao();
+        pictureDao=daoSession.getPictureDao();
     }
 
     public void initTitleBar(String title) {

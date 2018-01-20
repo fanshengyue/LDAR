@@ -53,6 +53,13 @@ public class UrlManager {
         return carrier+" "+model+"[Android_"+sysVersion+"]";
     }
     /**
+     * 上传地址
+     */
+    public String uploadUrl(){
+        return getBaseUrl()+"/app-insertpicture.action";
+    }
+
+    /**
      * 登录接口
      */
     public String getAppLogin(){
@@ -64,6 +71,7 @@ public class UrlManager {
      * @throws
      */
     public String getBaseUrl(){
-        return "http://123.57.10.249:8080/LDAR2.0";
+        return "http://192.168.1.14:8080/LDAR2.0";
+//        return "http://123.57.10.249:8080/LDAR2.0";
     }
 }

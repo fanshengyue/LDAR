@@ -9,6 +9,10 @@ import android.widget.EditText;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 /**
  * Created by fanshengyue on 2018/1/14.
@@ -85,5 +89,26 @@ public class Util {
                 }
             }
         });
+    }
+
+    //获取当前时间
+    public static String getCurrentTime(String format) {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
+        String currentTime = sdf.format(date);
+        return currentTime;
+    }
+
+    public static String getCurrentTime() {
+        return getCurrentTime("yyyy-MM-dd  HH:mm:ss");
+    }
+
+    //判断一个字符串是否是数字
+    public static boolean isNumeric(String str){
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+
+        return pattern.matcher(str).matches();
+
     }
 }

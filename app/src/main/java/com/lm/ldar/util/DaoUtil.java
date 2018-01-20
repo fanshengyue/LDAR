@@ -11,6 +11,7 @@ import com.lm.ldar.dao.DeviceDao;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.NamerulesDao;
+import com.lm.ldar.dao.PictureDao;
 import com.lm.ldar.dao.PictureversionDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.dao.WorkplanDao;
@@ -21,6 +22,7 @@ import com.lm.ldar.entity.Device;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.Namerules;
+import com.lm.ldar.entity.Picture;
 import com.lm.ldar.entity.Pictureversion;
 import com.lm.ldar.entity.User;
 import com.lm.ldar.entity.Workplan;
@@ -264,6 +266,24 @@ public class DaoUtil {
                 pictureversionDao.insert(pictureversion);
             }
         }
+    }
+
+
+    /**
+     * 建档上传数据库(Picture表)
+     */
+    public static void addPicture(PictureDao pictureDao, Picture picture){
+        if(picture !=null){
+            pictureDao.insert(picture);
+        }
+    }
+
+    /**
+     * 根据Eid查询该企业待上传的图片
+     */
+    public static List<Picture> getPictureList(PictureDao pictureDao,Long eid){
+        List<Picture>pictureList=pictureDao.queryBuilder().where(PictureDao.Properties.Eid.eq(eid)).build().list();
+        return pictureList;
     }
 
 

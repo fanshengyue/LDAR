@@ -88,6 +88,8 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
     private String image_name;
     private String image_path;
 
+    public static boolean isFinish=false;//是否销毁此页面
+
     /**
      * 本页面信息
      * @param savedInstanceState
@@ -173,6 +175,7 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.bt_last_step:
+                InputtingActivity.isCamera=false;
                 finish();
                 break;
             case R.id.bt_direction:
@@ -365,5 +368,14 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFinish){
+            finish();
+            isFinish=false;
+        }
     }
 }

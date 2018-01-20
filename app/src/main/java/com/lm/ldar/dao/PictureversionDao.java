@@ -44,7 +44,6 @@ public class PictureversionDao extends AbstractDao<Pictureversion, Long> {
         public final static Property Type = new Property(7, int.class, "type", false, "TYPE");
     }
 
-    ;
 
     public PictureversionDao(DaoConfig config) {
         super(config);
