@@ -45,7 +45,7 @@ public class CtypeDao extends AbstractDao<Ctype, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CTYPE\" (" + //
                 "\"ID\" TEXT," + // 0: id
-                "\"DESCRIPTION\" TEXT,");//1.description
+                "\"DESCRIPTION\" TEXT);");//1.description
     }
 
     /** Drops the underlying database table. */
