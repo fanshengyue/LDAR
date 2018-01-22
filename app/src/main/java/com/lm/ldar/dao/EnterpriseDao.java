@@ -37,17 +37,19 @@ public class EnterpriseDao extends AbstractDao<Enterprise, Long> {
         public final static Property Epid = new Property(9, int.class, "epid", false, "EPID");
     };
 
-
     public EnterpriseDao(DaoConfig config) {
         super(config);
     }
+
     public EnterpriseDao(DaoConfig config, DaoSession daoSession) {
-        super(config,daoSession);
+        super(config, daoSession);
     }
 
-    /** Creates the underlying database table. */
+    /**
+     * Creates the underlying database table.
+     */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists? "IF NOT EXISTS ": "";
+        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"ENTERPRISE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"ECODE\" TEXT NOT NULL," + // 1: ecode
@@ -61,7 +63,9 @@ public class EnterpriseDao extends AbstractDao<Enterprise, Long> {
                 "\"EPID\" INTEGER);");//9.epid
     }
 
-    /** Drops the underlying database table. */
+    /**
+     * Drops the underlying database table.
+     */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"ENTERPRISE\"";
         db.execSQL(sql);
@@ -80,7 +84,6 @@ public class EnterpriseDao extends AbstractDao<Enterprise, Long> {
                 cursor.getInt(offset + 7),// nid
                 cursor.getInt(offset + 8),// ppid
                 cursor.getInt(offset + 9)// epid
-
         );
         return entity;
     }
@@ -120,7 +123,7 @@ public class EnterpriseDao extends AbstractDao<Enterprise, Long> {
         stmt.bindLong(7, entity.getValid());
         stmt.bindLong(8, entity.getNid());
         stmt.bindLong(9, entity.getPpid());
-        stmt.bindLong(10,entity.getEpid());
+        stmt.bindLong(10, entity.getEpid());
     }
 
     @Override
@@ -139,7 +142,7 @@ public class EnterpriseDao extends AbstractDao<Enterprise, Long> {
         stmt.bindLong(7, entity.getValid());
         stmt.bindLong(8, entity.getNid());
         stmt.bindLong(9, entity.getPpid());
-        stmt.bindLong(10,entity.getEpid());
+        stmt.bindLong(10, entity.getEpid());
     }
 
     @Override
@@ -150,7 +153,7 @@ public class EnterpriseDao extends AbstractDao<Enterprise, Long> {
 
     @Override
     protected Long getKey(Enterprise entity) {
-        if(entity != null) {
+        if (entity != null) {
             return entity.getId();
         } else {
             return null;
