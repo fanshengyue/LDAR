@@ -290,7 +290,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         }
         if(data!=null){
-            LoginUserListAdapter adapter=new LoginUserListAdapter(LoginActivity.this,data,daoSession);
+            LoginUserListAdapter adapter=new LoginUserListAdapter(LoginActivity.this,data);
             listView.setAdapter(adapter);
         }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

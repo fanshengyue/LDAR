@@ -349,6 +349,86 @@ public class OkhttpFactory extends NetworkFactory {
 		});
 
 	}
+
+
+	/**
+	 * 上传图片，一组两张图
+	 * @param context
+	 * @param url
+	 * @param map
+	 * @param
+	 * @param successfulCallback
+	 * @param failCallback
+	 */
+	public void uploadImages(final Context context,final String url, final Map<String, String> map,
+						   File fileName,File fileSketch,final SuccessfulCallback successfulCallback, final FailCallback failCallback,
+						   String file_name,String file_sketch) {
+		// form 表单形式上传
+		MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+
+		if (map != null) {
+			// map 里面是请求中所需要的 key 和 value
+			for (Map.Entry entry : map.entrySet()) {
+				if(entry.getKey()!=null&&!entry.getKey().equals("")){
+					requestBody.addFormDataPart(entry.getKey().toString(), entry.getValue().toString());
+				}
+			}
+		}
+		if(fileName != null){
+			// MediaType.parse() 里面是上传的文件类型。
+			RequestBody body = RequestBody.create(MediaType.parse("image/*"), fileName);
+			// 参数分别为， 请求key ，文件名称 ， RequestBody
+			requestBody.addFormDataPart(file_name, fileName.getName(), body);
+		}
+		if(fileSketch != null){
+			// MediaType.parse() 里面是上传的文件类型。
+			RequestBody body = RequestBody.create(MediaType.parse("image/*"), fileSketch);
+			// 参数分别为， 请求key ，文件名称 ， RequestBody
+			requestBody.addFormDataPart(file_sketch, fileName.getName(), body);
+		}
+
+		Request request = new Request.Builder().url(url).post(requestBody.build()).tag(context).build();
+		// readTimeout("请求超时时间" , 时间单位);
+		client.newBuilder().hostnameVerifier(new HostnameVerifier() {
+			@Override
+			public boolean verify(String hostname, SSLSession session) {
+				return true;//强制返回true，屏蔽掉https证书检查
+			}
+		}).readTimeout(30000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call,final IOException e) {
+				if(failCallback!=null){
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							failCallback.fail(e.getMessage());
+						}
+					});
+				}
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				if(successfulCallback!=null){
+
+					final	String result=response.body().string();
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								successfulCallback.success(result);
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			}
+		});
+
+	}
+
+
 	/**
 	 * 带参数的文件上传,多文件同时上传
 	 * @param context
@@ -360,7 +440,7 @@ public class OkhttpFactory extends NetworkFactory {
 	 */
 	public void post_files(final Context context,final String url, final Map<String, String> map,
 						  File[] files,final SuccessfulCallback successfulCallback, final FailCallback failCallback,
-						   String file_name) {
+						   String file_name,String file_c_name) {
 		// form 表单形式上传
 		MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
 

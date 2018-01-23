@@ -52,6 +52,9 @@
             android:screenOrientation="landscape"
             android:launchMode="singleTask"
             />
+        <activity
+            android:name=".activity.ImageListActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

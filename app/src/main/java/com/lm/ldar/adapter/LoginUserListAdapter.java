@@ -37,12 +37,10 @@ import butterknife.ButterKnife;
 public class LoginUserListAdapter extends BaseAdapter {
     private Activity activity;
     private List<LoginUserEntity> data;
-    private DaoSession daoSession;
 
-    public LoginUserListAdapter(Activity activity, List<LoginUserEntity> data,DaoSession daoSession) {
+    public LoginUserListAdapter(Activity activity, List<LoginUserEntity> data) {
         this.activity = activity;
         this.data = data;
-        this.daoSession=daoSession;
     }
 
     @Override

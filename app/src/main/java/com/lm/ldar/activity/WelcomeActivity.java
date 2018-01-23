@@ -19,10 +19,17 @@ import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.UserDao;
+import com.lm.ldar.entity.Area;
+import com.lm.ldar.entity.Ctype;
+import com.lm.ldar.entity.Department;
+import com.lm.ldar.entity.Device;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.LoginUserEntity;
+import com.lm.ldar.entity.Namerules;
+import com.lm.ldar.entity.Pictureversion;
 import com.lm.ldar.entity.User;
+import com.lm.ldar.entity.Workplan;
 import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
 import com.lm.ldar.util.JsonPaser;
@@ -52,18 +59,18 @@ public class WelcomeActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-//                        Intent intent=new Intent(WelcomeActivity.this, MainActivity.class);
-//                        startActivity(intent);
-//                        WelcomeActivity.this.finish();
-                        LoginUserEntity entity=userUtil.getLoginUserInfo();
-                        if(entity!=null&&!IsNullOrEmpty.isEmpty(entity.getUsername())&&!IsNullOrEmpty.isEmpty(entity.getPassword())){
-                            //自动登录
-                            startLogin(entity.getUsername(),entity.getPassword());
-                        }else{
-                            Intent intent=new Intent(WelcomeActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            WelcomeActivity.this.finish();
-                        }
+                        Intent intent=new Intent(WelcomeActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        WelcomeActivity.this.finish();
+//                        LoginUserEntity entity=userUtil.getLoginUserInfo();
+//                        if(entity!=null&&!IsNullOrEmpty.isEmpty(entity.getUsername())&&!IsNullOrEmpty.isEmpty(entity.getPassword())){
+//                            //自动登录
+//                            startLogin(entity.getUsername(),entity.getPassword());
+//                        }else{
+//                            Intent intent=new Intent(WelcomeActivity.this, LoginActivity.class);
+//                            startActivity(intent);
+//                            WelcomeActivity.this.finish();
+//                        }
 
                         break;
                     default:
@@ -102,7 +109,7 @@ public class WelcomeActivity extends BaseActivity {
                     if(!IsNullOrEmpty.isEmpty(data)){
                         try {
                             org.json.JSONObject jsonObject=new org.json.JSONObject(data);
-                            //用户
+                            // 用户
                             String str_user=jsonObject.optString("user");
                             if(!IsNullOrEmpty.isEmpty(str_user)){
                                 User user= JsonPaser.parseUser(str_user);
@@ -112,7 +119,7 @@ public class WelcomeActivity extends BaseActivity {
                                     DaoUtil.UpdateUser(userDao,user);
                                 }
                             }
-                            //企业
+                            // 企业
                             String str_enterprise=jsonObject.optString("enterprise");
                             if(!IsNullOrEmpty.isEmpty(str_enterprise)){
                                 Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
@@ -122,7 +129,7 @@ public class WelcomeActivity extends BaseActivity {
                                     DaoUtil.UpdateEnterprise(enterpriseDao,enterprise);
                                 }
                             }
-                            //厂区
+                            // 厂区
                             String str_fac=jsonObject.optString("factoryList");
                             if(!IsNullOrEmpty.isEmpty(str_fac)){
                                 List<Factory> factories=JsonPaser.parseFactory(str_fac);
@@ -132,7 +139,72 @@ public class WelcomeActivity extends BaseActivity {
                                     }
                                 }
                             }
-
+                            // 图片版本
+                            String str_picv = jsonObject.optString("pictureversionlist");
+                            if(!IsNullOrEmpty.isEmpty(str_picv)){
+                                List<Pictureversion> pictureversions = JsonPaser.parsePictureversion(str_picv);
+                                if(pictureversions!=null&&pictureversions.size()>0){
+                                    for (Pictureversion pictureversion:pictureversions){
+                                        DaoUtil.updatePictureversion(pictureversionDao,pictureversion);
+                                    }
+                                }
+                            }
+                            // 子区域
+                            String str_area = jsonObject.optString("areaList");
+                            if(!IsNullOrEmpty.isEmpty(str_area)){
+                                List<Area> areas = JsonPaser.parseArea(str_area);
+                                if(areas!=null&&areas.size()>0){
+                                    for(Area area:areas){
+                                        DaoUtil.updateArea(areaDao,area);
+                                    }
+                                }
+                            }
+                            // 装置
+                            String str_device = jsonObject.optString("deviceList");
+                            if(!IsNullOrEmpty.isEmpty(str_device)){
+                                List<Device> devices = JsonPaser.parseDevice(str_device);
+                                if(devices!=null&&devices.size()>0){
+                                    for (Device device:devices){
+                                        DaoUtil.updateDevice(deviceDao,device);
+                                    }
+                                }
+                            }
+                            // 命名规则
+                            String str_namerules = jsonObject.optString("nameRules");
+                            if(!IsNullOrEmpty.isEmpty(str_namerules)){
+                                Namerules namerules = JsonPaser.parseNamerules(str_namerules);
+                                if(namerules!=null){
+                                    DaoUtil.updateNamerules(namerulesDao,namerules);
+                                }
+                            }
+                            // 组件类型
+                            String str_ctype = jsonObject.optString("ctypeList");
+                            if(!IsNullOrEmpty.isEmpty(str_ctype)){
+                                List<Ctype> ctypes = JsonPaser.parseCtype(str_ctype);
+                                if(ctypes!=null&&ctypes.size()>0){
+                                    for (Ctype ctype:ctypes){
+                                        DaoUtil.updateCtype(ctypeDao,ctype);
+                                    }
+                                }
+                            }
+                            // 工作计划
+                            String str_workplan = jsonObject.optString("workplan");
+                            if(!IsNullOrEmpty.isEmpty(str_workplan)){
+                                Workplan workplan = JsonPaser.parseWorkplan(str_workplan);
+                                if(workplan!=null){
+                                    DaoUtil.updateWorkplan(workplanDao,workplan);
+                                }
+                            }
+                            // 部门列表
+                            String str_dep = jsonObject.optString("departmentList");
+                            if(!IsNullOrEmpty.isEmpty(str_dep)){
+                                List<Department> departments = JsonPaser.parseDepartment(str_dep);
+                                if(departments!=null&&departments.size()>0){
+                                    for (Department department:departments){
+                                        DaoUtil.updateDepartment(departmentDao,department);
+                                    }
+                                }
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

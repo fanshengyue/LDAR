@@ -8,21 +8,34 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.network.framework.FailCallback;
 import com.example.network.framework.SuccessfulCallback;
 import com.example.network.workUtils.OkhttpFactory;
 import com.lm.ldar.R;
+import com.lm.ldar.dao.AreaDao;
+import com.lm.ldar.dao.DepartmentDao;
+import com.lm.ldar.dao.DeviceDao;
 import com.lm.ldar.dao.EnterpriseDao;
+import com.lm.ldar.dao.FactoryDao;
+import com.lm.ldar.dao.PictureversionDao;
+import com.lm.ldar.entity.Area;
+import com.lm.ldar.entity.Department;
+import com.lm.ldar.entity.Device;
 import com.lm.ldar.entity.Enterprise;
+import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.Global;
 import com.lm.ldar.entity.Picture;
+import com.lm.ldar.entity.Pictureversion;
+import com.lm.ldar.entity.SelectEntity;
 import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
+import com.lm.ldar.util.ListDialog;
 import com.lm.ldar.view.MyAlertDialog;
+import com.lm.ldar.view.NoScrollListView;
 
 import java.io.File;
 import java.io.InputStream;
@@ -69,12 +82,20 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
 
     public static boolean isCamera=false;
 
+    private String vid;//版本id
+    private SelectEntity selectEntity;
+    private ListDialog listDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inputting);
         ButterKnife.bind(this);
+        init();
         initListener();
+    }
+    private void init(){
+        selectEntity=new SelectEntity();
+        listDialog=new ListDialog(InputtingActivity.this,selectEntity,daoSession);
     }
 
     private void initListener() {
@@ -97,30 +118,83 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.bt_version:
                 //版本
+                List<Pictureversion>versionList=pictureversionDao.queryBuilder().where(PictureversionDao.Properties.Eid.eq(epId)).build().list();
+                if(versionList!=null&&versionList.size()>0){
+                   vid=listDialog.VersionDialog(versionList,btVersion);
+                }else{
+                    Toast.makeText(InputtingActivity.this,"暂无版本数据",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.bt_factory:
                 //厂区
+                List<Factory>factoryList=factoryDao.queryBuilder().where(FactoryDao.Properties.Eid.eq(epId)).build().list();
+                if(factoryList!=null&&factoryList.size()>0){
+                    listDialog.FactoryDialog(factoryList);
+                    UpdateButtonState();
+                }else{
+                    Toast.makeText(InputtingActivity.this,"暂无厂区数据",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.bt_department:
                 //部门
+                if(selectEntity!=null){
+                    if(!IsNullOrEmpty.isEmpty(selectEntity.getFid())){
+                        List<Department>departmentList=departmentDao.queryBuilder().where(DepartmentDao.Properties.Fid.eq(selectEntity.getFid())).build().list();
+                        if(departmentList!=null&&departmentList.size()>0){
+                            listDialog.DepartmentDialog(departmentList);
+                            UpdateButtonState();
+                        }else{
+                            Toast.makeText(InputtingActivity.this,"暂无部门数据",Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(InputtingActivity.this,"请先选择厂区",Toast.LENGTH_SHORT).show();
+                    }
+                }
                 break;
             case R.id.bt_device:
                 //装置
+                if(selectEntity!=null){
+                    if(!IsNullOrEmpty.isEmpty(selectEntity.getDid())){
+                        List<Device>deviceList=deviceDao.queryBuilder().where(DeviceDao.Properties.Did.eq(selectEntity.getDid())).build().list();
+                        if(deviceList!=null&&deviceList.size()>0){
+                            listDialog.DeviceDialog(deviceList);
+                            UpdateButtonState();
+                        }else{
+                            Toast.makeText(InputtingActivity.this,"暂无装置数据",Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(InputtingActivity.this,"请先选择部门",Toast.LENGTH_SHORT).show();
+                    }
+                }
                 break;
             case R.id.bt_child_area:
                 //子区域
+                if(selectEntity!=null){
+                    if(!IsNullOrEmpty.isEmpty(selectEntity.getEid())){
+                        List<Area>areaList=areaDao.queryBuilder().where(AreaDao.Properties.Did.eq(selectEntity.getEid())).build().list();
+                        if(areaList!=null&&areaList.size()>0){
+                            listDialog.AreaDialog(areaList);
+                            UpdateButtonState();
+                        }else{
+                            Toast.makeText(InputtingActivity.this,"暂无子区域数据",Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(InputtingActivity.this,"请先选择装置",Toast.LENGTH_SHORT).show();
+                    }
+                }
                 break;
             case R.id.bt_see:
                 //查看
+                Intent intent=new Intent(InputtingActivity.this,ImageListActivity.class);
+                startActivity(intent);
                 break;
             case R.id.bt_upload:
                 //上传
                 List<Picture>pictureList=DaoUtil.getPictureList(pictureDao,epId);
                 if(pictureList!=null&&pictureList.size()>0){
                     for(Picture picture:pictureList){
-                        File[] files=new File[2];
-                        files[0]=new File(picture.getName());
-                        files[1]=new File(picture.getSketch());
+                        File fileName=new File(picture.getName());
+                        File fileSketch=new File(picture.getSketch());
                         HashMap<String,String> parmas=new HashMap<>();
                         parmas.put("name",picture.getName());
                         parmas.put("createtime",picture.getCreatetime());
@@ -133,7 +207,7 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
                         parmas.put("pidnumber",picture.getPidnumber());
                         parmas.put("pvid",picture.getPidnumber());
                         parmas.put("sketch",picture.getSketch());
-                        uploadFiles(urlManager.uploadUrl(),parmas,files);
+                        uploadFiles(urlManager.uploadUrl(),parmas,fileName,fileSketch);
                     }
                 }
                 break;
@@ -142,23 +216,61 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    private void UpdateButtonState(){
+        if(selectEntity!=null){
+            //厂区
+            if(!IsNullOrEmpty.isEmpty(selectEntity.getFname())){
+                btFactory.setText(selectEntity.getFname());
+            }else{
+                btFactory.setText(getString(R.string.please_select));
+            }
+            //部门
+            if(!IsNullOrEmpty.isEmpty(selectEntity.getDname())){
+                btDepartment.setText(selectEntity.getDname());
+            }else{
+                btDepartment.setText(getString(R.string.please_select));
+                if(!IsNullOrEmpty.isEmpty(selectEntity.getFname())){
+                    Toast.makeText(InputtingActivity.this,"请先选择厂区",Toast.LENGTH_SHORT).show();
+                }
+            }
+            //装置
+            if(!IsNullOrEmpty.isEmpty(selectEntity.getEname())){
+                btDevice.setText(selectEntity.getEname());
+            }else{
+                btDevice.setText(getString(R.string.please_select));
+                if(!IsNullOrEmpty.isEmpty(selectEntity.getEname())){
+                    Toast.makeText(InputtingActivity.this,"请先选择部门",Toast.LENGTH_SHORT).show();
+                }
+            }
+            //子区域
+            if(!IsNullOrEmpty.isEmpty(selectEntity.getAname())){
+                btChildArea.setText(selectEntity.getAname());
+            }else{
+                btChildArea.setText(getString(R.string.please_select));
+                if(!IsNullOrEmpty.isEmpty(selectEntity.getAname())){
+                    Toast.makeText(InputtingActivity.this,"请先选择装置",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 
     /**
      * 上传一组图片
      * @param url
      * @param map
-     * @param files
+     * @param
      */
 
-    private void uploadFiles(String url, Map<String, String> map, File[] files) {
+    private void uploadFiles(String url, Map<String, String> map, File fileName,File fileSketch) {
         dialog.show();
-        OkhttpFactory.getInstance().post_files(InputtingActivity.this, url, map, files, new SuccessfulCallback() {
+        OkhttpFactory.getInstance().uploadImages(InputtingActivity.this, url, map, fileName,fileSketch, new SuccessfulCallback() {
             @Override
             public void success(String str) {
                 dialog.dismiss();
                 if (IsNullOrEmpty.isEmpty(str)) {
                     return;
                 }
+
                 Log.i("返回值：-------------", str);
 
             }
@@ -177,7 +289,7 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
                 Log.i("上传失败：", str);
                 MyAlertDialog.showDialog(InputtingActivity.this, str);
             }
-        }, "image_fileList");
+        }, "file_name","file_sketch");
     }
 
     /**
@@ -216,6 +328,7 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
             Toast.makeText(this, getString(R.string.nosdcard), Toast.LENGTH_LONG).show();
         }
     }
+
 
     @Override
     protected void onResume() {

@@ -102,6 +102,14 @@ public class DaoUtil {
                         departmentDao.delete(department);
                     }
                 }
+                //删除Picture表
+                PictureDao pictureDao=daoSession.getPictureDao();
+                List<Picture> pictureList = pictureDao.queryBuilder().where(PictureDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
+                if(pictureList!=null&&pictureList.size()>0){
+                    for(Picture picture:pictureList){
+                        pictureDao.delete(picture);
+                    }
+                }
 
             }
 

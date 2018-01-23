@@ -20,6 +20,7 @@ import com.lm.ldar.dao.DeviceDao;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.NamerulesDao;
+import com.lm.ldar.dao.PictureDao;
 import com.lm.ldar.dao.PictureversionDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.dao.WorkplanDao;
@@ -47,6 +48,7 @@ public class BaseActivity extends Activity {
     public CtypeDao ctypeDao;
     public WorkplanDao workplanDao;
     public DepartmentDao departmentDao;
+    public PictureDao pictureDao;
 
 
     public Long userId;//用户id
@@ -86,6 +88,7 @@ public class BaseActivity extends Activity {
         ctypeDao = daoSession.getCtypeDao();
         workplanDao = daoSession.getWorkplanDao();
         departmentDao = daoSession.getDepartmentDao();
+        pictureDao=daoSession.getPictureDao();
     }
 
     public void initTitleBar(String title) {
