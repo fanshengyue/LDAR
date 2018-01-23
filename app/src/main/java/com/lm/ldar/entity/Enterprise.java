@@ -19,20 +19,20 @@ public class Enterprise implements Serializable {
     private int ppid;//图像参数设置ID
     private int epid;//标点信息参数ID
 
-    public Enterprise(){}
-    public Enterprise(Long id,String ecode,String ename,String legalperson,String industry,String createtime,
-                      int valid,int nid,int ppid,int epid){
-        this.id=id;
-        this.ecode=ecode;
-        this.ename=ename;
-        this.legalperson=legalperson;
-        this.industry=industry;
-        this.createtime=createtime;
-        this.valid=valid;
-        this.nid=nid;
-        this.ppid=ppid;
-        this.epid=epid;
+    public Enterprise(Long id, String ecode, String ename, String legalperson, String industry, String createtime, int valid, int nid, int ppid, int epid) {
+        this.id = id;
+        this.ecode = ecode;
+        this.ename = ename;
+        this.legalperson = legalperson;
+        this.industry = industry;
+        this.createtime = createtime;
+        this.valid = valid;
+        this.nid = nid;
+        this.ppid = ppid;
+        this.epid = epid;
     }
+
+    public Enterprise(){}
 
     public Long getId() {
         return id;

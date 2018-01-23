@@ -1,12 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <Button
-        android:id="@+id/bt_quit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/logout"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/dimen_dp_18"
+            android:textColor="@color/font_text"
+            android:layout_marginLeft="@dimen/dimen_dp_100"
+            android:layout_marginRight="@dimen/dimen_dp_100"
+            android:text="个人信息"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/lineColor"
+        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/dimen_dp_10">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="企 业 名 称 :"
+                    android:gravity="center"
+                    android:layout_weight="3"/>
+
+                <TextView
+                    android:id="@+id/tv_ename"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button_nomal"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/dimen_dp_10"
+                    android:textColor="@color/font_text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="组织机构码:"
+                    android:gravity="center"
+                    android:layout_weight="3"/>
+                <TextView
+                    android:id="@+id/tv_ecode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_button_nomal"
+                    android:textColor="@color/font_text"
+                    android:paddingRight="@dimen/dimen_dp_10"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="用    户    名 :"
+                    android:gravity="center"
+                    android:layout_weight="3"/>
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_button_nomal"
+                    android:textColor="@color/font_text"
+                    android:paddingRight="@dimen/dimen_dp_10"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="真 实 姓 名 :"
+                    android:gravity="center"
+                    android:layout_weight="3"/>
+                <TextView
+                    android:id="@+id/tv_truename"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_button_nomal"
+                    android:textColor="@color/font_text"
+                    android:paddingRight="@dimen/dimen_dp_10"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="手   机   号 :"
+                    android:gravity="center"
+                    android:layout_weight="3"/>
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_button_nomal"
+                    android:textColor="@color/font_text"
+                    android:paddingRight="@dimen/dimen_dp_10"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="邮         箱 :"
+                    android:gravity="center"
+                    android:layout_weight="3"/>
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_button_nomal"
+                    android:textColor="@color/font_text"
+                    android:paddingRight="@dimen/dimen_dp_10"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="行 业 类 型 :"
+                    android:gravity="center"
+                    android:layout_weight="3"/>
+                <TextView
+                    android:id="@+id/tv_industry"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_button_nomal"
+                    android:textColor="@color/font_text"
+                    android:paddingRight="@dimen/dimen_dp_10"
+                    />
+            </LinearLayout>
+            <Button
+                android:id="@+id/bt_quit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_40"
+                android:text="退出登录"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dimen_dp_20"
+                android:layout_marginLeft="@dimen/dimen_dp_60"
+                android:layout_marginRight="@dimen/dimen_dp_60"
+                android:background="@drawable/bg_border_button"/>
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>
