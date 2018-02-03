@@ -26,6 +26,8 @@
     <string name="next_step">下一步</string>
     <string name="see">查看</string>
     <string name="upload">上传</string>
+    <string name="no_image">暂无图片</string>
+
 
     <!--direction-->
     <string name="N">N</string>
@@ -45,6 +47,13 @@
     <string name="NW">NW</string>
     <string name="NNW">NNW</string>
 
+
+    <string name="header_hint_refresh_normal">下拉刷新</string>
+    <string name="header_hint_refresh_ready">松开后刷新</string>
+    <string name="header_hint_refresh_loading">Refreshing&#8230;</string>
+    <string name="header_hint_refresh_time">更新时间：</string>
+    <string name="footer_hint_load_normal">上拉加载更多</string>
+    <string name="footer_hint_load_ready">已加载全部</string>
     <!--下拉刷新，上拉加载 -->
     <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
     <string name="pull_to_refresh_pull_label">下拉刷新</string>

@@ -3,6 +3,7 @@ package com.lm.ldar.util;
 
 import android.app.Activity;
 
+import com.lm.ldar.dao.PictureDao;
 import com.lm.ldar.entity.Area;
 import com.lm.ldar.entity.Ctype;
 import com.lm.ldar.entity.Department;
@@ -10,6 +11,7 @@ import com.lm.ldar.entity.Device;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.Namerules;
+import com.lm.ldar.entity.PictureDownload;
 import com.lm.ldar.entity.Pictureversion;
 import com.lm.ldar.entity.User;
 import com.lm.ldar.entity.Workplan;
@@ -95,8 +97,8 @@ public class JsonPaser {
                     factory.setNumber(jsonObject.optString("number"));
                     factory.setName(jsonObject.optString("name"));
                     factory.setCreatetime(jsonObject.optString("createtime"));
-                    factory.setValid(jsonObject.getInt("valid"));
-                    factory.setEid(jsonObject.getInt("eid"));
+                    factory.setValid(jsonObject.optInt("valid"));
+                    factory.setEid(jsonObject.optInt("eid"));
                     factories.add(factory);
                 }
             }
@@ -120,13 +122,13 @@ public class JsonPaser {
                     JSONObject jsonObject = jsonArray.optJSONObject(i);
                     Pictureversion pictureversion = new Pictureversion();
                     pictureversion.setId(jsonObject.optLong("id"));
-                    pictureversion.setName(jsonObject.getString("name"));
-                    pictureversion.setIntroduction(jsonObject.getString("introduction"));
-                    pictureversion.setCreatetime(jsonObject.getString("createtime"));
-                    pictureversion.setEid(jsonObject.getInt("eid"));
-                    pictureversion.setUid(jsonObject.getInt("uid"));
-                    pictureversion.setPvid(jsonObject.getInt("pvid"));
-                    pictureversion.setType(jsonObject.getInt("type"));
+                    pictureversion.setName(jsonObject.optString("name"));
+                    pictureversion.setIntroduction(jsonObject.optString("introduction"));
+                    pictureversion.setCreatetime(jsonObject.optString("createtime"));
+                    pictureversion.setEid(jsonObject.optInt("eid"));
+                    pictureversion.setUid(jsonObject.optInt("uid"));
+                    pictureversion.setPvid(jsonObject.optInt("pvid"));
+                    pictureversion.setType(jsonObject.optInt("type"));
                     pictureversions.add(pictureversion);
                 }
             }
@@ -150,12 +152,12 @@ public class JsonPaser {
                     JSONObject jsonObject = jsonArray.optJSONObject(i);
                     Area area = new Area();
                     area.setId(jsonObject.optLong("id"));
-                    area.setNumber(jsonObject.getString("number"));
-                    area.setName(jsonObject.getString("name"));
-                    area.setCreatetime(jsonObject.getString("createtime"));
-                    area.setDid(jsonObject.getInt("did"));
-                    area.setEid(jsonObject.getInt("eid"));
-                    area.setValid(jsonObject.getInt("valid"));
+                    area.setNumber(jsonObject.optString("number"));
+                    area.setName(jsonObject.optString("name"));
+                    area.setCreatetime(jsonObject.optString("createtime"));
+                    area.setDid(jsonObject.optInt("did"));
+                    area.setEid(jsonObject.optInt("eid"));
+                    area.setValid(jsonObject.optInt("valid"));
                     areas.add(area);
                 }
             }
@@ -178,14 +180,14 @@ public class JsonPaser {
                     JSONObject jsonObject = jsonArray.optJSONObject(i);
                     Device device = new Device();
                     device.setId(jsonObject.optLong("id"));
-                    device.setNumber(jsonObject.getString("number"));
-                    device.setName(jsonObject.getString("name"));
-                    device.setCreatetime(jsonObject.getString("createtime"));
-                    device.setDid(jsonObject.getInt("did"));
-                    device.setEid(jsonObject.getInt("eid"));
-                    device.setProductiontime(jsonObject.getString("productiontime"));
-                    device.setValid(jsonObject.getInt("valid"));
-                    device.setSafeguard(jsonObject.getString("safeguard"));
+                    device.setNumber(jsonObject.optString("number"));
+                    device.setName(jsonObject.optString("name"));
+                    device.setCreatetime(jsonObject.optString("createtime"));
+                    device.setDid(jsonObject.optInt("did"));
+                    device.setEid(jsonObject.optInt("eid"));
+                    device.setProductiontime(jsonObject.optString("productiontime"));
+                    device.setValid(jsonObject.optInt("valid"));
+                    device.setSafeguard(jsonObject.optString("safeguard"));
                     devices.add(device);
                 }
             }
@@ -205,18 +207,18 @@ public class JsonPaser {
         if (!IsNullOrEmpty.isEmpty(content)) {
             JSONObject jsonObject = new JSONObject(content);
             namerules.setId(jsonObject.optLong("id"));
-            namerules.setEid(jsonObject.getInt("eid"));
-            namerules.setName(jsonObject.getString("name"));
-            namerules.setFamen(jsonObject.getString("famen"));
-            namerules.setBeng(jsonObject.getString("beng"));
-            namerules.setFalan(jsonObject.getString("falan"));
-            namerules.setYasuoji(jsonObject.getString("yasuoji"));
-            namerules.setJiaoban(jsonObject.getString("jiaoban"));
-            namerules.setXieya(jsonObject.getString("xieya"));
-            namerules.setLianjie(jsonObject.getString("lianjie"));
-            namerules.setKaikou(jsonObject.getString("kaikou"));
-            namerules.setCaiyang(jsonObject.getString("caiyang"));
-            namerules.setOther(jsonObject.getString("other"));
+            namerules.setEid(jsonObject.optInt("eid"));
+            namerules.setName(jsonObject.optString("name"));
+            namerules.setFamen(jsonObject.optString("famen"));
+            namerules.setBeng(jsonObject.optString("beng"));
+            namerules.setFalan(jsonObject.optString("falan"));
+            namerules.setYasuoji(jsonObject.optString("yasuoji"));
+            namerules.setJiaoban(jsonObject.optString("jiaoban"));
+            namerules.setXieya(jsonObject.optString("xieya"));
+            namerules.setLianjie(jsonObject.optString("lianjie"));
+            namerules.setKaikou(jsonObject.optString("kaikou"));
+            namerules.setCaiyang(jsonObject.optString("caiyang"));
+            namerules.setOther(jsonObject.optString("other"));
         }
         return namerules;
     }
@@ -231,12 +233,12 @@ public class JsonPaser {
         List<Ctype> ctypes = new ArrayList<>();
         if (!IsNullOrEmpty.isEmpty(content)) {
             JSONArray jsonArray = new JSONArray(content);
-            if (!IsNullOrEmpty.isEmpty(content)) {
+            if (jsonArray != null && jsonArray.length() > 0) {
                 for (int i = 0; i < jsonArray.length(); i++){
-                    JSONObject jsonObject = new JSONObject(content);
+                    JSONObject jsonObject = jsonArray.optJSONObject(i);
                     Ctype ctype = new Ctype();
-                    ctype.setId(jsonObject.getString("id"));
-                    ctype.setDescription(jsonObject.getString("description"));
+                    ctype.setId(jsonObject.optString("id"));
+                    ctype.setDescription(jsonObject.optString("description"));
                     ctypes.add(ctype);
                 }
             }
@@ -256,12 +258,12 @@ public class JsonPaser {
         if (!IsNullOrEmpty.isEmpty(content)) {
             JSONObject jsonObject = new JSONObject(content);
             workplan.setId(jsonObject.optLong("id"));
-            workplan.setName(jsonObject.getString("name"));
-            workplan.setEid(jsonObject.getInt("eid"));
-            workplan.setState(jsonObject.getInt("state"));
-            workplan.setNid(jsonObject.getInt("nid"));
-            workplan.setSid(jsonObject.getInt("sid"));
-            workplan.setPvid(jsonObject.getInt("pvid"));
+            workplan.setName(jsonObject.optString("name"));
+            workplan.setEid(jsonObject.optInt("eid"));
+            workplan.setState(jsonObject.optInt("state"));
+            workplan.setNid(jsonObject.optInt("nid"));
+            workplan.setSid(jsonObject.optInt("sid"));
+            workplan.setPvid(jsonObject.optInt("pvid"));
         }
         return workplan;
     }
@@ -276,17 +278,17 @@ public class JsonPaser {
         List<Department> departments = new ArrayList<>();
         if (!IsNullOrEmpty.isEmpty(content)) {
             JSONArray jsonArray = new JSONArray(content);
-            if (!IsNullOrEmpty.isEmpty(content)) {
+            if (jsonArray != null && jsonArray.length() > 0) {
                 for (int i = 0; i < jsonArray.length(); i++){
-                    JSONObject jsonObject = new JSONObject(content);
+                    JSONObject jsonObject = jsonArray.optJSONObject(i);
                     Department department = new Department();
                     department.setId(jsonObject.optLong("id"));
-                    department.setNumber(jsonObject.getString("number"));
-                    department.setName(jsonObject.getString("name"));
-                    department.setCreatetime(jsonObject.getString("createtime"));
-                    department.setFid(jsonObject.getInt("fid"));
-                    department.setEid(jsonObject.getInt("eid"));
-                    department.setValid(jsonObject.getInt("valid"));
+                    department.setNumber(jsonObject.optString("number"));
+                    department.setName(jsonObject.optString("name"));
+                    department.setCreatetime(jsonObject.optString("createtime"));
+                    department.setFid(jsonObject.optInt("fid"));
+                    department.setEid(jsonObject.optInt("eid"));
+                    department.setValid(jsonObject.optInt("valid"));
                     departments.add(department);
                 }
             }
@@ -294,6 +296,41 @@ public class JsonPaser {
         return departments;
     }
 
+
+    /**
+     * 解析下载图片数据
+     */
+    public static List<PictureDownload> getDownloadImgData(String content,int ischeck) throws JSONException {
+        List<PictureDownload>pictureList=new ArrayList<>();
+        if(!IsNullOrEmpty.isEmpty(content)){
+            JSONArray jsonArray=new JSONArray(content);
+            if(jsonArray != null && jsonArray.length() > 0){
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.optJSONObject(i);
+                    PictureDownload picture=new PictureDownload();
+                    picture.setId(jsonObject.optLong("id"));
+                    picture.setNumber(jsonObject.optString("number"));
+                    picture.setName(jsonObject.optString("name"));
+                    picture.setStatus(jsonObject.optString("status"));
+                    picture.setCreatetime(jsonObject.optString("createtime"));
+                    picture.setDeviceinfo(jsonObject.optString("deviceinfo"));
+                    picture.setMaterial(jsonObject.optString("material"));
+                    picture.setPosition(jsonObject.optString("position"));
+                    picture.setDid(jsonObject.optInt("did"));
+                    picture.setAid(jsonObject.optInt("aid"));
+                    picture.setEid(jsonObject.optInt("eid"));
+                    picture.setElementname(jsonObject.optString("elementname"));
+                    picture.setPidnumber(jsonObject.optString("pidnumber"));
+                    picture.setPvid(jsonObject.optInt("pvid"));
+                    picture.setSketch(jsonObject.optString("sketch"));
+                    picture.setIscheck(ischeck);
+                    pictureList.add(picture);
+                }
+            }
+        }
+        return pictureList;
+
+    }
 
 
 

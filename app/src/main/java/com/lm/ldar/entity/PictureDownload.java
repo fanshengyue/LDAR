@@ -20,15 +20,19 @@ public class PictureDownload implements Serializable {
     private int did;//装置ID
     private int aid;//区域ID
     private int eid;//企业ID
-    private String elementname;//图片重命名
+    private String elementname;//图片重命名(图片url,待拼接)
     private String pidnumber;//PID图号
     private int pvid;//图像版本号
     private String sketch;//草图地址
-
+    private int ischeck;//默认是0,0代表检测图片，1代表复测图片
+    private double latitude;//纬度
+    private double longitude;//经度
     public PictureDownload() {
     }
 
-    public PictureDownload(Long id, String number, String name, String status, String createtime, String deviceinfo, String material, String position, int did, int aid, int eid, String elementname, String pidnumber, int pvid, String sketch) {
+    public PictureDownload(Long id, String number, String name, String status, String createtime, String deviceinfo, String material,
+                           String position, int did, int aid, int eid, String elementname, String pidnumber, int pvid,
+                           String sketch,int ischeck,double latitude,double longitude) {
         this.id = id;
         this.number = number;
         this.name = name;
@@ -44,6 +48,25 @@ public class PictureDownload implements Serializable {
         this.pidnumber = pidnumber;
         this.pvid = pvid;
         this.sketch = sketch;
+        this.ischeck=ischeck;
+        this.latitude=latitude;
+        this.longitude=longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public Long getId() {
@@ -164,5 +187,13 @@ public class PictureDownload implements Serializable {
 
     public void setSketch(String sketch) {
         this.sketch = sketch;
+    }
+
+    public int getIscheck() {
+        return ischeck;
+    }
+
+    public void setIscheck(int ischeck) {
+        this.ischeck = ischeck;
     }
 }

@@ -24,11 +24,14 @@ public class Picture implements Serializable {
     private String pidnumber;//PID图号
     private int pvid;//图像版本号
     private String sketch;//草图地址(标点之后存储图片路径)
+    private double latitude;//纬度
+    private double longitude;//经度
 
     public Picture() {
     }
 
-    public Picture(Long id, String number, String name, String status, String createtime, String deviceinfo, String material, String position, int did, int aid, int eid, String elementname, String pidnumber, int pvid, String sketch) {
+    public Picture(Long id, String number, String name, String status, String createtime, String deviceinfo, String material, String position,
+                   int did, int aid, int eid, String elementname, String pidnumber, int pvid, String sketch,double latitude,double longitude) {
         this.id = id;
         this.number = number;
         this.name = name;
@@ -44,6 +47,24 @@ public class Picture implements Serializable {
         this.pidnumber = pidnumber;
         this.pvid = pvid;
         this.sketch = sketch;
+        this.latitude=latitude;
+        this.longitude=longitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public Long getId() {

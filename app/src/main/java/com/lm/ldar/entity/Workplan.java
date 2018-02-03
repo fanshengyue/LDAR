@@ -15,7 +15,7 @@ public class Workplan implements Serializable {
     private int state;//状态
     private int nid;//命名规则ID
     private int sid;//泄漏标准ID
-    private int pvid;//继承序号ID
+    private int pvid;//版本号ID
 
     public Workplan() {
     }

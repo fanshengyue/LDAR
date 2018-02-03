@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_background">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50">
+        <include
+            layout="@layout/titlebar_imagepager"/>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.lm.ldar.view.HackyViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black" />
+
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="5dp"
+        android:background="@color/transparent_background"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_dp_5"
+            android:textSize="@dimen/dimen_dp_18"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/dimen_dp_10"
+            android:layout_centerHorizontal="true"
+            />
+
+    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent_background"
+            android:gravity="center_vertical"
+            >
+            <TextView
+                android:id="@+id/tv_pictype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_dp_5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_dp_18"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

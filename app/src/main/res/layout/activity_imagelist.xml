@@ -4,18 +4,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/titlebar_top_layout"></include>
-
-    <com.lm.ldar.view.PullToRefreshView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/refresh_view">
-
-        <ListView
+        android:layout_height="match_parent">
+        <com.lm.ldar.view.XListView
             android:id="@+id/lv_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-        </ListView>
-    </com.lm.ldar.view.PullToRefreshView>
+            android:layout_height="match_parent">
+
+        </com.lm.ldar.view.XListView>
+        <LinearLayout
+            android:id="@+id/ll_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/iv_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/list_emty"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="@dimen/dimen_dp_10"
+                android:text="@string/no_image"
+                />
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>

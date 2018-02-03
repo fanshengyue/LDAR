@@ -12,6 +12,7 @@ import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.NamerulesDao;
 import com.lm.ldar.dao.PictureDao;
+import com.lm.ldar.dao.PictureDownloadDao;
 import com.lm.ldar.dao.PictureversionDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.dao.WorkplanDao;
@@ -23,6 +24,7 @@ import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.Namerules;
 import com.lm.ldar.entity.Picture;
+import com.lm.ldar.entity.PictureDownload;
 import com.lm.ldar.entity.Pictureversion;
 import com.lm.ldar.entity.User;
 import com.lm.ldar.entity.Workplan;
@@ -59,7 +61,9 @@ public class DaoUtil {
                 List<Factory> factories = factoryDao.queryBuilder().where(FactoryDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
                 if (factories != null && factories.size() > 0) {
                     for (Factory factory : factories) {
-                        factoryDao.delete(factory);
+                        if(factory!=null){
+                            factoryDao.delete(factory);
+                        }
                     }
                 }
                 // 删除图像版本
@@ -67,7 +71,10 @@ public class DaoUtil {
                 List<Pictureversion> pictureversions = pictureversionDao.queryBuilder().where(PictureversionDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
                 if(pictureversions!=null&&pictureversions.size()>0){
                     for(Pictureversion pictureversion:pictureversions){
-                        pictureversionDao.delete(pictureversion);
+                        if(pictureversion!=null){
+                            pictureversionDao.delete(pictureversion);
+                        }
+
                     }
                 }
                 // 删除子区域
@@ -75,7 +82,9 @@ public class DaoUtil {
                 List<Area> areas = areaDao.queryBuilder().where(AreaDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
                 if(areas!=null&&areas.size()>0){
                     for (Area area:areas){
-                        areaDao.delete(area);
+                        if(area!=null){
+                            areaDao.delete(area);
+                        }
                     }
                 }
                 // 删除装置
@@ -83,23 +92,33 @@ public class DaoUtil {
                 List<Device> devices = deviceDao.queryBuilder().where(DeviceDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
                 if(devices!=null&&devices.size()>0){
                     for (Device device:devices){
-                        deviceDao.delete(device);
+                        if(device!=null){
+                            deviceDao.delete(device);
+                        }
                     }
                 }
                 // 删除命名规则
                 NamerulesDao namerulesDao = daoSession.getNamerulesDao();
                 Namerules namerules = namerulesDao.queryBuilder().where(NamerulesDao.Properties.Eid.eq(ep_queryEntity.getId())).build().unique();
-                namerulesDao.delete(namerules);
+                if(namerules!=null){
+                    namerulesDao.delete(namerules);
+                }
+
                 // 删除工作计划
                 WorkplanDao workplanDao = daoSession.getWorkplanDao();
                 Workplan workplan = workplanDao.queryBuilder().where(WorkplanDao.Properties.Eid.eq(ep_queryEntity.getId())).build().unique();
-                workplanDao.delete(workplan);
+                if(workplan!=null){
+                    workplanDao.delete(workplan);
+                }
+
                 // 删除部门
                 DepartmentDao departmentDao = daoSession.getDepartmentDao();
                 List<Department> departments = departmentDao.queryBuilder().where(DepartmentDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
                 if (departments!=null&&departments.size()>0){
                     for (Department department:departments){
-                        departmentDao.delete(department);
+                        if(department!=null){
+                            departmentDao.delete(department);
+                        }
                     }
                 }
                 //删除Picture表
@@ -107,7 +126,9 @@ public class DaoUtil {
                 List<Picture> pictureList = pictureDao.queryBuilder().where(PictureDao.Properties.Eid.eq(ep_queryEntity.getId())).build().list();
                 if(pictureList!=null&&pictureList.size()>0){
                     for(Picture picture:pictureList){
-                        pictureDao.delete(picture);
+                        if(picture!=null){
+                            pictureDao.delete(picture);
+                        }
                     }
                 }
 
@@ -276,7 +297,6 @@ public class DaoUtil {
         }
     }
 
-
     /**
      * 建档上传数据库(Picture表)
      */
@@ -287,13 +307,89 @@ public class DaoUtil {
     }
 
     /**
-     * 根据Eid查询该企业待上传的图片
+     * 根据Aid查询该企业待上传的图片
      */
-    public static List<Picture> getPictureList(PictureDao pictureDao,Long eid){
-        List<Picture>pictureList=pictureDao.queryBuilder().where(PictureDao.Properties.Eid.eq(eid)).build().list();
+    public static List<Picture> getPictureList(PictureDao pictureDao,Long aid){
+        List<Picture>pictureList=pictureDao.queryBuilder().where(PictureDao.Properties.Aid.eq(aid)).build().list();
         return pictureList;
     }
 
+
+    /**
+     * 根据Aid删除该子区域内的图片表数据
+     */
+    public static void DeletePicListByAid(PictureDao pictureDao,Long aid){
+        List<Picture>pictureList=getPictureList(pictureDao,aid);
+        if(pictureList!=null){
+            for(Picture picture:pictureList){
+                if(picture!=null){
+                    pictureDao.delete(picture);
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新下载图片表
+     */
+    public static void updatePicDownload(PictureDownloadDao downloadDao, PictureDownload pictureDownload){
+        if(pictureDownload !=null){
+            PictureDownload query_download = downloadDao.queryBuilder().where(PictureDownloadDao.Properties.Id.eq(pictureDownload.getId())).unique();
+            if(query_download!=null){
+                downloadDao.update(pictureDownload);
+            }else{
+                downloadDao.insert(pictureDownload);
+            }
+        }
+    }
+    /**
+     * 更新建档图片表
+     */
+    public static void updatePicture(PictureDao pictureDao, Picture picture){
+        if(picture !=null){
+            Picture query_picture = pictureDao.queryBuilder().where(PictureDao.Properties.Id.eq(picture.getId())).unique();
+            if(query_picture!=null){
+                pictureDao.update(picture);
+            }else{
+                pictureDao.insert(picture);
+            }
+        }
+    }
+
+    /**
+     * 查询下载图片表的数据
+     */
+    public static List<PictureDownload>getDownloadPicList(PictureDownloadDao downloadDao,Long aid,int ischeck){
+        List<PictureDownload>pictureList=downloadDao.queryBuilder().where(PictureDownloadDao.Properties.Aid.eq(aid),PictureDownloadDao.Properties.ischeck.eq(ischeck)).build().list();
+        return pictureList;
+    }
+
+    /**
+     * 根据Aid删除该子区域内的图片表数据
+     */
+    public static void DeleteDownloadPicListByAid(PictureDownloadDao downloadDao,Long aid,int ischeck){
+        List<PictureDownload>pictureList=getDownloadPicList(downloadDao,aid,ischeck);
+        if(pictureList!=null){
+            for(PictureDownload picture:pictureList){
+                if(picture!=null){
+                    downloadDao.delete(picture);
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据wpid查询vid
+     */
+    public static int getVid(WorkplanDao workplanDao,Long wpid){
+        int vid = 0;
+        Workplan workplan = workplanDao.queryBuilder().where(WorkplanDao.Properties.Id.eq(wpid)).unique();
+        if(workplan!=null){
+            vid=workplan.getPvid();
+        }
+        return vid;
+
+    }
 
 
 }

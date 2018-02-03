@@ -16,8 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.lm.ldar.R;
+import com.lm.ldar.entity.Global;
 import com.lm.ldar.entity.ImageInfoEntity;
 import com.lm.ldar.entity.Picture;
+import com.lm.ldar.entity.SelectEntity;
 import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.ImageUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
@@ -66,7 +68,8 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
 
     private String image_name;
     private String image_path;
-
+    private String vid;//版本id
+    private SelectEntity selectEntity;
     private ImageInfoEntity entity;
 
     private boolean isOpen = false;//是否打开,默认关闭
@@ -77,9 +80,7 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawpoint);
         ButterKnife.bind(this);
-        image_name = getIntent().getStringExtra("image_name");
-        image_path = getIntent().getStringExtra("image_path");
-        entity = (ImageInfoEntity) getIntent().getSerializableExtra("image_info");
+        init();
         initListener();
         if (!IsNullOrEmpty.isEmpty(image_path) && !IsNullOrEmpty.isEmpty(image_name)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -146,6 +147,15 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
         });
     }
 
+    private void init(){
+        image_name = getIntent().getStringExtra("image_name");
+        image_path = getIntent().getStringExtra("image_path");
+        entity = (ImageInfoEntity) getIntent().getSerializableExtra("image_info");
+        vid=getIntent().getStringExtra("vid");
+        selectEntity= (SelectEntity) getIntent().getSerializableExtra("select");
+        tagview.ChangeTag("F");
+    }
+
     private void initListener() {
         btClear.setOnClickListener(this);
         btSave.setOnClickListener(this);
@@ -162,9 +172,9 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
     public void saveView(View view, String name) {
         Bitmap bitmap = ImageUtil.convertViewToBitmap(view);
         if (bitmap != null) {
-            ImageUtil.saveBitmap(DrawPointActivity.this, bitmap, image_path, name);
+            ImageUtil.saveBitmap(DrawPointActivity.this, bitmap, image_path, name,true);
         }
-        if(entity!=null){
+        if(entity!=null&&selectEntity!=null){
             Picture picture=new Picture();
             picture.setNumber("");
             picture.setStatus("");
@@ -174,17 +184,32 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
             picture.setDeviceinfo(entity.getEquip());
             picture.setMaterial(entity.getMaterial());
             picture.setPosition(getPosition(entity));
-            picture.setDid(7);
-            picture.setAid(13);
-            picture.setEid(5);
+
+            if(!IsNullOrEmpty.isEmpty(selectEntity.getDid())){
+                picture.setDid(Integer.parseInt(selectEntity.getDid()));
+            }
+            if(!IsNullOrEmpty.isEmpty(selectEntity.getAid())){
+                picture.setAid(Integer.parseInt(selectEntity.getAid()));
+            }
+            picture.setEid(Integer.parseInt(String.valueOf(epId)));
+
+            if(!IsNullOrEmpty.isEmpty(vid)){
+                picture.setPvid(Integer.parseInt(vid));
+            }
             picture.setPidnumber(entity.getPid());
-            picture.setPvid(2);
             picture.setSketch(image_path+"c_"+image_name+".jpg");
+            if(Global.Latitude>0){
+                picture.setLatitude(Global.Latitude);
+            }
+            if(Global.Longitude>0){
+                picture.setLongitude(Global.Longitude);
+            }
             DaoUtil.addPicture(pictureDao,picture);
         }
         ImageInfoActivity.isFinish=true;
         InputtingActivity.isCamera=true;
-        dialog.dismiss();
+        loadingDialog.dismiss();
+        stopLocation();
         finish();
     }
 
@@ -196,10 +221,10 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
     private String getPosition(ImageInfoEntity imageInfoEntity){
         String position="";
         if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getFloor())){
-            position=position+imageInfoEntity.getFloor();
+            position=position+imageInfoEntity.getFloor()+"F";
         }
         if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getDistance())){
-            position=position+imageInfoEntity.getDistance();
+            position=position+imageInfoEntity.getDistance()+"M";
         }
         if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getLocation())){
             position=position+imageInfoEntity.getLocation();
@@ -208,7 +233,7 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
             position=position+imageInfoEntity.getDirection();
         }
         if(!IsNullOrEmpty.isEmpty(imageInfoEntity.getHeight())){
-            position=position+imageInfoEntity.getHeight();
+            position=position+imageInfoEntity.getHeight()+"H";
         }
         return position;
     }
@@ -221,7 +246,7 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
                 tagview.removeAllViews();
                 break;
             case R.id.bt_save:
-                dialog.show();
+                loadingDialog.show();
                 saveView(tagview, "c_" + image_name + ".jpg");
                 break;
             case R.id.bt_last_step:

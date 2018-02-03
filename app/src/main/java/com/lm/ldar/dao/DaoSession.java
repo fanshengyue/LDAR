@@ -16,6 +16,7 @@ import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
 import com.lm.ldar.entity.Namerules;
 import com.lm.ldar.entity.Picture;
+import com.lm.ldar.entity.PictureDownload;
 import com.lm.ldar.entity.Pictureversion;
 import com.lm.ldar.entity.User;
 import com.lm.ldar.entity.Workplan;
@@ -40,6 +41,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig departmentDaoConfig;
     private final DaoConfig pictureversionDaoConfig;
     private final DaoConfig pictureDaoConfig;
+    private final DaoConfig picturDownloadConfig;
 
     private final UserDao userDao;
     private final EnterpriseDao enterpriseDao;
@@ -52,6 +54,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DepartmentDao departmentDao;
     private final PictureversionDao pictureversionDao;
     private final PictureDao pictureDao;
+    private final PictureDownloadDao pictureDownloadDao;
 
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -89,6 +92,9 @@ public class DaoSession extends AbstractDaoSession {
         // 图片
         pictureDaoConfig = daoConfigMap.get(PictureDao.class).clone();
         pictureDaoConfig.initIdentityScope(type);
+        // 图片下载
+        picturDownloadConfig = daoConfigMap.get(PictureDownloadDao.class).clone();
+        picturDownloadConfig.initIdentityScope(type);
 
         userDao = new UserDao(userDaoConfig, this);
         enterpriseDao = new EnterpriseDao(enterpriseDaoConfig, this);
@@ -101,6 +107,7 @@ public class DaoSession extends AbstractDaoSession {
         departmentDao = new DepartmentDao(departmentDaoConfig, this);
         pictureversionDao = new PictureversionDao(pictureversionDaoConfig,this);
         pictureDao = new PictureDao(pictureDaoConfig,this);
+        pictureDownloadDao = new PictureDownloadDao(picturDownloadConfig,this);
 
         registerDao(User.class, userDao);
         registerDao(Enterprise.class, enterpriseDao);
@@ -113,6 +120,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(Department.class, departmentDao);
         registerDao(Pictureversion.class,pictureversionDao);
         registerDao(Picture.class,pictureDao);
+        registerDao(PictureDownload.class,pictureDownloadDao);
     }
 
     public void clear() {
@@ -127,6 +135,7 @@ public class DaoSession extends AbstractDaoSession {
         departmentDaoConfig.clearIdentityScope();
         pictureversionDaoConfig.clearIdentityScope();
         pictureDaoConfig.clearIdentityScope();
+        picturDownloadConfig.clearIdentityScope();
     }
 
     public UserDao getUserDao() {
@@ -172,4 +181,6 @@ public class DaoSession extends AbstractDaoSession {
     public PictureDao getPictureDao() {
         return pictureDao;
     }
+
+    public PictureDownloadDao getPictureDownloadDao(){return pictureDownloadDao;}
 }

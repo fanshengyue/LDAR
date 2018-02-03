@@ -186,36 +186,60 @@
                 android:paddingRight="@dimen/dimen_dp_10"
                 android:background="@drawable/bg_button_nomal"/>
         </LinearLayout>
-        <Button
-            android:id="@+id/bt_inputting"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_dp_40"
-            android:text="建    档"
-            android:textColor="@color/white"
-            android:layout_marginTop="@dimen/dimen_dp_20"
-            android:layout_marginLeft="@dimen/dimen_dp_60"
-            android:layout_marginRight="@dimen/dimen_dp_60"
-            android:background="@drawable/bg_border_button"/>
-        <Button
-            android:id="@+id/bt_see"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_dp_40"
-            android:text="查    看"
-            android:textColor="@color/white"
-            android:layout_marginTop="@dimen/dimen_dp_20"
-            android:layout_marginLeft="@dimen/dimen_dp_60"
-            android:layout_marginRight="@dimen/dimen_dp_60"
-            android:background="@drawable/bg_border_button"/>
+            android:layout_height="@dimen/dimen_dp_50"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dimen_dp_20">
+            <Button
+                android:id="@+id/bt_inputting"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_40"
+                android:text="建    档"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen_dp_30"
+                android:background="@drawable/bg_border_button"/>
+            <Button
+                android:id="@+id/bt_see"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_40"
+                android:text="查    看"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen_dp_30"
+                android:background="@drawable/bg_border_button"/>
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_dp_50"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dimen_dp_20">
         <Button
             android:id="@+id/bt_upload"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_dp_40"
             android:text="上    传"
+            android:layout_weight="1"
             android:textColor="@color/white"
-            android:layout_marginTop="@dimen/dimen_dp_20"
-            android:layout_marginLeft="@dimen/dimen_dp_60"
-            android:layout_marginRight="@dimen/dimen_dp_60"
+            android:gravity="center"
+            android:layout_margin="@dimen/dimen_dp_30"
             android:background="@drawable/bg_border_button"/>
+        <Button
+            android:id="@+id/bt_delete"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_dp_40"
+            android:text="删除建档信息"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_margin="@dimen/dimen_dp_30"
+            android:background="@drawable/bg_border_button"/>
+    </LinearLayout>
 
     </LinearLayout>
     </ScrollView>

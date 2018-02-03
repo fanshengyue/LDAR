@@ -132,7 +132,7 @@ public class ListDialog {
     /**
      * 厂区
      */
-    public void FactoryDialog(final List<Factory> data){
+    public void FactoryDialog(final List<Factory> data, final Button button){
         if(data!=null&&data.size()>0){
             selectEntity.setFid(data.get(0).getId()+"");
             selectEntity.setFname(data.get(0).getName());
@@ -157,6 +157,7 @@ public class ListDialog {
                     long fid=data.get(position).getId();
                     selectEntity.setFid(fid+"");
                     selectEntity.setFname(data.get(position).getName());
+                    button.setText(data.get(position).getName());
                     DepartmentDao departmentDao=daoSession.getDepartmentDao();
                     List<Department>departmentList=departmentDao.queryBuilder().where(DepartmentDao.Properties.Fid.eq(fid)).build().list();
                     if(departmentList!=null&& departmentList.size()>0){
@@ -172,7 +173,7 @@ public class ListDialog {
     /**
      * 部门
      */
-    public void DepartmentDialog(final List<Department> data){
+    public void DepartmentDialog(final List<Department> data, final Button button){
         if(data!=null&&data.size()>0){
             selectEntity.setDid(data.get(0).getId()+"");
             selectEntity.setDname(data.get(0).getName());
@@ -197,6 +198,7 @@ public class ListDialog {
                     long did=data.get(position).getId();
                     selectEntity.setDid(did+"");
                     selectEntity.setDname(data.get(position).getName());
+                    button.setText(data.get(position).getName());
                     DeviceDao deviceDao=daoSession.getDeviceDao();
                     List<Device>deviceList=deviceDao.queryBuilder().where(DeviceDao.Properties.Did.eq(did)).build().list();
                     if(deviceList!=null&& deviceList.size()>0){
@@ -213,7 +215,7 @@ public class ListDialog {
     /**
      * 装置
      */
-    public void DeviceDialog(final List<Device> data){
+    public void DeviceDialog(final List<Device> data, final Button button){
         if(data!=null&&data.size()>0){
             selectEntity.setEid(data.get(0).getId()+"");
             selectEntity.setEname(data.get(0).getName());
@@ -238,6 +240,7 @@ public class ListDialog {
                     long eid=data.get(position).getId();
                     selectEntity.setEid(eid+"");
                     selectEntity.setEname(data.get(position).getName());
+                    button.setText(data.get(position).getName());
                     AreaDao areaDao=daoSession.getAreaDao();
                     List<Area>areaList=areaDao.queryBuilder().where(AreaDao.Properties.Eid.eq(eid)).build().list();
                     if(areaList!=null&& areaList.size()>0){
@@ -253,7 +256,7 @@ public class ListDialog {
     /**
      * 子区域
      */
-    public void AreaDialog(final List<Area> data){
+    public void AreaDialog(final List<Area> data, final Button button){
         if(data!=null&&data.size()>0){
             selectEntity.setAid(data.get(0).getId()+"");
             selectEntity.setAname(data.get(0).getName());
@@ -277,6 +280,7 @@ public class ListDialog {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     selectEntity.setAid(data.get(position).getId()+"");
                     selectEntity.setAname(data.get(position).getName());
+                    button.setText(data.get(position).getName());
                     alertDialog.dismiss();
                 }
             });

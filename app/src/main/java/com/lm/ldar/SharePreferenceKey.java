@@ -10,5 +10,6 @@ public class SharePreferenceKey {
 	//当前登录用户对应的企业信息
 	public static final String EnterPriseInfo="EnterPriseInfo";
 	public static final String EnterPriseId="enterPriseId";
+	public static final String EnterCode="enterCode";
 
 }

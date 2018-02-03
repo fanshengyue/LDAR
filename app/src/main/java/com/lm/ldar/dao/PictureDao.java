@@ -1,5 +1,6 @@
 package com.lm.ldar.dao;
 
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
@@ -56,6 +57,10 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         public final static Property Pvid = new Property(13, int.class, "pvid", false, "PVID");
         //草图地址
         public final static Property Sketch = new Property(14, String.class, "sketch", false, "SKETCH");
+        //纬度
+        public final static Property Latitude = new Property(15, Double.class, "latitude", false, "LATITUDE");
+        //经度
+        public final static Property Longitude = new Property(16, Double.class, "longitude", false, "LONGITUDE");
     }
 
     ;
@@ -88,7 +93,9 @@ public class PictureDao extends AbstractDao<Picture, Long> {
                 "\"ELEMENTNAME\" TEXT," + //11: elementname
                 "\"PIDNUMBER\" TEXT," + //12: pidnumber
                 "\"PVID\" INTEGER," + //13.pvid
-                "\"SKETCH\" TEXT);");//14.sketch
+                "\"SKETCH\" TEXT," + //14.sketch
+                "\"LATITUDE\" DOUBLE," + //15.latitude
+                "\"LONGITUDE\" DOUBLE);");//16.longitude
     }
 
     /**
@@ -116,7 +123,9 @@ public class PictureDao extends AbstractDao<Picture, Long> {
                 cursor.getString(offset + 11), // elementname
                 cursor.getString(offset + 12), // pidnumber
                 cursor.getInt(offset + 13),// pvid
-                cursor.getString(offset + 14)// sketch
+                cursor.getString(offset + 14),// sketch
+                cursor.getDouble(offset+15),//latitude
+                cursor.getDouble(offset+16)//longitude
         );
         return picture;
     }
@@ -143,6 +152,8 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         entity.setPidnumber(cursor.getString(offset + 12));
         entity.setPvid(cursor.getInt(offset + 13));
         entity.setSketch(cursor.getString(offset + 14));
+        entity.setLatitude(cursor.getDouble(offset+15));
+        entity.setLongitude(cursor.getDouble(offset+16));
     }
 
     @Override
@@ -166,6 +177,8 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         stmt.bindString(13, entity.getPidnumber());
         stmt.bindLong(14, entity.getPvid());
         stmt.bindString(15, entity.getSketch());
+        stmt.bindDouble(16,entity.getLatitude());
+        stmt.bindDouble(17,entity.getLongitude());
     }
 
     @Override
@@ -189,6 +202,8 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         stmt.bindString(13, entity.getPidnumber());
         stmt.bindLong(14, entity.getPvid());
         stmt.bindString(15, entity.getSketch());
+        stmt.bindDouble(16,entity.getLatitude());
+        stmt.bindDouble(17,entity.getLongitude());
     }
 
     @Override

@@ -7,14 +7,14 @@ import java.io.Serializable;
  */
 
 public class SelectEntity implements Serializable {
-    private String fid;
-    private String fname;
-    private String did;
-    private String dname;
-    private String eid;
-    private String ename;
-    private String aid;
-    private String aname;
+    private String fid;//厂区id
+    private String fname;//厂区名字
+    private String did;//部门id
+    private String dname;//部门名字
+    private String eid;//设备id
+    private String ename;//设备名字
+    private String aid;//子区域id
+    private String aname;//子区域名字
 
     public String getFid() {
         return fid;

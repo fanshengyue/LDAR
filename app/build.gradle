@@ -17,6 +17,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets{
+        main{
+            jniLibs.srcDir 'libs'
+            //说明so的路径为该libs路径，关联所有地图SDK的so文件
+        }
+    }
+    signingConfigs {
+        debug {
+            storeFile file('/Users/fanshengyue/keystore/ldar.jks')//签名文件路径
+            storePassword "ldar314159"
+            keyAlias "ldar"
+            keyPassword "ldar314159"  //签名密码
+        }
+        release {
+            storeFile file('/Users/fanshengyue/keystore/ldar.jks')//签名文件路径
+            storePassword "ldar314159"
+            keyAlias "ldar"
+            keyPassword "ldar314159"  //签名密码
+        }
+    }
 }
 
 dependencies {
@@ -31,4 +51,5 @@ dependencies {
     implementation project(':network')
     implementation files('libs/fastjson.jar')
     compile 'org.greenrobot:greendao:3.2.0'
+    implementation 'com.commit451:PhotoView:1.2.4'
 }

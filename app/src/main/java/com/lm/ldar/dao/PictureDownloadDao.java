@@ -3,7 +3,7 @@ package com.lm.ldar.dao;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
-import com.lm.ldar.entity.Picture;
+import com.lm.ldar.entity.PictureDownload;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.AbstractDaoSession;
@@ -16,9 +16,9 @@ import org.greenrobot.greendao.internal.DaoConfig;
  * Created by xieweikun on 2018/1/14.
  */
 
-public class PictureDownloadDao extends AbstractDao<Picture, Long> {
+public class PictureDownloadDao extends AbstractDao<PictureDownload, Long> {
 
-    public static final String TABLENAME = "PICTURE";
+    public static final String TABLENAME = "PICTUREDOWNLOAD";
 
     /**
      * Properties of entity VideoPlayEntity.<br/>
@@ -55,9 +55,15 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
         public final static Property Pvid = new Property(13, int.class, "pvid", false, "PVID");
         //草图地址
         public final static Property Sketch = new Property(14, String.class, "sketch", false, "SKETCH");
+        //检测or复测
+        public final static Property ischeck = new Property(15,int.class,"ischeck",false,"ISCHECK");
+        //纬度
+        public final static Property Latitude = new Property(16, Double.class, "latitude", false, "LATITUDE");
+        //经度
+        public final static Property Longitude = new Property(17, Double.class, "longitude", false, "LONGITUDE");
     }
 
-    ;
+
 
     public PictureDownloadDao(DaoConfig config) {
         super(config);
@@ -72,7 +78,7 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
      */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
-        db.execSQL("CREATE TABLE " + constraint + "\"PICTURE\" (" + //
+        db.execSQL("CREATE TABLE " + constraint + "\"PICTUREDOWNLOAD\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"NUMBER\" TEXT," + // 1: number
                 "\"NAME\" TEXT," + // 2: name
@@ -87,20 +93,23 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
                 "\"ELEMENTNAME\" TEXT," + //11: elementname
                 "\"PIDNUMBER\" TEXT," + //12: pidnumber
                 "\"PVID\" INTEGER," + //13.pvid
-                "\"SKETCH\" TEXT);");//14.sketch
+                "\"SKETCH\" TEXT," + //14.sketch
+                "\"ISCHECK\" INTEGER," + //15.ischeck
+                "\"LATITUDE\" DOUBLE," + //16.latitude
+                "\"LONGITUDE\" DOUBLE);");//17.longitude
     }
 
     /**
      * Drops the underlying database table.
      */
     public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"PICTURE\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"PICTUREDOWNLOAD\"";
         db.execSQL(sql);
     }
 
     @Override
-    protected Picture readEntity(Cursor cursor, int offset) {
-        Picture picture = new Picture(
+    protected PictureDownload readEntity(Cursor cursor, int offset) {
+        PictureDownload picture = new PictureDownload(
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
                 cursor.getString(offset + 1), // number
                 cursor.getString(offset + 2), // name
@@ -115,7 +124,10 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
                 cursor.getString(offset + 11), // elementname
                 cursor.getString(offset + 12), // pidnumber
                 cursor.getInt(offset + 13),// pvid
-                cursor.getString(offset + 14)// sketch
+                cursor.getString(offset + 14),// sketch
+                cursor.getInt(offset+15),//ischeck
+                cursor.getDouble(offset+16),//latitude
+                cursor.getDouble(offset+17)//longitude
         );
         return picture;
     }
@@ -126,7 +138,7 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
     }
 
     @Override
-    protected void readEntity(Cursor cursor, Picture entity, int offset) {
+    protected void readEntity(Cursor cursor, PictureDownload entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setNumber(cursor.getString(offset + 1));
         entity.setName(cursor.getString(offset + 2));
@@ -142,10 +154,13 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
         entity.setPidnumber(cursor.getString(offset + 12));
         entity.setPvid(cursor.getInt(offset + 13));
         entity.setSketch(cursor.getString(offset + 14));
+        entity.setIscheck(cursor.getInt(offset + 15));
+        entity.setLatitude(cursor.getDouble(offset+16));
+        entity.setLongitude(cursor.getDouble(offset+17));
     }
 
     @Override
-    protected void bindValues(DatabaseStatement stmt, Picture entity) {
+    protected void bindValues(DatabaseStatement stmt, PictureDownload entity) {
         stmt.clearBindings();
         Long id = entity.getId();
         if (id != null) {
@@ -165,10 +180,13 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
         stmt.bindString(13, entity.getPidnumber());
         stmt.bindLong(14, entity.getPvid());
         stmt.bindString(15, entity.getSketch());
+        stmt.bindLong(16, entity.getIscheck());
+        stmt.bindDouble(17,entity.getLatitude());
+        stmt.bindDouble(18,entity.getLongitude());
     }
 
     @Override
-    protected void bindValues(SQLiteStatement stmt, Picture entity) {
+    protected void bindValues(SQLiteStatement stmt, PictureDownload entity) {
         stmt.clearBindings();
         Long id = entity.getId();
         if (id != null) {
@@ -188,16 +206,19 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
         stmt.bindString(13, entity.getPidnumber());
         stmt.bindLong(14, entity.getPvid());
         stmt.bindString(15, entity.getSketch());
+        stmt.bindLong(16, entity.getIscheck());
+        stmt.bindDouble(17,entity.getLatitude());
+        stmt.bindDouble(18,entity.getLongitude());
     }
 
     @Override
-    protected Long updateKeyAfterInsert(Picture entity, long rowId) {
+    protected Long updateKeyAfterInsert(PictureDownload entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
 
     @Override
-    protected Long getKey(Picture entity) {
+    protected Long getKey(PictureDownload entity) {
         if(entity != null) {
             return entity.getId();
         } else {
@@ -206,7 +227,7 @@ public class PictureDownloadDao extends AbstractDao<Picture, Long> {
     }
 
     @Override
-    protected boolean hasKey(Picture entity) {
+    protected boolean hasKey(PictureDownload entity) {
         return entity.getId() != null;
     }
 

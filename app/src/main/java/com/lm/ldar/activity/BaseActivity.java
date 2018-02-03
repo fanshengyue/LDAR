@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.lm.ldar.LMApplication;
 import com.lm.ldar.R;
 import com.lm.ldar.api.UrlManager;
@@ -21,10 +25,12 @@ import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
 import com.lm.ldar.dao.NamerulesDao;
 import com.lm.ldar.dao.PictureDao;
+import com.lm.ldar.dao.PictureDownloadDao;
 import com.lm.ldar.dao.PictureversionDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.dao.WorkplanDao;
 import com.lm.ldar.entity.Ctype;
+import com.lm.ldar.entity.Global;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.util.LoginUserUtil;
 import com.lm.ldar.view.LoadingDialog;
@@ -34,7 +40,7 @@ import com.lm.ldar.view.LoadingDialog;
  */
 
 public class BaseActivity extends Activity {
-    public LoadingDialog dialog;
+    public LoadingDialog loadingDialog;
     public UrlManager urlManager;
     public LoginUserUtil userUtil;
     public DaoSession daoSession;
@@ -49,27 +55,51 @@ public class BaseActivity extends Activity {
     public WorkplanDao workplanDao;
     public DepartmentDao departmentDao;
     public PictureDao pictureDao;
+    public PictureDownloadDao pictureDownloadDao;
 
 
     public Long userId;//用户id
     public Long epId;//企业id
+    public String ecode;//企业组织结构代码
 
     private TextView tv_title, tv_right;
     private ImageView ivRight;
     private LinearLayout ll_back;
+
+    public LocationClient mLocationClient = null;
+    private MyLocationListener myListener = new MyLocationListener();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
         initDao();
+        initLocation();
+    }
+
+    private void initLocation(){
+        //声明LocationClient类
+        mLocationClient = new LocationClient(getApplicationContext());
+        //注册监听函数
+        mLocationClient.registerLocationListener(myListener);
+
+        LocationClientOption option = new LocationClientOption();
+        //可选，设置定位模式，默认高精度
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        //可选，设置返回经纬度坐标类型，默认gcj02,定位SDK默认输出GCJ02坐标，地图SDK默认输出BD09ll
+        option.setCoorType("bd09ll");
+        //设置是否使用gps，默认false
+        option.setOpenGps(true);
+        mLocationClient.setLocOption(option);
+
     }
 
     private void init() {
-        dialog = new LoadingDialog(BaseActivity.this);
+        loadingDialog = new LoadingDialog(BaseActivity.this);
         urlManager = new UrlManager(BaseActivity.this);
         userUtil = new LoginUserUtil(BaseActivity.this);
         epId = userUtil.getEnterPriseId();
+        ecode=userUtil.getEcode();
         LoginUserEntity entity = userUtil.getLoginUserInfo();
         if (entity != null) {
             userId = entity.getId();
@@ -89,6 +119,7 @@ public class BaseActivity extends Activity {
         workplanDao = daoSession.getWorkplanDao();
         departmentDao = daoSession.getDepartmentDao();
         pictureDao=daoSession.getPictureDao();
+        pictureDownloadDao=daoSession.getPictureDownloadDao();
     }
 
     public void initTitleBar(String title) {
@@ -108,5 +139,38 @@ public class BaseActivity extends Activity {
 
     }
 
+    /**
+     * 开启定位
+     */
+    public void startLocation(){
+        if(mLocationClient!=null){
+            mLocationClient.start();
+        }
+    }
+
+    /**
+     * 停止定位
+     */
+    public void stopLocation(){
+        if(mLocationClient!=null){
+            mLocationClient.stop();
+        }
+    }
+
+    public class MyLocationListener extends BDAbstractLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            double latitude = location.getLatitude();    //获取纬度信息
+            double longitude = location.getLongitude();    //获取经度信息
+            if(latitude>0){
+                Global.Latitude=latitude;
+            }
+            if(longitude>0){
+                Global.Longitude=longitude;
+            }
+//            float radius = location.getRadius();    //获取定位精度，默认值为0.0f
+        }
+    }
 
 }

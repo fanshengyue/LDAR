@@ -203,7 +203,16 @@
                 android:layout_marginLeft="@dimen/dimen_dp_60"
                 android:layout_marginRight="@dimen/dimen_dp_60"
                 android:background="@drawable/bg_border_button"/>
-
+            <Button
+                android:id="@+id/bt_delete"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_dp_40"
+                android:text="删     除"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dimen_dp_20"
+                android:layout_marginLeft="@dimen/dimen_dp_60"
+                android:layout_marginRight="@dimen/dimen_dp_60"
+                android:background="@drawable/bg_border_button"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

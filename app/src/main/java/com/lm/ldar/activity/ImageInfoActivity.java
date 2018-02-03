@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lm.ldar.R;
+import com.lm.ldar.entity.Global;
 import com.lm.ldar.entity.ImageInfoEntity;
+import com.lm.ldar.entity.SelectEntity;
 import com.lm.ldar.util.IsNullOrEmpty;
 import com.lm.ldar.util.Util;
 
@@ -87,6 +90,8 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
     Button btNextStep;
     private String image_name;
     private String image_path;
+    private String vid;//版本id
+    private SelectEntity selectEntity;
 
     public static boolean isFinish=false;//是否销毁此页面
 
@@ -115,7 +120,37 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
     private void init() {
         image_name = getIntent().getStringExtra("image_name");
         image_path = getIntent().getStringExtra("image_path");
+        vid=getIntent().getStringExtra("vid");
+        selectEntity= (SelectEntity) getIntent().getSerializableExtra("select");
         initTitleBar(getString(R.string.image_info));
+        if(Global.imageInfoEntity!=null){
+            ImageInfoEntity entity=Global.imageInfoEntity;
+            if(!IsNullOrEmpty.isEmpty(entity.getFloor())){
+                etFloor.setText(entity.getFloor());
+            }
+            if(!IsNullOrEmpty.isEmpty(entity.getDistance())){
+                etDistance.setText(entity.getDistance());
+            }
+            if(!IsNullOrEmpty.isEmpty(entity.getLocation())){
+                etLocation.setText(entity.getLocation());
+            }
+            if(!IsNullOrEmpty.isEmpty(entity.getDirection())){
+                btDirection.setText(entity.getFloor());
+            }
+            if(!IsNullOrEmpty.isEmpty(entity.getHeight())){
+                etHeight.setText(entity.getHeight());
+            }
+            if(!IsNullOrEmpty.isEmpty(entity.getEquip())){
+                etEquip.setText(entity.getEquip());
+            }
+            if(!IsNullOrEmpty.isEmpty(entity.getMaterial())){
+                etMaterial.setText(entity.getMaterial());
+            }
+            if(!IsNullOrEmpty.isEmpty(entity.getPid())){
+                etPid.setText(entity.getPid());
+            }
+
+        }
     }
 
     private void initListener() {
@@ -153,19 +188,21 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
                             if(isNotNull(equip,"设备信息")){
                                 if(isNotNull(material,"物质信息")){
                                     if(isNotNull(pid,"PID图号")){
-                                        ImageInfoEntity entity=new ImageInfoEntity();
-                                        entity.setFloor(floor);
-                                        entity.setDistance(distance);
-                                        entity.setLocation(location);
-                                        entity.setDirection(direction);
-                                        entity.setHeight(height);
-                                        entity.setEquip(equip);
-                                        entity.setMaterial(material);
-                                        entity.setPid(pid);
+                                        Global.imageInfoEntity=new ImageInfoEntity();
+                                        Global.imageInfoEntity.setFloor(floor);
+                                        Global.imageInfoEntity.setDistance(distance);
+                                        Global.imageInfoEntity.setLocation(location);
+                                        Global.imageInfoEntity.setDirection(direction);
+                                        Global.imageInfoEntity.setHeight(height);
+                                        Global.imageInfoEntity.setEquip(equip);
+                                        Global.imageInfoEntity.setMaterial(material);
+                                        Global.imageInfoEntity.setPid(pid);
                                         Intent intent = new Intent(ImageInfoActivity.this, DrawPointActivity.class);
                                         intent.putExtra("image_name", image_name);
                                         intent.putExtra("image_path", image_path);
-                                        intent.putExtra("image_info",entity);
+                                        intent.putExtra("image_info",Global.imageInfoEntity);
+                                        intent.putExtra("vid",vid);
+                                        intent.putExtra("select",selectEntity);
                                         startActivity(intent);
                                     }
                                 }

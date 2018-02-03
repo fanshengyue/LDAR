@@ -59,19 +59,21 @@ public class WelcomeActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        Intent intent=new Intent(WelcomeActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        WelcomeActivity.this.finish();
-//                        LoginUserEntity entity=userUtil.getLoginUserInfo();
-//                        if(entity!=null&&!IsNullOrEmpty.isEmpty(entity.getUsername())&&!IsNullOrEmpty.isEmpty(entity.getPassword())){
-//                            //自动登录
-//                            startLogin(entity.getUsername(),entity.getPassword());
-//                        }else{
-//                            Intent intent=new Intent(WelcomeActivity.this, LoginActivity.class);
-//                            startActivity(intent);
-//                            WelcomeActivity.this.finish();
-//                        }
-
+                        if(!IsNullOrEmpty.isEmpty(userId+"")&&userId>0){
+                            Intent intent=new Intent(WelcomeActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            WelcomeActivity.this.finish();
+                        }else{
+                            LoginUserEntity entity=userUtil.getLoginUserInfo();
+                            if(entity!=null&&!IsNullOrEmpty.isEmpty(entity.getUsername())&&!IsNullOrEmpty.isEmpty(entity.getPassword())){
+                                //自动登录
+                                startLogin(entity.getUsername(),entity.getPassword());
+                            }else{
+                                Intent intent=new Intent(WelcomeActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                WelcomeActivity.this.finish();
+                            }
+                        }
                         break;
                     default:
                         break;
@@ -125,37 +127,32 @@ public class WelcomeActivity extends BaseActivity {
                                 Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
                                 if(enterprise!=null){
                                     //企业id更新shareprefrence
-                                    userUtil.updateEnterPrise(enterprise.getId());
+                                    userUtil.updateEnterPrise(enterprise.getId(),enterprise.getEcode());
                                     DaoUtil.UpdateEnterprise(enterpriseDao,enterprise);
                                 }
                             }
+
                             // 厂区
                             String str_fac=jsonObject.optString("factoryList");
                             if(!IsNullOrEmpty.isEmpty(str_fac)){
                                 List<Factory> factories=JsonPaser.parseFactory(str_fac);
                                 if(factories!=null&&factories.size()>0){
                                     for(Factory factory:factories){
-                                        DaoUtil.UpdateFactory(factoryDao,factory);
+                                        if(factory!=null){
+                                            DaoUtil.UpdateFactory(factoryDao,factory);
+                                        }
                                     }
                                 }
                             }
-                            // 图片版本
-                            String str_picv = jsonObject.optString("pictureversionlist");
-                            if(!IsNullOrEmpty.isEmpty(str_picv)){
-                                List<Pictureversion> pictureversions = JsonPaser.parsePictureversion(str_picv);
-                                if(pictureversions!=null&&pictureversions.size()>0){
-                                    for (Pictureversion pictureversion:pictureversions){
-                                        DaoUtil.updatePictureversion(pictureversionDao,pictureversion);
-                                    }
-                                }
-                            }
-                            // 子区域
-                            String str_area = jsonObject.optString("areaList");
-                            if(!IsNullOrEmpty.isEmpty(str_area)){
-                                List<Area> areas = JsonPaser.parseArea(str_area);
-                                if(areas!=null&&areas.size()>0){
-                                    for(Area area:areas){
-                                        DaoUtil.updateArea(areaDao,area);
+                            // 部门列表
+                            String str_dep = jsonObject.optString("departmentList");
+                            if(!IsNullOrEmpty.isEmpty(str_dep)){
+                                List<Department> departments = JsonPaser.parseDepartment(str_dep);
+                                if(departments!=null&&departments.size()>0){
+                                    for (Department department:departments){
+                                        if(department!=null){
+                                            DaoUtil.updateDepartment(departmentDao,department);
+                                        }
                                     }
                                 }
                             }
@@ -165,7 +162,34 @@ public class WelcomeActivity extends BaseActivity {
                                 List<Device> devices = JsonPaser.parseDevice(str_device);
                                 if(devices!=null&&devices.size()>0){
                                     for (Device device:devices){
-                                        DaoUtil.updateDevice(deviceDao,device);
+                                        if(device!=null){
+                                            DaoUtil.updateDevice(deviceDao,device);
+                                        }
+                                    }
+                                }
+                            }
+                            // 子区域
+                            String str_area = jsonObject.optString("areaList");
+                            if(!IsNullOrEmpty.isEmpty(str_area)){
+                                List<Area> areas = JsonPaser.parseArea(str_area);
+                                if(areas!=null&&areas.size()>0){
+                                    for(Area area:areas){
+                                        if(area!=null){
+                                            DaoUtil.updateArea(areaDao,area);
+                                        }
+                                    }
+                                }
+                            }
+
+                            // 图片版本
+                            String str_picv = jsonObject.optString("pictureversionlist");
+                            if(!IsNullOrEmpty.isEmpty(str_picv)){
+                                List<Pictureversion> pictureversions = JsonPaser.parsePictureversion(str_picv);
+                                if(pictureversions!=null&&pictureversions.size()>0){
+                                    for (Pictureversion pictureversion:pictureversions){
+                                        if(pictureversion!=null){
+                                            DaoUtil.updatePictureversion(pictureversionDao,pictureversion);
+                                        }
                                     }
                                 }
                             }
@@ -177,32 +201,26 @@ public class WelcomeActivity extends BaseActivity {
                                     DaoUtil.updateNamerules(namerulesDao,namerules);
                                 }
                             }
-                            // 组件类型
-                            String str_ctype = jsonObject.optString("ctypeList");
-                            if(!IsNullOrEmpty.isEmpty(str_ctype)){
-                                List<Ctype> ctypes = JsonPaser.parseCtype(str_ctype);
-                                if(ctypes!=null&&ctypes.size()>0){
-                                    for (Ctype ctype:ctypes){
-                                        DaoUtil.updateCtype(ctypeDao,ctype);
-                                    }
-                                }
-                            }
+//                            // 组件类型
+//                            String str_ctype = jsonObject.optString("ctypeList");
+//                            if(!IsNullOrEmpty.isEmpty(str_ctype)){
+//                                List<Ctype> ctypes = JsonPaser.parseCtype(str_ctype);
+//                                if(ctypes!=null&&ctypes.size()>0){
+//                                    for (Ctype ctype:ctypes){
+//                                        if(ctype!=null){
+//                                            if(!IsNullOrEmpty.isEmpty(ctype.getId())&&!IsNullOrEmpty.isEmpty(ctype.getDescription())){
+//                                                DaoUtil.updateCtype(ctypeDao,ctype);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
                             // 工作计划
                             String str_workplan = jsonObject.optString("workplan");
                             if(!IsNullOrEmpty.isEmpty(str_workplan)){
                                 Workplan workplan = JsonPaser.parseWorkplan(str_workplan);
                                 if(workplan!=null){
                                     DaoUtil.updateWorkplan(workplanDao,workplan);
-                                }
-                            }
-                            // 部门列表
-                            String str_dep = jsonObject.optString("departmentList");
-                            if(!IsNullOrEmpty.isEmpty(str_dep)){
-                                List<Department> departments = JsonPaser.parseDepartment(str_dep);
-                                if(departments!=null&&departments.size()>0){
-                                    for (Department department:departments){
-                                        DaoUtil.updateDepartment(departmentDao,department);
-                                    }
                                 }
                             }
 

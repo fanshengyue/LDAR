@@ -45,6 +45,7 @@ import com.lm.ldar.entity.Workplan;
 import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.FAST;
 import com.lm.ldar.util.JsonPaser;
+import com.lm.ldar.util.LoginUserUtil;
 import com.lm.ldar.util.NetUtil;
 import com.lm.ldar.util.IsNullOrEmpty;
 import com.lm.ldar.util.Util;
@@ -125,7 +126,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         SuccessfulCallback successfulCallback=new SuccessfulCallback() {
             @Override
             public void success(String str) {
-                dialog.dismiss();
+                loadingDialog.dismiss();
                 if(str==null){
                     return;
                 }
@@ -150,37 +151,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 Enterprise enterprise=JsonPaser.parseEnterprise(str_enterprise);
                                 if(enterprise!=null){
                                     //企业id更新shareprefrence
-                                    userUtil.updateEnterPrise(enterprise.getId());
+                                    userUtil.updateEnterPrise(enterprise.getId(),enterprise.getEcode());
                                     DaoUtil.UpdateEnterprise(enterpriseDao,enterprise);
                                 }
                             }
+
                             // 厂区
                             String str_fac=jsonObject.optString("factoryList");
                             if(!IsNullOrEmpty.isEmpty(str_fac)){
                                 List<Factory> factories=JsonPaser.parseFactory(str_fac);
                                 if(factories!=null&&factories.size()>0){
                                     for(Factory factory:factories){
-                                        DaoUtil.UpdateFactory(factoryDao,factory);
+                                        if(factory!=null){
+                                            DaoUtil.UpdateFactory(factoryDao,factory);
+                                        }
                                     }
                                 }
                             }
-                            // 图片版本
-                            String str_picv = jsonObject.optString("pictureversionlist");
-                            if(!IsNullOrEmpty.isEmpty(str_picv)){
-                                List<Pictureversion> pictureversions = JsonPaser.parsePictureversion(str_picv);
-                                if(pictureversions!=null&&pictureversions.size()>0){
-                                    for (Pictureversion pictureversion:pictureversions){
-                                        DaoUtil.updatePictureversion(pictureversionDao,pictureversion);
-                                    }
-                                }
-                            }
-                            // 子区域
-                            String str_area = jsonObject.optString("areaList");
-                            if(!IsNullOrEmpty.isEmpty(str_area)){
-                                List<Area> areas = JsonPaser.parseArea(str_area);
-                                if(areas!=null&&areas.size()>0){
-                                    for(Area area:areas){
-                                        DaoUtil.updateArea(areaDao,area);
+                            // 部门列表
+                            String str_dep = jsonObject.optString("departmentList");
+                            if(!IsNullOrEmpty.isEmpty(str_dep)){
+                                List<Department> departments = JsonPaser.parseDepartment(str_dep);
+                                if(departments!=null&&departments.size()>0){
+                                    for (Department department:departments){
+                                        if(department!=null){
+                                            DaoUtil.updateDepartment(departmentDao,department);
+                                        }
                                     }
                                 }
                             }
@@ -190,7 +186,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 List<Device> devices = JsonPaser.parseDevice(str_device);
                                 if(devices!=null&&devices.size()>0){
                                     for (Device device:devices){
-                                        DaoUtil.updateDevice(deviceDao,device);
+                                        if(device!=null){
+                                            DaoUtil.updateDevice(deviceDao,device);
+                                        }
+                                    }
+                                }
+                            }
+                            // 子区域
+                            String str_area = jsonObject.optString("areaList");
+                            if(!IsNullOrEmpty.isEmpty(str_area)){
+                                List<Area> areas = JsonPaser.parseArea(str_area);
+                                if(areas!=null&&areas.size()>0){
+                                    for(Area area:areas){
+                                        if(area!=null){
+                                            DaoUtil.updateArea(areaDao,area);
+                                        }
+                                    }
+                                }
+                            }
+
+                            // 图片版本
+                            String str_picv = jsonObject.optString("pictureversionlist");
+                            if(!IsNullOrEmpty.isEmpty(str_picv)){
+                                List<Pictureversion> pictureversions = JsonPaser.parsePictureversion(str_picv);
+                                if(pictureversions!=null&&pictureversions.size()>0){
+                                    for (Pictureversion pictureversion:pictureversions){
+                                        if(pictureversion!=null){
+                                            DaoUtil.updatePictureversion(pictureversionDao,pictureversion);
+                                        }
                                     }
                                 }
                             }
@@ -202,16 +225,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     DaoUtil.updateNamerules(namerulesDao,namerules);
                                 }
                             }
-                            // 组件类型
-                            String str_ctype = jsonObject.optString("ctypeList");
-                            if(!IsNullOrEmpty.isEmpty(str_ctype)){
-                                List<Ctype> ctypes = JsonPaser.parseCtype(str_ctype);
-                                if(ctypes!=null&&ctypes.size()>0){
-                                    for (Ctype ctype:ctypes){
-                                        DaoUtil.updateCtype(ctypeDao,ctype);
-                                    }
-                                }
-                            }
+//                            // 组件类型
+//                            String str_ctype = jsonObject.optString("ctypeList");
+//                            if(!IsNullOrEmpty.isEmpty(str_ctype)){
+//                                List<Ctype> ctypes = JsonPaser.parseCtype(str_ctype);
+//                                if(ctypes!=null&&ctypes.size()>0){
+//                                    for (Ctype ctype:ctypes){
+//                                        if(ctype!=null){
+//                                            if(!IsNullOrEmpty.isEmpty(ctype.getId())&&!IsNullOrEmpty.isEmpty(ctype.getDescription())){
+//                                                DaoUtil.updateCtype(ctypeDao,ctype);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
                             // 工作计划
                             String str_workplan = jsonObject.optString("workplan");
                             if(!IsNullOrEmpty.isEmpty(str_workplan)){
@@ -220,16 +247,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     DaoUtil.updateWorkplan(workplanDao,workplan);
                                 }
                             }
-                            // 部门列表
-                            String str_dep = jsonObject.optString("departmentList");
-                            if(!IsNullOrEmpty.isEmpty(str_dep)){
-                                List<Department> departments = JsonPaser.parseDepartment(str_dep);
-                                if(departments!=null&&departments.size()>0){
-                                    for (Department department:departments){
-                                        DaoUtil.updateDepartment(departmentDao,department);
-                                    }
-                                }
-                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -249,14 +267,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         FailCallback failCallback=new FailCallback() {
             @Override
             public void fail(String str) {
-                dialog.dismiss();
+                loadingDialog.dismiss();
                 MyAlertDialog.showDialog(LoginActivity.this, str);
             }
         };
         HashMap<String,String> params=new HashMap<>();
         params.put("username",username);
         params.put("password", password);
-        dialog.show();
+        loadingDialog.show();
         factory.start(NetworkFactory.METHOD_POST,urlManager.getAppLogin() , params, successfulCallback, failCallback);
     }
 
@@ -296,8 +314,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startLogin(data.get(position).getUsername(),data.get(position).getPassword());
-                alertDialog.dismiss();
+                long user_id=data.get(position).getId();
+                User userinfo = userDao.queryBuilder().where(UserDao.Properties.Id.eq(user_id)).unique();
+                if(userinfo!=null){
+                    userUtil.updateShareUser(user_id,userinfo.getUsername(),userinfo.getPassword());
+                    Enterprise ep_Entity = enterpriseDao.queryBuilder().where(EnterpriseDao.Properties.Id.eq(userinfo.getEid())).unique();
+                    if(ep_Entity!=null){
+                        userUtil.updateEnterPrise(ep_Entity.getId(),ep_Entity.getEcode());
+                    }
+                    alertDialog.dismiss();
+                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+                }else{
+                    Toast.makeText(LoginActivity.this,"暂无此用户信息",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

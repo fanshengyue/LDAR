@@ -35,6 +35,7 @@ public class DaoMaster extends AbstractDaoMaster {
         DepartmentDao.createTable(db,ifNotExists);
         PictureversionDao.createTable(db,ifNotExists);
         PictureDao.createTable(db,ifNotExists);
+        PictureDownloadDao.createTable(db,ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -50,6 +51,7 @@ public class DaoMaster extends AbstractDaoMaster {
         DepartmentDao.createTable(db,ifExists);
         PictureversionDao.createTable(db,ifExists);
         PictureDao.createTable(db,ifExists);
+        PictureDownloadDao.createTable(db,ifExists);
     }
 
     /**
@@ -79,6 +81,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(DepartmentDao.class);
         registerDaoClass(PictureversionDao.class);
         registerDaoClass(PictureDao.class);
+        registerDaoClass(PictureDownloadDao.class);
     }
 
     public DaoSession newSession() {
