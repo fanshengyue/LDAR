@@ -153,7 +153,8 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
         entity = (ImageInfoEntity) getIntent().getSerializableExtra("image_info");
         vid=getIntent().getStringExtra("vid");
         selectEntity= (SelectEntity) getIntent().getSerializableExtra("select");
-        tagview.ChangeTag("F");
+        tagview.initTag();
+
     }
 
     private void initListener() {

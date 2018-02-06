@@ -186,32 +186,8 @@ public class ReviewActivity extends BaseActivity implements View.OnClickListener
                     if (selectEntity != null) {
                         if (!IsNullOrEmpty.isEmpty(selectEntity.getAid())) {
                             List<PictureDownload> data = DaoUtil.getDownloadPicList(pictureDownloadDao, Long.parseLong(selectEntity.getAid()),1);
-                            List<Picture> pictures=new ArrayList<>();
-                            if(data!=null&&data.size()>0){
-                                for(int i=0 ;i<data.size();i++){
-                                    Picture picture=new Picture();
-                                    picture.setId(data.get(i).getId());
-                                    picture.setNumber(data.get(i).getNumber());
-                                    picture.setName(data.get(i).getName());
-                                    picture.setStatus(data.get(i).getStatus());
-                                    picture.setCreatetime(data.get(i).getCreatetime());
-                                    picture.setDeviceinfo(data.get(i).getDeviceinfo());
-                                    picture.setMaterial(data.get(i).getMaterial());
-                                    picture.setPosition(data.get(i).getPosition());
-                                    picture.setDid(data.get(i).getDid());
-                                    picture.setAid(data.get(i).getAid());
-                                    picture.setEid(data.get(i).getEid());
-                                    picture.setElementname(data.get(i).getElementname());
-                                    picture.setPidnumber(data.get(i).getPidnumber());
-                                    picture.setPvid(data.get(i).getPvid());
-                                    picture.setSketch(data.get(i).getSketch());
-                                    picture.setLatitude(data.get(i).getLatitude());
-                                    picture.setLongitude(data.get(i).getLongitude());
-                                    pictures.add(picture);
-                                }
-                            }
                             Intent intent=new Intent(ReviewActivity.this,ImageListActivity.class);
-                            intent.putExtra("imagelist", (Serializable) pictures);
+                            intent.putExtra("imagelist", (Serializable) data);
                             intent.putExtra("type",2);
                             startActivity(intent);
                         } else {

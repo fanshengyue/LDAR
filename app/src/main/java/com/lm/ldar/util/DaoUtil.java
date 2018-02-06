@@ -391,5 +391,24 @@ public class DaoUtil {
 
     }
 
+    /**
+     * 删除picture
+     */
+    public static void deletePic(PictureDao pictureDao,Long id){
+        Picture picture = pictureDao.queryBuilder().where(PictureDao.Properties.Id.eq(id)).unique();
+        if(picture!=null){
+            pictureDao.delete(picture);
+        }
+    }
+    /**
+     * 删除pictureDownload
+     */
+    public static void deletePicDownload(PictureDownloadDao downloadDao,Long id){
+        PictureDownload pictureDownload = downloadDao.queryBuilder().where(PictureDownloadDao.Properties.Id.eq(id)).unique();
+        if(pictureDownload!=null){
+            downloadDao.delete(pictureDownload);
+        }
+    }
+
 
 }

@@ -271,8 +271,8 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
                                     parmas.put("pidnumber", picture.getPidnumber());
                                     parmas.put("pvid", vid);
                                     parmas.put("sketch", picture.getSketch());
-                                    parmas.put("latitude",picture.getLatitude()+"");
-                                    parmas.put("longitide",picture.getLongitude()+"");
+                                    parmas.put("lat",picture.getLatitude()+"");
+                                    parmas.put("lon",picture.getLongitude()+"");
                                     uploadFiles(urlManager.uploadUrl(), parmas, fileName, fileSketch);
                                 }
                             } else {

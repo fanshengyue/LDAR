@@ -1,5 +1,7 @@
 package com.lm.ldar.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +18,7 @@ import com.lm.ldar.R;
 import com.lm.ldar.adapter.ImageListAdapter;
 import com.lm.ldar.entity.Picture;
 import com.lm.ldar.entity.PictureDownload;
+import com.lm.ldar.util.DaoUtil;
 import com.lm.ldar.util.Util;
 import com.lm.ldar.view.XListView;
 
@@ -78,6 +81,30 @@ public class ImageListActivity extends BaseActivity implements View.OnClickListe
                 intent.putExtra("type",type);
                 intent.putExtra("position",position-1);
                 startActivity(intent);
+            }
+        });
+        lvImage.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final long lid=result.get(position-1).getId();
+                final AlertDialog.Builder builder=new AlertDialog.Builder(ImageListActivity.this);
+                builder.setMessage("确定要删除此张图片及其数据吗？");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //删除数据库
+                        if(type==0){
+                            DaoUtil.deletePic(pictureDao,lid);
+                        }
+                        result.remove(position-1);
+                        mAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                builder.setTitle("提示");
+                builder.create().show();
+                return true;
             }
         });
     }

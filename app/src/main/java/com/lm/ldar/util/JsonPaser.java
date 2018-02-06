@@ -323,6 +323,8 @@ public class JsonPaser {
                     picture.setPidnumber(jsonObject.optString("pidnumber"));
                     picture.setPvid(jsonObject.optInt("pvid"));
                     picture.setSketch(jsonObject.optString("sketch"));
+                    picture.setLatitude(jsonObject.optDouble("lat"));
+                    picture.setLongitude(jsonObject.optDouble("lon"));
                     picture.setIscheck(ischeck);
                     pictureList.add(picture);
                 }
