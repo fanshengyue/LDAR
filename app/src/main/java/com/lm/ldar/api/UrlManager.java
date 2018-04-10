@@ -53,10 +53,24 @@ public class UrlManager {
         return carrier+" "+model+"[Android_"+sysVersion+"]";
     }
     /**
-     * 上传地址
+     * 建档上传地址
      */
     public String uploadUrl(){
         return getBaseUrl()+"/app-insertpicture.action";
+    }
+
+    /**
+     * 检测信息上传地址
+     */
+    public String detectionUploadUrl(){
+        return getBaseUrl()+"/app-uploadcheck.action";
+    }
+
+    /**
+     * 维修复测上传地址
+     */
+    public String repairUploadUrl(){
+        return getBaseUrl()+"/app-uploadrepair.action";
     }
 
     /**
@@ -85,7 +99,7 @@ public class UrlManager {
      * @throws
      */
     public String getBaseUrl(){
-//        return "http://192.168.1.27:8080/LDAR2.0";
+//        return "http://192.168.1.28:8080/LDAR2.0";
         return "http://123.57.10.249/LDAR2.0";
     }
 }

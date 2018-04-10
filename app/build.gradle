@@ -39,4 +39,6 @@ dependencies {
     implementation files('libs/fastjson.jar')
     compile 'org.greenrobot:greendao:3.2.0'
     implementation 'com.commit451:PhotoView:1.2.4'
+    implementation project(':pickerview')
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
 }

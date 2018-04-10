@@ -135,7 +135,7 @@ public class ImageInfoActivity extends BaseActivity implements View.OnClickListe
                 etLocation.setText(entity.getLocation());
             }
             if(!IsNullOrEmpty.isEmpty(entity.getDirection())){
-                btDirection.setText(entity.getFloor());
+                btDirection.setText(entity.getDirection());
             }
             if(!IsNullOrEmpty.isEmpty(entity.getHeight())){
                 etHeight.setText(entity.getHeight());

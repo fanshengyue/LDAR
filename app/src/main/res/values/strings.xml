@@ -61,4 +61,25 @@
     <string name="pull_to_refresh_refreshing_label">正在刷新</string>
     <string name="pull_to_refresh_footer_release_label">松开后加载</string>
     <string name="pull_to_refresh_footer_refreshing_label">正在加载中</string>
+
+    <string name="fixed_model">固定模式</string>
+    <string name="optional_model">自选模式</string>
+    <string name="smart_model">智能模式</string>
+
+    <string name="detecting">检测中</string>
+    <string name="no_detect">待检测</string>
+
+    <string name="v">V(阀门)</string>
+    <string name="p">P(泵)</string>
+    <string name="f">F(法兰)</string>
+    <string name="c">C(压缩机)</string>
+    <string name="a">A(搅拌器)</string>
+    <string name="r">R(泄压装置)</string>
+    <string name="n">N(连接件)</string>
+    <string name="o">O(开口阀)</string>
+    <string name="s">S(采样连接系统)</string>
+    <string name="q">Q(其他类型)</string>
+
+
+
 </resources>

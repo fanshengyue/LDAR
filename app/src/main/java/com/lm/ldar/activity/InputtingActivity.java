@@ -209,33 +209,8 @@ public class InputtingActivity extends BaseActivity implements View.OnClickListe
                     if (selectEntity != null) {
                         if (!IsNullOrEmpty.isEmpty(selectEntity.getAid())) {
                             List<Picture>data=DaoUtil.getPictureList(pictureDao,Long.parseLong(selectEntity.getAid()));
-                            List<PictureDownload>pictures=new ArrayList<>();
-                            if(data!=null&&data.size()>0){
-                                for(Picture picture:data){
-                                    PictureDownload download=new PictureDownload();
-                                    download.setId(picture.getId());
-                                    download.setNumber(picture.getNumber());
-                                    download.setName(picture.getName());
-                                    download.setStatus(picture.getStatus());
-                                    download.setCreatetime(picture.getCreatetime());
-                                    download.setDeviceinfo(picture.getDeviceinfo());
-                                    download.setMaterial(picture.getMaterial());
-                                    download.setPosition(picture.getPosition());
-                                    download.setDid(picture.getDid());
-                                    download.setAid(picture.getAid());
-                                    download.setEid(picture.getEid());
-                                    download.setElementname(picture.getElementname());
-                                    download.setPidnumber(picture.getPidnumber());
-                                    download.setPvid(picture.getPvid());
-                                    download.setSketch(picture.getSketch());
-                                    download.setLatitude(picture.getLatitude());
-                                    download.setLongitude(picture.getLongitude());
-                                    download.setIscheck(0);
-                                    pictures.add(download);
-                                }
-                            }
-                            Intent intent=new Intent(InputtingActivity.this,ImageListActivity.class);
-                            intent.putExtra("imagelist", (Serializable) pictures);
+                            Intent intent=new Intent(InputtingActivity.this,DragListActivity.class);
+                            intent.putExtra("imagelist", (Serializable) data);
                             intent.putExtra("type",0);
                             startActivity(intent);
                         } else {

@@ -205,6 +205,9 @@ public class DrawPointActivity extends BaseActivity implements View.OnClickListe
             if(Global.Longitude>0){
                 picture.setLongitude(Global.Longitude);
             }
+            //获取最新的id,xid=id+1
+            Long xid=DaoUtil.getPictureLastId(pictureDao)+1;
+            picture.setXid(xid);
             DaoUtil.addPicture(pictureDao,picture);
         }
         ImageInfoActivity.isFinish=true;

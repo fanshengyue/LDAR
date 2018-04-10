@@ -76,7 +76,7 @@ public class ImageListActivity extends BaseActivity implements View.OnClickListe
         lvImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(ImageListActivity.this,ImagePagerActivity.class);
+                Intent intent=new Intent(ImageListActivity.this,ImageBluetoothActivity.class);
                 intent.putExtra("imagelist", (Serializable) pictures);
                 intent.putExtra("type",type);
                 intent.putExtra("position",position-1);

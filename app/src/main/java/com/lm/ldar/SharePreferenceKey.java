@@ -12,4 +12,9 @@ public class SharePreferenceKey {
 	public static final String EnterPriseId="enterPriseId";
 	public static final String EnterCode="enterCode";
 
+	//模式
+	public static final String MODEL="model";
+	public static final String CHOICEINDEX="choiceindex";
+	public static final String FREQUENCY="frequency";
+
 }

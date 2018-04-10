@@ -183,36 +183,59 @@
                     android:background="@drawable/bg_button_nomal"
                     android:paddingRight="@dimen/dimen_dp_10"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/bt_download"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_40"
-                android:text="下    载"
-                android:textColor="@color/white"
-                android:layout_marginTop="@dimen/dimen_dp_20"
-                android:layout_marginLeft="@dimen/dimen_dp_60"
-                android:layout_marginRight="@dimen/dimen_dp_60"
-                android:background="@drawable/bg_border_button"/>
-            <Button
-                android:id="@+id/bt_see"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_dp_20">
+                <Button
+                    android:id="@+id/bt_download"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:text="下    载"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/dimen_dp_10"
+                    android:layout_marginRight="@dimen/dimen_dp_10"
+                    android:background="@drawable/bg_border_button"/>
+                <Button
+                    android:id="@+id/bt_see"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:text="查    看"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/dimen_dp_10"
+                    android:layout_marginRight="@dimen/dimen_dp_10"
+                    android:background="@drawable/bg_border_button"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_40"
-                android:text="查    看"
-                android:textColor="@color/white"
+                android:layout_height="@dimen/dimen_dp_50"
+                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dimen_dp_20"
-                android:layout_marginLeft="@dimen/dimen_dp_60"
-                android:layout_marginRight="@dimen/dimen_dp_60"
-                android:background="@drawable/bg_border_button"/>
-            <Button
-                android:id="@+id/bt_delete"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_dp_40"
-                android:text="删     除"
-                android:textColor="@color/white"
-                android:layout_marginTop="@dimen/dimen_dp_20"
-                android:layout_marginLeft="@dimen/dimen_dp_60"
-                android:layout_marginRight="@dimen/dimen_dp_60"
-                android:background="@drawable/bg_border_button"/>
+                android:layout_marginBottom="@dimen/dimen_dp_10">
+                <Button
+                    android:id="@+id/bt_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:layout_weight="1"
+                    android:text="上    传"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/dimen_dp_10"
+                    android:layout_marginRight="@dimen/dimen_dp_10"
+                    android:background="@drawable/bg_border_button"/>
+                <Button
+                    android:id="@+id/bt_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_40"
+                    android:text="删    除"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/dimen_dp_10"
+                    android:layout_marginRight="@dimen/dimen_dp_10"
+                    android:background="@drawable/bg_border_button"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

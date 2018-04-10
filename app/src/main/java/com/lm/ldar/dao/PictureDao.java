@@ -61,9 +61,11 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         public final static Property Latitude = new Property(15, Double.class, "latitude", false, "LATITUDE");
         //经度
         public final static Property Longitude = new Property(16, Double.class, "longitude", false, "LONGITUDE");
+        //人为排序
+        public final static Property Xid = new Property(17, Long.class, "xid", false, "XID");
     }
 
-    ;
+
 
     public PictureDao(DaoConfig config) {
         super(config);
@@ -95,7 +97,9 @@ public class PictureDao extends AbstractDao<Picture, Long> {
                 "\"PVID\" INTEGER," + //13.pvid
                 "\"SKETCH\" TEXT," + //14.sketch
                 "\"LATITUDE\" DOUBLE," + //15.latitude
-                "\"LONGITUDE\" DOUBLE);");//16.longitude
+                "\"LONGITUDE\" DOUBLE," + //16.longitude
+                "\"XID\" INTEGER);");//17.xid
+
     }
 
     /**
@@ -125,7 +129,9 @@ public class PictureDao extends AbstractDao<Picture, Long> {
                 cursor.getInt(offset + 13),// pvid
                 cursor.getString(offset + 14),// sketch
                 cursor.getDouble(offset+15),//latitude
-                cursor.getDouble(offset+16)//longitude
+                cursor.getDouble(offset+16),//longitude
+                cursor.getLong(offset+17)//xid
+
         );
         return picture;
     }
@@ -154,6 +160,7 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         entity.setSketch(cursor.getString(offset + 14));
         entity.setLatitude(cursor.getDouble(offset+15));
         entity.setLongitude(cursor.getDouble(offset+16));
+        entity.setXid(cursor.getLong(offset+17));
     }
 
     @Override
@@ -179,6 +186,7 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         stmt.bindString(15, entity.getSketch());
         stmt.bindDouble(16,entity.getLatitude());
         stmt.bindDouble(17,entity.getLongitude());
+        stmt.bindLong(18,entity.getXid());
     }
 
     @Override
@@ -204,6 +212,7 @@ public class PictureDao extends AbstractDao<Picture, Long> {
         stmt.bindString(15, entity.getSketch());
         stmt.bindDouble(16,entity.getLatitude());
         stmt.bindDouble(17,entity.getLongitude());
+        stmt.bindLong(18,entity.getXid());
     }
 
     @Override

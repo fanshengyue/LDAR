@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lm.ldar.itemtouch.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_dp_100">
+
+    <RelativeLayout
+        android:id="@+id/rl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/item_imagelist"></include>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/lineColor"
+        android:focusable="true">
+        <Button
+            android:id="@+id/bt_deletes"
+            android:text="删除"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_width="100dp"
+            android:background="@drawable/btn_delete"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+</com.lm.ldar.itemtouch.SwipeItemLayout>

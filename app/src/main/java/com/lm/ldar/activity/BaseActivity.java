@@ -17,16 +17,20 @@ import com.lm.ldar.LMApplication;
 import com.lm.ldar.R;
 import com.lm.ldar.api.UrlManager;
 import com.lm.ldar.dao.AreaDao;
+import com.lm.ldar.dao.CheckInfoDao;
 import com.lm.ldar.dao.CtypeDao;
 import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.DepartmentDao;
 import com.lm.ldar.dao.DeviceDao;
+import com.lm.ldar.dao.ElementDao;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
+import com.lm.ldar.dao.InstrumentDao;
 import com.lm.ldar.dao.NamerulesDao;
 import com.lm.ldar.dao.PictureDao;
 import com.lm.ldar.dao.PictureDownloadDao;
 import com.lm.ldar.dao.PictureversionDao;
+import com.lm.ldar.dao.RepairDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.dao.WorkplanDao;
 import com.lm.ldar.entity.Ctype;
@@ -56,7 +60,10 @@ public class BaseActivity extends Activity {
     public DepartmentDao departmentDao;
     public PictureDao pictureDao;
     public PictureDownloadDao pictureDownloadDao;
-
+    public InstrumentDao instrumentDao;
+    public RepairDao repairDao;
+    public CheckInfoDao checkInfoDao;
+    public ElementDao elementDao;
 
     public Long userId;//用户id
     public Long epId;//企业id
@@ -120,6 +127,10 @@ public class BaseActivity extends Activity {
         departmentDao = daoSession.getDepartmentDao();
         pictureDao=daoSession.getPictureDao();
         pictureDownloadDao=daoSession.getPictureDownloadDao();
+        instrumentDao=daoSession.getInstrumentDao();
+        repairDao=daoSession.getRepairDao();
+        checkInfoDao=daoSession.getCheckInfoDao();
+        elementDao=daoSession.getElementDao();
     }
 
     public void initTitleBar(String title) {

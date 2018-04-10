@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
 import com.lm.ldar.entity.Device;
+import com.lm.ldar.entity.Element;
 import com.lm.ldar.entity.Factory;
+import com.lm.ldar.entity.Repair;
 
 import org.greenrobot.greendao.AbstractDaoMaster;
 import org.greenrobot.greendao.database.StandardDatabase;
@@ -36,6 +38,10 @@ public class DaoMaster extends AbstractDaoMaster {
         PictureversionDao.createTable(db,ifNotExists);
         PictureDao.createTable(db,ifNotExists);
         PictureDownloadDao.createTable(db,ifNotExists);
+        CheckInfoDao.createTable(db,ifNotExists);
+        RepairDao.createTable(db,ifNotExists);
+        InstrumentDao.createTable(db,ifNotExists);
+        ElementDao.createTable(db,ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -52,6 +58,10 @@ public class DaoMaster extends AbstractDaoMaster {
         PictureversionDao.createTable(db,ifExists);
         PictureDao.createTable(db,ifExists);
         PictureDownloadDao.createTable(db,ifExists);
+        CheckInfoDao.createTable(db,ifExists);
+        RepairDao.createTable(db,ifExists);
+        InstrumentDao.createTable(db,ifExists);
+        ElementDao.createTable(db,ifExists);
     }
 
     /**
@@ -82,6 +92,10 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(PictureversionDao.class);
         registerDaoClass(PictureDao.class);
         registerDaoClass(PictureDownloadDao.class);
+        registerDaoClass(CheckInfoDao.class);
+        registerDaoClass(RepairDao.class);
+        registerDaoClass(InstrumentDao.class);
+        registerDaoClass(ElementDao.class);
     }
 
     public DaoSession newSession() {

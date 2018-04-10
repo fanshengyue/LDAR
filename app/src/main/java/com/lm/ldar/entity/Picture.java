@@ -26,12 +26,13 @@ public class Picture implements Serializable {
     private String sketch;//草图地址(标点之后存储图片路径)
     private double latitude;//纬度
     private double longitude;//经度
-
+    private Long xid;//自己加的字段，用来手机本地数据库排序，初始值和xid一样
     public Picture() {
     }
 
     public Picture(Long id, String number, String name, String status, String createtime, String deviceinfo, String material, String position,
-                   int did, int aid, int eid, String elementname, String pidnumber, int pvid, String sketch,double latitude,double longitude) {
+                   int did, int aid, int eid, String elementname, String pidnumber, int pvid, String sketch,double latitude,double longitude,
+                    Long xid) {
         this.id = id;
         this.number = number;
         this.name = name;
@@ -49,6 +50,15 @@ public class Picture implements Serializable {
         this.sketch = sketch;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.xid=xid;
+    }
+
+    public Long getXid() {
+        return xid;
+    }
+
+    public void setXid(Long xid) {
+        this.xid = xid;
     }
 
     public double getLongitude() {

@@ -27,12 +27,13 @@ public class PictureDownload implements Serializable {
     private int ischeck;//默认是0,0代表检测图片，1代表复测图片
     private double latitude;//纬度
     private double longitude;//经度
+    private Long xid;//自己加的字段，用来手机本地数据库排序，初始值和xid一样
     public PictureDownload() {
     }
 
     public PictureDownload(Long id, String number, String name, String status, String createtime, String deviceinfo, String material,
                            String position, int did, int aid, int eid, String elementname, String pidnumber, int pvid,
-                           String sketch,int ischeck,double latitude,double longitude) {
+                           String sketch,int ischeck,double latitude,double longitude,Long xid) {
         this.id = id;
         this.number = number;
         this.name = name;
@@ -51,6 +52,15 @@ public class PictureDownload implements Serializable {
         this.ischeck=ischeck;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.xid=xid;
+    }
+
+    public Long getXid() {
+        return xid;
+    }
+
+    public void setXid(Long xid) {
+        this.xid = xid;
     }
 
     public double getLatitude() {

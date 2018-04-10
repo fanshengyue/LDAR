@@ -4,28 +4,36 @@ import android.app.Activity;
 
 import com.lm.ldar.LMApplication;
 import com.lm.ldar.dao.AreaDao;
+import com.lm.ldar.dao.CheckInfoDao;
 import com.lm.ldar.dao.CtypeDao;
 import com.lm.ldar.dao.DaoSession;
 import com.lm.ldar.dao.DepartmentDao;
 import com.lm.ldar.dao.DeviceDao;
+import com.lm.ldar.dao.ElementDao;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.FactoryDao;
+import com.lm.ldar.dao.InstrumentDao;
 import com.lm.ldar.dao.NamerulesDao;
 import com.lm.ldar.dao.PictureDao;
 import com.lm.ldar.dao.PictureDownloadDao;
 import com.lm.ldar.dao.PictureversionDao;
+import com.lm.ldar.dao.RepairDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.dao.WorkplanDao;
 import com.lm.ldar.entity.Area;
+import com.lm.ldar.entity.CheckInfo;
 import com.lm.ldar.entity.Ctype;
 import com.lm.ldar.entity.Department;
 import com.lm.ldar.entity.Device;
+import com.lm.ldar.entity.Element;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
+import com.lm.ldar.entity.Instrument;
 import com.lm.ldar.entity.Namerules;
 import com.lm.ldar.entity.Picture;
 import com.lm.ldar.entity.PictureDownload;
 import com.lm.ldar.entity.Pictureversion;
+import com.lm.ldar.entity.Repair;
 import com.lm.ldar.entity.User;
 import com.lm.ldar.entity.Workplan;
 
@@ -307,13 +315,36 @@ public class DaoUtil {
     }
 
     /**
-     * 根据Aid查询该企业待上传的图片
+     * 根据Aid查询该企业待上传的图片,xid升序排列
      */
     public static List<Picture> getPictureList(PictureDao pictureDao,Long aid){
-        List<Picture>pictureList=pictureDao.queryBuilder().where(PictureDao.Properties.Aid.eq(aid)).build().list();
+        //xid升序排列
+        List<Picture>pictureList=pictureDao.queryBuilder().where(PictureDao.Properties.Aid.eq(aid)).orderAsc(PictureDao.Properties.Xid).build().list();
         return pictureList;
     }
 
+    /**
+     * Picture表降序排序，获取最新的id值
+     */
+    public static Long getPictureLastId(PictureDao pictureDao){
+        //orderAsc升序，orderDesc降序
+        List<Picture>pictureList=pictureDao.queryBuilder().orderDesc(PictureDao.Properties.Id).build().list();
+        if(pictureList!=null&&pictureList.size()>0){
+            return pictureList.get(0).getId();
+        }else{
+            return Long.valueOf(0);
+        }
+    }
+
+    /**
+     * 更新数据库中两个数据之间的顺序
+     */
+    public static void UpdateRank(PictureDao pictureDao,Picture opicture,Picture npicture){
+        if(opicture!=null&&npicture!=null){
+            pictureDao.update(opicture);
+            pictureDao.update(npicture);
+        }
+    }
 
     /**
      * 根据Aid删除该子区域内的图片表数据
@@ -409,6 +440,95 @@ public class DaoUtil {
             downloadDao.delete(pictureDownload);
         }
     }
+
+    /**
+     * 增加设备仪器
+     * @param
+     * @param
+     */
+    public static void updateInstrument(InstrumentDao instrumentDao, Instrument instrument){
+        if(instrument !=null){
+            Instrument query_ins = instrumentDao.queryBuilder().where(InstrumentDao.Properties.Id.eq(instrument.getId())).unique();
+            if(query_ins!=null){
+                instrumentDao.update(instrument);
+            }else{
+                instrumentDao.insert(instrument);
+            }
+        }
+    }
+    /**
+     * 更新Repair表
+     */
+    public static void updateRepair(RepairDao repairDao, Repair repair){
+        if(repair !=null){
+            Repair query_repair = repairDao.queryBuilder().where(RepairDao.Properties.Id.eq(repair.getId())).unique();
+            if(query_repair!=null){
+                repairDao.update(repair);
+            }else{
+                repairDao.insert(repair);
+            }
+        }
+    }
+    /**
+     * 更新CheckInfo
+     */
+    public static void updateCheckInfo(CheckInfoDao checkInfoDao, CheckInfo checkInfo){
+        if(checkInfo !=null){
+            CheckInfo query_check = checkInfoDao.queryBuilder().where(CheckInfoDao.Properties.Id.eq(checkInfo.getId())).unique();
+            if(query_check!=null){
+                checkInfoDao.update(checkInfo);
+            }else{
+                checkInfoDao.insert(checkInfo);
+            }
+        }
+    }
+
+    /**
+     * 更新Element
+     */
+    public static void updateElement(ElementDao elementDao, Element element){
+        if(element !=null){
+            Element query_ele = elementDao.queryBuilder().where(ElementDao.Properties.Id.eq(element.getId())).unique();
+            if(query_ele!=null){
+                elementDao.update(element);
+            }else{
+                elementDao.insert(element);
+            }
+        }
+    }
+
+    /**
+     * 根据areaid查询Repair表数据
+     */
+    public static List<Repair>getRepairList(RepairDao repairDao,Long aid){
+        List<Repair>repairList=repairDao.queryBuilder().where(RepairDao.Properties.Aid.eq(aid)).build().list();
+        return repairList;
+    }
+
+    /**
+     * 根据areaid查询CheckInfo表数据
+     */
+    public static List<CheckInfo>getCheckInfoList(CheckInfoDao checkInfoDao,Long aid){
+        List<CheckInfo>checkInfoList=checkInfoDao.queryBuilder().where(CheckInfoDao.Properties.Aid.eq(aid)).build().list();
+        return checkInfoList;
+    }
+
+    /**
+     * 根据pid查询Element表数据
+     */
+    public static List<Element>getElementListByPid(ElementDao elementDao,Long pid){
+        List<Element>elementList=elementDao.queryBuilder().where(ElementDao.Properties.Pid.eq(pid)).build().list();
+        return elementList;
+    }
+
+    /**
+     * 根据eleid查找checkinfo
+     */
+    public static CheckInfo getCheckInfoByEleid(CheckInfoDao checkInfoDao,Long eleid){
+        CheckInfo checkInfo = checkInfoDao.queryBuilder().where(CheckInfoDao.Properties.Eleid.eq(eleid)).unique();
+        return checkInfo;
+    }
+
 
 
 }

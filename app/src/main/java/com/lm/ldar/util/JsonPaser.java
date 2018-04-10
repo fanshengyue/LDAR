@@ -5,14 +5,18 @@ import android.app.Activity;
 
 import com.lm.ldar.dao.PictureDao;
 import com.lm.ldar.entity.Area;
+import com.lm.ldar.entity.CheckInfo;
 import com.lm.ldar.entity.Ctype;
 import com.lm.ldar.entity.Department;
 import com.lm.ldar.entity.Device;
+import com.lm.ldar.entity.Element;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
+import com.lm.ldar.entity.Instrument;
 import com.lm.ldar.entity.Namerules;
 import com.lm.ldar.entity.PictureDownload;
 import com.lm.ldar.entity.Pictureversion;
+import com.lm.ldar.entity.Repair;
 import com.lm.ldar.entity.User;
 import com.lm.ldar.entity.Workplan;
 
@@ -326,6 +330,7 @@ public class JsonPaser {
                     picture.setLatitude(jsonObject.optDouble("lat"));
                     picture.setLongitude(jsonObject.optDouble("lon"));
                     picture.setIscheck(ischeck);
+                    picture.setXid(jsonObject.optLong("id"));
                     pictureList.add(picture);
                 }
             }
@@ -334,7 +339,175 @@ public class JsonPaser {
 
     }
 
+    /**
+     * 解析Instrument
+     *
+     * @param content
+     * @return
+     * @throws JSONException
+     */
+    public static List<Instrument> parseInstrument(String content) throws JSONException {
+        List<Instrument> instruments = new ArrayList<>();
+        if (!IsNullOrEmpty.isEmpty(content)) {
+            JSONArray jsonArray = new JSONArray(content);
+            if (jsonArray != null && jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.optJSONObject(i);
+                    Instrument instrument = new Instrument();
+                    instrument.setId(jsonObject.optLong("id"));
+                    instrument.setInsname(jsonObject.optString("insname"));
+                    instrument.setEid(jsonObject.optLong("eid"));
+                    instruments.add(instrument);
+                }
+            }
+        }
+        return instruments;
+    }
 
+    /**
+     * 解析Repair
+     */
+    private double leakagerate;//泄漏量ppm
+    private double repairleakagerate;//修复后泄漏量ppm
+    private Long pvid;//图像版本ID
+    private String firstcheckpeople;//第一次复测人员
+    private String seccheckpeople;//第二次复测人员
+    public static List<Repair> getRepair(String content) throws JSONException {
+        List<Repair>repairList=new ArrayList<>();
+        if(!IsNullOrEmpty.isEmpty(content)){
+            JSONArray jsonArray=new JSONArray(content);
+            if(jsonArray != null && jsonArray.length() > 0){
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.optJSONObject(i);
+                    Repair repair=new Repair();
+                    repair.setId(jsonObject.optLong("id"));
+                    repair.setTag(jsonObject.optString("tag"));
+                    repair.setPbvalue(jsonObject.optString("pbvalue"));
+                    repair.setFirstname(jsonObject.optString("firstname"));
+                    repair.setFirsttime(jsonObject.optString("firsttime"));
+                    repair.setFirstmethod(jsonObject.optString("firstmethod"));
+                    repair.setFirstreplay(jsonObject.optString("firstreplay"));
+                    repair.setFirstdropnumber(jsonObject.optString("firstdropnumber"));
+                    repair.setSecname(jsonObject.optString("secname"));
+                    repair.setSectime(jsonObject.optString("sectime"));
+                    repair.setSecmethod(jsonObject.optString("secmethod"));
+                    repair.setSecreplay(jsonObject.optString("secreplay"));
+                    repair.setSecdropnumber(jsonObject.optString("secdropnumber"));
+                    repair.setFcvalue(jsonObject.optString("fcvalue"));
+                    repair.setDefine(jsonObject.optString("define"));
+                    repair.setIssuccess(jsonObject.optInt("issuccess"));
+                    repair.setDelayreason(jsonObject.optString("delayreason"));
+                    repair.setIsdelay(jsonObject.optInt("isdelay"));
+                    repair.setUid(jsonObject.optLong("uid"));
+                    repair.setChecktime(jsonObject.optString("checktime"));
+                    repair.setDid(jsonObject.optLong("did"));
+                    repair.setAid(jsonObject.optLong("aid"));
+                    repair.setTid(jsonObject.optLong("tid"));
+                    repair.setPid(jsonObject.optLong("pid"));
+                    repair.setWid(jsonObject.optLong("wid"));
+                    repair.setEleid(jsonObject.optLong("eleid"));
+                    repair.setLeakagerate(jsonObject.optDouble("leakagerate"));
+                    repair.setRepairleakagerate(jsonObject.optDouble("repairleakagerate"));
+                    repair.setPvid(jsonObject.optLong("pvid"));
+                    repair.setFirstcheckpeople(jsonObject.optString("firstcheckpeople"));
+                    repair.setSeccheckpeople(jsonObject.optString("seccheckpeople"));
+                    repairList.add(repair);
+                }
+            }
+        }
+        return repairList;
+
+    }
+
+    /**
+     * 解析CheckInfo
+     */
+    public static List<CheckInfo> getCheckInfoData(String content) throws JSONException {
+        List<CheckInfo>checkInfoList=new ArrayList<>();
+        if(!IsNullOrEmpty.isEmpty(content)){
+            JSONArray jsonArray=new JSONArray(content);
+            if(jsonArray != null && jsonArray.length() > 0){
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.optJSONObject(i);
+                    CheckInfo checkInfo=new CheckInfo();
+                    checkInfo.setId(jsonObject.optLong("id"));
+                    checkInfo.setDate(jsonObject.optString("date"));
+                    checkInfo.setTime(jsonObject.optString("time"));
+                    checkInfo.setMedium(jsonObject.optString("medium"));
+                    checkInfo.setType(jsonObject.optString("type"));
+                    checkInfo.setTag(jsonObject.optString("tag"));
+                    checkInfo.setPbvalue(jsonObject.optString("pbvalue"));
+                    checkInfo.setPbunit(jsonObject.optString("pbunit"));
+                    checkInfo.setPbstate(jsonObject.optString("pbstate"));
+                    checkInfo.setPcvalue(jsonObject.optString("pcvalue"));
+                    checkInfo.setPcunit(jsonObject.optString("pcunit"));
+                    checkInfo.setPcstate(jsonObject.optString("pcstate"));
+                    checkInfo.setFbvalue(jsonObject.optString("fbvalue"));
+                    checkInfo.setFbunit(jsonObject.optString("fbunit"));
+                    checkInfo.setFbstate(jsonObject.optString("fbstate"));
+                    checkInfo.setFcvalue(jsonObject.optString("fcvalue"));
+                    checkInfo.setFcunit(jsonObject.optString("fcunit"));
+                    checkInfo.setFcstate(jsonObject.optString("fcstate"));
+                    checkInfo.setDefine(jsonObject.optString("define"));
+                    checkInfo.setUid(jsonObject.optLong("uid"));
+                    checkInfo.setInsid(jsonObject.optLong("insid"));
+                    checkInfo.setDid(jsonObject.optLong("did"));
+                    checkInfo.setAid(jsonObject.optLong("aid"));
+                    checkInfo.setTid(jsonObject.optLong("tid"));
+                    checkInfo.setWid(jsonObject.optLong("wid"));
+                    checkInfo.setEleid(jsonObject.optLong("eleid"));
+                    checkInfo.setDays(jsonObject.optDouble("days"));
+                    checkInfo.setHorus(jsonObject.optDouble("horus"));
+                    checkInfo.setIsleak(jsonObject.optInt("isleak"));
+                    checkInfo.setLeakagerate(jsonObject.optDouble("leakagerate"));
+                    checkInfo.setLeakageratepjxs(jsonObject.optDouble("leakageratepjxs"));
+                    checkInfo.setDet(jsonObject.optString("det"));
+                    checkInfo.setLeak(jsonObject.optString("leak"));
+                    checkInfo.setLeaksource(jsonObject.optString("leaksource"));
+                    checkInfo.setRepairmethod(jsonObject.optString("repairmethod"));
+                    checkInfo.setOriginalfcvalue(jsonObject.optString("originalfcvalue"));
+                    checkInfo.setPvid(jsonObject.optLong("pvid"));
+                    checkInfo.setCheckpeople(jsonObject.optString("checkpeople"));
+                    checkInfoList.add(checkInfo);
+                }
+            }
+        }
+        return checkInfoList;
+
+    }
+
+    /**
+     * 解析CheckInfo
+     */
+    public static List<Element> getElementData(String content) throws JSONException {
+        List<Element>elementList=new ArrayList<>();
+        if(!IsNullOrEmpty.isEmpty(content)){
+            JSONArray jsonArray=new JSONArray(content);
+            if(jsonArray != null && jsonArray.length() > 0){
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.optJSONObject(i);
+                    Element element=new Element();
+                    element.setId(jsonObject.optLong("id"));
+                    element.setType(jsonObject.optString("type"));
+                    element.setDatetime(jsonObject.optString("datetime"));
+                    element.setDid(jsonObject.optLong("did"));
+                    element.setAid(jsonObject.optLong("aid"));
+                    element.setEid(jsonObject.optLong("eid"));
+                    element.setPid(jsonObject.optLong("pid"));
+                    element.setText(jsonObject.optString("text"));
+                    element.setMethod(jsonObject.optString("method"));
+                    element.setNumber(jsonObject.optString("number"));
+                    element.setUpdatetime(jsonObject.optString("updatetie"));
+                    element.setIsreach(jsonObject.optString("isreach"));
+                    element.setPidnumber(jsonObject.optString("pidnumber"));
+                    element.setPvid(jsonObject.optLong("pvid"));
+                    elementList.add(element);
+                }
+            }
+        }
+        return elementList;
+
+    }
 
 
 }

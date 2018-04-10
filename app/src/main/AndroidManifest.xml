@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lm.ldar">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -19,6 +21,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--蓝牙模块-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
 
     <application
         android:name=".LMApplication"
@@ -85,6 +91,17 @@
             android:name=".activity.ImageEditActivity"
             android:launchMode="singleTask">
         </activity>
+        <activity android:name=".activity.ImageBluetoothActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".activity.SettingActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".activity.DragListActivity"
+            android:launchMode="singleTask">
+        </activity>
+
+        <service android:name=".bluetoothssp.BluetoothClientService" />
     </application>
 
 </manifest>

@@ -184,38 +184,221 @@
                         android:paddingRight="@dimen/dimen_dp_10"
                         android:background="@drawable/bg_button_nomal"/>
                 </LinearLayout>
-                <Button
-                    android:id="@+id/bt_download"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_dp_40"
-                    android:text="下    载"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/dimen_dp_20"
-                    android:layout_marginLeft="@dimen/dimen_dp_60"
-                    android:layout_marginRight="@dimen/dimen_dp_60"
-                    android:background="@drawable/bg_border_button"/>
-                <Button
-                    android:id="@+id/bt_see"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="组件类型:"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:layout_weight="1"
+                        android:visibility="invisible"
+                        android:paddingRight="@dimen/dimen_dp_10"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_dp_40"
-                    android:text="查    看"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/dimen_dp_20"
-                    android:layout_marginLeft="@dimen/dimen_dp_60"
-                    android:layout_marginRight="@dimen/dimen_dp_60"
-                    android:background="@drawable/bg_border_button"/>
-                <Button
-                    android:id="@+id/bt_delete"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <CheckBox
+                        android:id="@+id/cb_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/v" />
+                    <CheckBox
+                        android:id="@+id/cb_p"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p" />
+                    <CheckBox
+                        android:id="@+id/cb_f"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/f" />
+                    <CheckBox
+                        android:id="@+id/cb_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/c" />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_dp_40"
-                    android:text="删     除"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/dimen_dp_20"
-                    android:layout_marginLeft="@dimen/dimen_dp_60"
-                    android:layout_marginRight="@dimen/dimen_dp_60"
-                    android:background="@drawable/bg_border_button"/>
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <CheckBox
+                        android:id="@+id/cb_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/a" />
 
+                    <CheckBox
+                        android:id="@+id/cb_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/r" />
+                    <CheckBox
+                        android:id="@+id/cb_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/n" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" >
+                    <CheckBox
+                        android:id="@+id/cb_o"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/o" />
+
+                    <CheckBox
+                        android:id="@+id/cb_s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/s" />
+                    <CheckBox
+                        android:id="@+id/cb_q"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/q" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_marginBottom="@dimen/dimen_dp_10"
+                    >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="检测仪器:"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <Button
+                        android:id="@+id/bt_instrument"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:layout_weight="1"
+                        android:text="@string/please_select"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:textColor="@color/font_text"
+                        android:paddingRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_button_nomal"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    >
+                    <TextView
+                        android:layout_width="@dimen/dimen_dp_10"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="*"
+                        android:textColor="@color/font_text3"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="检测人员:"
+                        android:gravity="center"
+                        android:layout_weight="3"/>
+                    <EditText
+                        android:id="@+id/et_checkpeople"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@color/font_text"
+                        android:paddingRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_edittext"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dimen_dp_20">
+                    <Button
+                        android:id="@+id/bt_download"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:layout_weight="1"
+                        android:text="下    载"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/dimen_dp_10"
+                        android:layout_marginRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_border_button"/>
+                    <Button
+                        android:id="@+id/bt_see"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:text="查    看"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/dimen_dp_10"
+                        android:layout_marginRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_border_button"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_dp_50"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dimen_dp_20"
+                    android:layout_marginBottom="@dimen/dimen_dp_10">
+                    <Button
+                        android:id="@+id/bt_upload"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:layout_weight="1"
+                        android:text="上    传"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/dimen_dp_10"
+                        android:layout_marginRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_border_button"/>
+                    <Button
+                        android:id="@+id/bt_delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_dp_40"
+                        android:text="删    除"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/dimen_dp_10"
+                        android:layout_marginRight="@dimen/dimen_dp_10"
+                        android:background="@drawable/bg_border_button"/>
+                </LinearLayout>
             </LinearLayout>
+
         </ScrollView>
 </LinearLayout>
 

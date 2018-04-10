@@ -37,6 +37,7 @@ import com.lm.ldar.entity.Department;
 import com.lm.ldar.entity.Device;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.Factory;
+import com.lm.ldar.entity.Instrument;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.entity.Namerules;
 import com.lm.ldar.entity.Pictureversion;
@@ -225,26 +226,38 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     DaoUtil.updateNamerules(namerulesDao,namerules);
                                 }
                             }
-//                            // 组件类型
-//                            String str_ctype = jsonObject.optString("ctypeList");
-//                            if(!IsNullOrEmpty.isEmpty(str_ctype)){
-//                                List<Ctype> ctypes = JsonPaser.parseCtype(str_ctype);
-//                                if(ctypes!=null&&ctypes.size()>0){
-//                                    for (Ctype ctype:ctypes){
-//                                        if(ctype!=null){
-//                                            if(!IsNullOrEmpty.isEmpty(ctype.getId())&&!IsNullOrEmpty.isEmpty(ctype.getDescription())){
-//                                                DaoUtil.updateCtype(ctypeDao,ctype);
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
+                            // 组件类型
+                            String str_ctype = jsonObject.optString("ctypeList");
+                            if(!IsNullOrEmpty.isEmpty(str_ctype)){
+                                List<Ctype> ctypes = JsonPaser.parseCtype(str_ctype);
+                                if(ctypes!=null&&ctypes.size()>0){
+                                    for (Ctype ctype:ctypes){
+                                        if(ctype!=null){
+                                            if(!IsNullOrEmpty.isEmpty(ctype.getId())&&!IsNullOrEmpty.isEmpty(ctype.getDescription())){
+                                                DaoUtil.updateCtype(ctypeDao,ctype);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             // 工作计划
                             String str_workplan = jsonObject.optString("workplan");
                             if(!IsNullOrEmpty.isEmpty(str_workplan)){
                                 Workplan workplan = JsonPaser.parseWorkplan(str_workplan);
                                 if(workplan!=null){
                                     DaoUtil.updateWorkplan(workplanDao,workplan);
+                                }
+                            }
+                            //设备仪器
+                            String str_ins=jsonObject.optString("instrumentList");
+                            if(!IsNullOrEmpty.isEmpty(str_ins)){
+                                List<Instrument> instrumentList = JsonPaser.parseInstrument(str_ins);
+                                if(instrumentList!=null&&instrumentList.size()>0){
+                                    for (Instrument instrument:instrumentList){
+                                        if(instrument!=null){
+                                            DaoUtil.updateInstrument(instrumentDao,instrument);
+                                        }
+                                    }
                                 }
                             }
 

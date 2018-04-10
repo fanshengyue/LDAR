@@ -9,6 +9,7 @@ import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
 import com.lm.ldar.entity.Area;
+import com.lm.ldar.entity.CheckInfo;
 import com.lm.ldar.entity.Ctype;
 import com.lm.ldar.entity.Department;
 import com.lm.ldar.entity.Device;
@@ -42,6 +43,10 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig pictureversionDaoConfig;
     private final DaoConfig pictureDaoConfig;
     private final DaoConfig picturDownloadConfig;
+    private final DaoConfig checkinfoConfig;
+    private final DaoConfig repairConfig;
+    private final DaoConfig instrumentConfig;
+    private final DaoConfig elementConfig;
 
     private final UserDao userDao;
     private final EnterpriseDao enterpriseDao;
@@ -55,7 +60,10 @@ public class DaoSession extends AbstractDaoSession {
     private final PictureversionDao pictureversionDao;
     private final PictureDao pictureDao;
     private final PictureDownloadDao pictureDownloadDao;
-
+    private final CheckInfoDao checkInfoDao;
+    private final RepairDao repairDao;
+    private final InstrumentDao instrumentDao;
+    private final ElementDao elementDao;
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
@@ -95,6 +103,18 @@ public class DaoSession extends AbstractDaoSession {
         // 图片下载
         picturDownloadConfig = daoConfigMap.get(PictureDownloadDao.class).clone();
         picturDownloadConfig.initIdentityScope(type);
+        //检查
+        checkinfoConfig=daoConfigMap.get(CheckInfoDao.class).clone();
+        checkinfoConfig.initIdentityScope(type);
+        //repair
+        repairConfig=daoConfigMap.get(RepairDao.class).clone();
+        repairConfig.initIdentityScope(type);
+        //设备仪器
+        instrumentConfig=daoConfigMap.get(InstrumentDao.class).clone();
+        instrumentConfig.initIdentityScope(type);
+        //Element
+        elementConfig=daoConfigMap.get(ElementDao.class).clone();
+        elementConfig.initIdentityScope(type);
 
         userDao = new UserDao(userDaoConfig, this);
         enterpriseDao = new EnterpriseDao(enterpriseDaoConfig, this);
@@ -108,6 +128,10 @@ public class DaoSession extends AbstractDaoSession {
         pictureversionDao = new PictureversionDao(pictureversionDaoConfig,this);
         pictureDao = new PictureDao(pictureDaoConfig,this);
         pictureDownloadDao = new PictureDownloadDao(picturDownloadConfig,this);
+        checkInfoDao=new CheckInfoDao(checkinfoConfig,this);
+        repairDao=new RepairDao(repairConfig,this);
+        instrumentDao=new InstrumentDao(instrumentConfig,this);
+        elementDao=new ElementDao(elementConfig,this);
 
         registerDao(User.class, userDao);
         registerDao(Enterprise.class, enterpriseDao);
@@ -121,6 +145,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(Pictureversion.class,pictureversionDao);
         registerDao(Picture.class,pictureDao);
         registerDao(PictureDownload.class,pictureDownloadDao);
+        registerDao(CheckInfo.class,checkInfoDao);
     }
 
     public void clear() {
@@ -136,6 +161,7 @@ public class DaoSession extends AbstractDaoSession {
         pictureversionDaoConfig.clearIdentityScope();
         pictureDaoConfig.clearIdentityScope();
         picturDownloadConfig.clearIdentityScope();
+        checkinfoConfig.clearIdentityScope();
     }
 
     public UserDao getUserDao() {
@@ -183,4 +209,20 @@ public class DaoSession extends AbstractDaoSession {
     }
 
     public PictureDownloadDao getPictureDownloadDao(){return pictureDownloadDao;}
+
+    public CheckInfoDao getCheckInfoDao(){
+        return checkInfoDao;
+    }
+
+    public RepairDao getRepairDao(){
+        return repairDao;
+    }
+
+    public InstrumentDao getInstrumentDao(){
+        return instrumentDao;
+    }
+
+    public ElementDao getElementDao(){
+        return elementDao;
+    }
 }

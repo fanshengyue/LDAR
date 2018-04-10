@@ -1,22 +1,19 @@
 package com.lm.ldar.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lm.ldar.R;
-import com.lm.ldar.SharePreferenceKey;
 import com.lm.ldar.dao.EnterpriseDao;
 import com.lm.ldar.dao.UserDao;
 import com.lm.ldar.entity.Enterprise;
 import com.lm.ldar.entity.LoginUserEntity;
 import com.lm.ldar.entity.User;
-import com.lm.ldar.util.LoginUserUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +40,8 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
     TextView tvEmail;
     @BindView(R.id.tv_industry)
     TextView tvIndustry;
+    @BindView(R.id.iv_setting)
+    ImageView ivSetting;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,12 +78,13 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
 
     private void initListener() {
         btQuit.setOnClickListener(this);
+        ivSetting.setOnClickListener(this);
     }
 
     /**
      * 退出登录
      */
-    private void Logout(){
+    private void Logout() {
         Intent intents = new Intent(MeActivity.this, LoginActivity.class);
         startActivity(intents);
         userUtil.deleteShare();
@@ -94,9 +94,12 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_quit:
                 Logout();
+                break;
+            case R.id.iv_setting:
+                startActivity(new Intent(this,SettingActivity.class));
                 break;
             default:
                 break;

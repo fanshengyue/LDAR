@@ -61,6 +61,8 @@ public class PictureDownloadDao extends AbstractDao<PictureDownload, Long> {
         public final static Property Latitude = new Property(16, Double.class, "latitude", false, "LATITUDE");
         //经度
         public final static Property Longitude = new Property(17, Double.class, "longitude", false, "LONGITUDE");
+        //人为排序
+        public final static Property Xid = new Property(18, Long.class, "xid", false, "XID");
     }
 
 
@@ -96,7 +98,8 @@ public class PictureDownloadDao extends AbstractDao<PictureDownload, Long> {
                 "\"SKETCH\" TEXT," + //14.sketch
                 "\"ISCHECK\" INTEGER," + //15.ischeck
                 "\"LATITUDE\" DOUBLE," + //16.latitude
-                "\"LONGITUDE\" DOUBLE);");//17.longitude
+                "\"LONGITUDE\" DOUBLE," + //17.longitude
+                "\"XID\" INTEGER);");//18.xid
     }
 
     /**
@@ -127,7 +130,8 @@ public class PictureDownloadDao extends AbstractDao<PictureDownload, Long> {
                 cursor.getString(offset + 14),// sketch
                 cursor.getInt(offset+15),//ischeck
                 cursor.getDouble(offset+16),//latitude
-                cursor.getDouble(offset+17)//longitude
+                cursor.getDouble(offset+17),//longitude
+                cursor.getLong(offset+18)//xid
         );
         return picture;
     }
@@ -157,6 +161,7 @@ public class PictureDownloadDao extends AbstractDao<PictureDownload, Long> {
         entity.setIscheck(cursor.getInt(offset + 15));
         entity.setLatitude(cursor.getDouble(offset+16));
         entity.setLongitude(cursor.getDouble(offset+17));
+        entity.setXid(cursor.getLong(offset+18));
     }
 
     @Override
@@ -183,6 +188,7 @@ public class PictureDownloadDao extends AbstractDao<PictureDownload, Long> {
         stmt.bindLong(16, entity.getIscheck());
         stmt.bindDouble(17,entity.getLatitude());
         stmt.bindDouble(18,entity.getLongitude());
+        stmt.bindLong(19,entity.getXid());
     }
 
     @Override
@@ -209,6 +215,7 @@ public class PictureDownloadDao extends AbstractDao<PictureDownload, Long> {
         stmt.bindLong(16, entity.getIscheck());
         stmt.bindDouble(17,entity.getLatitude());
         stmt.bindDouble(18,entity.getLongitude());
+        stmt.bindLong(19,entity.getXid());
     }
 
     @Override

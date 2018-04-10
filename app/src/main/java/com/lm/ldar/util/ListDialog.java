@@ -14,6 +14,7 @@ import com.lm.ldar.adapter.AreaAdapter;
 import com.lm.ldar.adapter.DepartmentAdapter;
 import com.lm.ldar.adapter.DeviceAdapter;
 import com.lm.ldar.adapter.FactoryAdapter;
+import com.lm.ldar.adapter.InstrumentAdapter;
 import com.lm.ldar.adapter.PicVersionAdapter;
 import com.lm.ldar.adapter.WorkPlanAdapter;
 import com.lm.ldar.dao.AreaDao;
@@ -25,6 +26,7 @@ import com.lm.ldar.entity.Area;
 import com.lm.ldar.entity.Department;
 import com.lm.ldar.entity.Device;
 import com.lm.ldar.entity.Factory;
+import com.lm.ldar.entity.Instrument;
 import com.lm.ldar.entity.Pictureversion;
 import com.lm.ldar.entity.SelectEntity;
 import com.lm.ldar.entity.Workplan;
@@ -286,4 +288,6 @@ public class ListDialog {
             });
         }
     }
+
+
 }
